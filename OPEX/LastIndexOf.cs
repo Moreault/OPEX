@@ -4,6 +4,9 @@ public static partial class CollectionExtensions
 {
     public static int LastIndexOf<T>(this T[] collection, T? item) => ((IList<T>)collection).LastIndexOf(item);
     public static int LastIndexOf<T>(this T[] collection, Func<T, bool> match) => ((IList<T>)collection).LastIndexOf(match);
+    public static int LastIndexOf<T>(this List<T> collection, T? item) => ((IList<T>)collection).LastIndexOf(item);
+    public static int LastIndexOf<T>(this List<T> collection, Func<T, bool> match) => ((IList<T>)collection).LastIndexOf(match);
+
     public static int LastIndexOf<T>(this IList<T> collection, T? item) => collection.LastIndexOf(x => Equals(x, item));
 
     public static int LastIndexOf<T>(this IList<T> collection, Func<T, bool> match)
