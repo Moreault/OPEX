@@ -2,18 +2,10 @@
 
 public static partial class CollectionExtensions
 {
-    public static int GetRandomIndex<T>(this T[] collection) => ((IList<T>)collection).GetRandomIndex();
-    public static int GetRandomIndex<T>(this List<T> collection) => ((IList<T>)collection).GetRandomIndex();
-
-    public static int GetRandomIndex<T>(this IList<T> collection)
+    public static int GetRandomIndex<T>(this IEnumerable<T> collection)
     {
         if (collection == null) throw new ArgumentNullException(nameof(collection));
-        return collection.Count == 0 ? -1 : new Random().Next(collection.Count);
-    }
-
-    public static int GetRandomIndex<T>(this IReadOnlyList<T> collection)
-    {
-        if (collection == null) throw new ArgumentNullException(nameof(collection));
-        return collection.Count == 0 ? -1 : new Random().Next(collection.Count);
+        var list = collection as IList<T> ?? collection.ToArray();
+        return list.Count == 0 ? -1 : new Random().Next(list.Count);
     }
 }
