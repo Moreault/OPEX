@@ -61,7 +61,7 @@ namespace ToolBX.OPEX.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Can&apos;t get randoms from collection : numberOfElements must be a positive number but its value is {0}.
         /// </summary>
         internal static string CannotGetManyRandomsBecauseNumberNegative {
             get {
@@ -75,6 +75,15 @@ namespace ToolBX.OPEX.Resources {
         internal static string CannotUseMethodBecauseIsFixedSize {
             get {
                 return ResourceManager.GetString("CannotUseMethodBecauseIsFixedSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot use Uniform : the collection is empty.
+        /// </summary>
+        internal static string CannotUseUniformOnEmptyCollection {
+            get {
+                return ResourceManager.GetString("CannotUseUniformOnEmptyCollection", resourceCulture);
             }
         }
         
@@ -102,6 +111,15 @@ namespace ToolBX.OPEX.Resources {
         internal static string PredicateItemCouldNotBeRemoved {
             get {
                 return ResourceManager.GetString("PredicateItemCouldNotBeRemoved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uniform returned no item.
+        /// </summary>
+        internal static string UniformFoundDuplicates {
+            get {
+                return ResourceManager.GetString("UniformFoundDuplicates", resourceCulture);
             }
         }
     }

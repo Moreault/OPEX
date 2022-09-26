@@ -113,4 +113,10 @@
 	<data name="CannotGetManyRandomsBecauseNumberNegative" xml:space="preserve">
 		<value>Impossible d'obtenir des éléments aléatoires de la collection : 'numberOfElements' doit être un nombre positif mais sa valeur était de {0}</value>
 	</data>
+	<data name="CannotUseUniformOnEmptyCollection" xml:space="preserve">
+		<value>Impossible d'utiliser la méthode Uniform : la collection est vide</value>
+	</data>
+	<data name="UniformFoundDuplicates" xml:space="preserve">
+		<value>Impossible d'utiliser la méthode 'Uniform' : il y a des éléments dupliqués dans la collection</value>
+	</data>
 </root>
