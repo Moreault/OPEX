@@ -115,11 +115,11 @@ namespace ToolBX.OPEX.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Uniform returned no item.
+        ///   Looks up a localized string similar to Cannot use Uniform : there are duplicate entries in the collection.
         /// </summary>
-        internal static string UniformFoundDuplicates {
+        internal static string UniformFoundNonDuplicates {
             get {
-                return ResourceManager.GetString("UniformFoundDuplicates", resourceCulture);
+                return ResourceManager.GetString("UniformFoundNonDuplicates", resourceCulture);
             }
         }
     }

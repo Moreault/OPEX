@@ -37,7 +37,7 @@ public static partial class CollectionExtensions
         while (enumerator.MoveNext())
         {
             if (!comparer.Equals(firstKey, selector(enumerator.Current)))
-                throw new InvalidOperationException(Exceptions.UniformFoundDuplicates);
+                throw new InvalidOperationException(Exceptions.UniformFoundNonDuplicates);
         }
 
         return new TryGetResult<TSource>(true, first);

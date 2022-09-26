@@ -135,7 +135,7 @@
   <data name="CannotUseUniformOnEmptyCollection" xml:space="preserve">
     <value>Cannot use Uniform : the collection is empty</value>
   </data>
-  <data name="UniformFoundDuplicates" xml:space="preserve">
-	  <value>Cannot use Uniform : there are duplicate entries in the collection</value>
+  <data name="UniformFoundNonDuplicates" xml:space="preserve">
+	  <value>Cannot use Uniform : some elements in the collection are not duplicates</value>
   </data>
 </root>

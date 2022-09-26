@@ -50,7 +50,7 @@ public class UniformBy
             var action = () => source.UniformByOrDefault(x => x.Id == id);
 
             //Assert
-            action.Should().Throw<InvalidOperationException>().WithMessage(Exceptions.UniformFoundDuplicates);
+            action.Should().Throw<InvalidOperationException>().WithMessage(Exceptions.UniformFoundNonDuplicates);
         }
 
         [TestMethod]
@@ -126,7 +126,7 @@ public class UniformBy
             var action = () => source.UniformBy(x => x.Id == id);
 
             //Assert
-            action.Should().Throw<InvalidOperationException>().WithMessage(Exceptions.UniformFoundDuplicates);
+            action.Should().Throw<InvalidOperationException>().WithMessage(Exceptions.UniformFoundNonDuplicates);
         }
 
         [TestMethod]

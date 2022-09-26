@@ -35,7 +35,7 @@ public class Uniform
             var action = () => source.Uniform();
 
             //Assert
-            action.Should().Throw<InvalidOperationException>().WithMessage(Exceptions.UniformFoundDuplicates);
+            action.Should().Throw<InvalidOperationException>().WithMessage(Exceptions.UniformFoundNonDuplicates);
         }
 
         [TestMethod]
@@ -97,7 +97,7 @@ public class Uniform
             var action = () => source.UniformOrDefault();
 
             //Assert
-            action.Should().Throw<InvalidOperationException>().WithMessage(Exceptions.UniformFoundDuplicates);
+            action.Should().Throw<InvalidOperationException>().WithMessage(Exceptions.UniformFoundNonDuplicates);
         }
 
         [TestMethod]
@@ -174,7 +174,7 @@ public class Uniform
             var action = () => source.Uniform(x => x.Id == id);
 
             //Assert
-            action.Should().Throw<InvalidOperationException>().WithMessage(Exceptions.UniformFoundDuplicates);
+            action.Should().Throw<InvalidOperationException>().WithMessage(Exceptions.UniformFoundNonDuplicates);
         }
 
         [TestMethod]
@@ -250,7 +250,7 @@ public class Uniform
             var action = () => source.Uniform(x => x.Id == id);
 
             //Assert
-            action.Should().Throw<InvalidOperationException>().WithMessage(Exceptions.UniformFoundDuplicates);
+            action.Should().Throw<InvalidOperationException>().WithMessage(Exceptions.UniformFoundNonDuplicates);
         }
 
         [TestMethod]
