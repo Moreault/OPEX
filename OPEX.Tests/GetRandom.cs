@@ -7,71 +7,71 @@ public class GetRandom
     public class WithArray : Tester
     {
         [TestMethod]
-        public void WhenCollectionIsNull_Throw()
+        public void WhenSourceIsNull_Throw()
         {
             //Arrange
-            Dummy[] collection = null!;
+            Dummy[] source = null!;
 
             //Act
-            var action = () => collection.GetRandom();
+            var action = () => source.GetRandom();
 
             //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("collection");
+            action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(source));
         }
 
         [TestMethod]
-        public void WhenCollectionIsEmpty_ReturnNull()
+        public void WhenSourceIsEmpty_ReturnNull()
         {
             //Arrange
-            var collection = Array.Empty<Dummy>();
+            var source = Array.Empty<Dummy>();
 
             //Act
-            var result = collection.GetRandom();
+            var result = source.GetRandom();
 
             //Assert
             result.Should().BeNull();
         }
 
         [TestMethod]
-        public void WhenCollectionIsEmptyAndValueType_ReturnDefault()
+        public void WhenSourceIsEmptyAndValueType_ReturnDefault()
         {
             //Arrange
-            var collection = Array.Empty<int>();
+            var source = Array.Empty<int>();
 
             //Act
-            var result = collection.GetRandom();
+            var result = source.GetRandom();
 
             //Assert
             result.Should().Be(default);
         }
 
         [TestMethod]
-        public void WhenCollectionContainsOnlyOneItem_ReturnSingleItem()
+        public void WhenSourceContainsOnlyOneItem_ReturnSingleItem()
         {
             //Arrange
-            var collection = new[]
+            var source = new[]
             {
                 Fixture.Create<Dummy>()
             };
 
             //Act
-            var result = collection.GetRandom();
+            var result = source.GetRandom();
 
             //Assert
-            result.Should().Be(collection.Single());
+            result.Should().Be(source.Single());
         }
 
         [TestMethod]
-        public void WhenCollectionContainsMultipleItems_ReturnAnyOfThem()
+        public void WhenSourceContainsMultipleItems_ReturnAnyOfThem()
         {
             //Arrange
-            var collection = Fixture.CreateMany<Dummy>(10).ToArray();
+            var source = Fixture.CreateMany<Dummy>(10).ToArray();
 
             //Act
-            var result = collection.GetRandom()!;
+            var result = source.GetRandom()!;
 
             //Assert
-            collection.Should().Contain(result);
+            source.Should().Contain(result);
         }
     }
 
@@ -79,71 +79,71 @@ public class GetRandom
     public class WithList : Tester
     {
         [TestMethod]
-        public void WhenCollectionIsNull_Throw()
+        public void WhenSourceIsNull_Throw()
         {
             //Arrange
-            List<Dummy> collection = null!;
+            List<Dummy> source = null!;
 
             //Act
-            var action = () => collection.GetRandom();
+            var action = () => source.GetRandom();
 
             //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("collection");
+            action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(source));
         }
 
         [TestMethod]
-        public void WhenCollectionIsEmpty_ReturnNull()
+        public void WhenSourceIsEmpty_ReturnNull()
         {
             //Arrange
-            var collection = new List<Dummy>();
+            var source = new List<Dummy>();
 
             //Act
-            var result = collection.GetRandom();
+            var result = source.GetRandom();
 
             //Assert
             result.Should().BeNull();
         }
 
         [TestMethod]
-        public void WhenCollectionIsEmptyAndValueType_ReturnDefault()
+        public void WhenSourceIsEmptyAndValueType_ReturnDefault()
         {
             //Arrange
-            var collection = new List<int>();
+            var source = new List<int>();
 
             //Act
-            var result = collection.GetRandom();
+            var result = source.GetRandom();
 
             //Assert
             result.Should().Be(default);
         }
 
         [TestMethod]
-        public void WhenCollectionContainsOnlyOneItem_ReturnSingleItem()
+        public void WhenSourceContainsOnlyOneItem_ReturnSingleItem()
         {
             //Arrange
-            var collection = new List<Dummy>
+            var source = new List<Dummy>
             {
                 Fixture.Create<Dummy>()
             };
 
             //Act
-            var result = collection.GetRandom();
+            var result = source.GetRandom();
 
             //Assert
-            result.Should().Be(collection.Single());
+            result.Should().Be(source.Single());
         }
 
         [TestMethod]
-        public void WhenCollectionContainsMultipleItems_ReturnAnyOfThem()
+        public void WhenSourceContainsMultipleItems_ReturnAnyOfThem()
         {
             //Arrange
-            var collection = Fixture.CreateMany<Dummy>(10).ToList();
+            var source = Fixture.CreateMany<Dummy>(10).ToList();
 
             //Act
-            var result = collection.GetRandom()!;
+            var result = source.GetRandom()!;
 
             //Assert
-            collection.Should().Contain(result);
+            source.Should().Contain(result);
         }
     }
 
@@ -151,71 +151,71 @@ public class GetRandom
     public class WithReadOnlyList : Tester
     {
         [TestMethod]
-        public void WhenCollectionIsNull_Throw()
+        public void WhenSourceIsNull_Throw()
         {
             //Arrange
-            IReadOnlyList<Dummy> collection = null!;
+            IReadOnlyList<Dummy> source = null!;
 
             //Act
-            var action = () => collection.GetRandom();
+            var action = () => source.GetRandom();
 
             //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("collection");
+            action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(source));
         }
 
         [TestMethod]
-        public void WhenCollectionIsEmpty_ReturnNull()
+        public void WhenSourceIsEmpty_ReturnNull()
         {
             //Arrange
-            IReadOnlyList<Dummy> collection = new List<Dummy>();
+            IReadOnlyList<Dummy> source = new List<Dummy>();
 
             //Act
-            var result = collection.GetRandom();
+            var result = source.GetRandom();
 
             //Assert
             result.Should().BeNull();
         }
 
         [TestMethod]
-        public void WhenCollectionIsEmptyAndValueType_ReturnDefault()
+        public void WhenSourceIsEmptyAndValueType_ReturnDefault()
         {
             //Arrange
-            IReadOnlyList<int> collection = new List<int>();
+            IReadOnlyList<int> source = new List<int>();
 
             //Act
-            var result = collection.GetRandom();
+            var result = source.GetRandom();
 
             //Assert
             result.Should().Be(default);
         }
 
         [TestMethod]
-        public void WhenCollectionContainsOnlyOneItem_ReturnSingleItem()
+        public void WhenSourceContainsOnlyOneItem_ReturnSingleItem()
         {
             //Arrange
-            IReadOnlyList<Dummy> collection = new List<Dummy>
+            IReadOnlyList<Dummy> source = new List<Dummy>
             {
                 Fixture.Create<Dummy>()
             };
 
             //Act
-            var result = collection.GetRandom();
+            var result = source.GetRandom();
 
             //Assert
-            result.Should().Be(collection.Single());
+            result.Should().Be(source.Single());
         }
 
         [TestMethod]
-        public void WhenCollectionContainsMultipleItems_ReturnAnyOfThem()
+        public void WhenSourceContainsMultipleItems_ReturnAnyOfThem()
         {
             //Arrange
-            IReadOnlyList<Dummy> collection = Fixture.CreateMany<Dummy>(10).ToList();
+            IReadOnlyList<Dummy> source = Fixture.CreateMany<Dummy>(10).ToList();
 
             //Act
-            var result = collection.GetRandom()!;
+            var result = source.GetRandom()!;
 
             //Assert
-            collection.Should().Contain(result);
+            source.Should().Contain(result);
         }
     }
 
@@ -223,71 +223,71 @@ public class GetRandom
     public class WithWriteOnlyList : Tester
     {
         [TestMethod]
-        public void WhenCollectionIsNull_Throw()
+        public void WhenSourceIsNull_Throw()
         {
             //Arrange
-            WriteOnlyList<Dummy> collection = null!;
+            WriteOnlyList<Dummy> source = null!;
 
             //Act
-            var action = () => collection.GetRandom();
+            var action = () => source.GetRandom();
 
             //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("collection");
+            action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(source));
         }
 
         [TestMethod]
-        public void WhenCollectionIsEmpty_ReturnNull()
+        public void WhenSourceIsEmpty_ReturnNull()
         {
             //Arrange
-            var collection = new WriteOnlyList<Dummy>();
+            var source = new WriteOnlyList<Dummy>();
 
             //Act
-            var result = collection.GetRandom();
+            var result = source.GetRandom();
 
             //Assert
             result.Should().BeNull();
         }
 
         [TestMethod]
-        public void WhenCollectionIsEmptyAndValueType_ReturnDefault()
+        public void WhenSourceIsEmptyAndValueType_ReturnDefault()
         {
             //Arrange
-            var collection = new WriteOnlyList<int>();
+            var source = new WriteOnlyList<int>();
 
             //Act
-            var result = collection.GetRandom();
+            var result = source.GetRandom();
 
             //Assert
             result.Should().Be(default);
         }
 
         [TestMethod]
-        public void WhenCollectionContainsOnlyOneItem_ReturnSingleItem()
+        public void WhenSourceContainsOnlyOneItem_ReturnSingleItem()
         {
             //Arrange
-            var collection = new WriteOnlyList<Dummy>
+            var source = new WriteOnlyList<Dummy>
             {
                 Fixture.Create<Dummy>()
             };
 
             //Act
-            var result = collection.GetRandom();
+            var result = source.GetRandom();
 
             //Assert
-            result.Should().Be(collection.Single());
+            result.Should().Be(source.Single());
         }
 
         [TestMethod]
-        public void WhenCollectionContainsMultipleItems_ReturnAnyOfThem()
+        public void WhenSourceContainsMultipleItems_ReturnAnyOfThem()
         {
             //Arrange
-            var collection = Fixture.CreateMany<Dummy>(10).ToWriteOnlyList();
+            var source = Fixture.CreateMany<Dummy>(10).ToWriteOnlyList();
 
             //Act
-            var result = collection.GetRandom()!;
+            var result = source.GetRandom()!;
 
             //Assert
-            collection.Should().Contain(result);
+            source.Should().Contain(result);
         }
     }
 }

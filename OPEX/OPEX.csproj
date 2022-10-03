@@ -51,6 +51,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <PackageReference Include="ToolBX.OutWarden" Version="1.0.0" />
 	  <PackageReference Include="ToolBX.Reflection4Humans.Extensions" Version="1.0.0" />
 	</ItemGroup>
 
