@@ -9,6 +9,9 @@ Adds the following methods (and more) to basic .NET collections :
 -IndexesOf : Ever wanted to get all indexes of an occurence inside your collection? We got you again!
 -Sawp : Want to swap two indexes together? list.Swap(5, 1)! WE TOTALLY GOT YOU!
 -Uniform & UniformBy : Similar to First() and Single() except that this one expects a collection or properties to all be equal so it doesn't matter which one you get.
+-TryGetSingle : Like Single() except that it returns the result in a TryGetResult<T> which clearly indicates whether or not a "default" result is the outcome of a failure
+-TryGetFirst : Like TryGetSingle() except that it only returns the first occurence
+-TryGetLast : Should be self-explanatory by now
 
 OPEX even provides methods that add randomness to collections such as :
 

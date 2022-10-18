@@ -61,6 +61,20 @@ public class RemoveLast
             //Assert
             action.Should().Throw<NotSupportedException>().WithMessage(string.Format(Exceptions.CannotUseMethodBecauseIsFixedSize, nameof(ToolBX.OPEX.CollectionExtensions.RemoveLast)));
         }
+
+        [TestMethod]
+        public void WhenUsingItemWithArray_Throw()
+        {
+            //Arrange
+            var collection = Fixture.CreateMany<Dummy>().ToArray();
+            var item = Fixture.Create<Dummy>();
+
+            //Act
+            var action = () => collection.RemoveLast(item);
+
+            //Assert
+            action.Should().Throw<NotSupportedException>().WithMessage(string.Format(Exceptions.CannotUseMethodBecauseIsFixedSize, nameof(ToolBX.OPEX.CollectionExtensions.RemoveLast)));
+        }
     }
 
     [TestClass]

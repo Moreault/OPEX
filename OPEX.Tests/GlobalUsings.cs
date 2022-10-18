@@ -10,3 +10,4 @@ global using OPEX.Tests.Dummies;
 global using ToolBX.Eloquentest;
 global using ToolBX.OPEX;
 global using ToolBX.OPEX.Resources;
+global using ToolBX.OutWarden;

@@ -4,112 +4,52 @@
 public class RemoveFirst
 {
     [TestClass]
-    public class WithArray : Tester
+    public class Item : Tester
     {
         [TestMethod]
-        public void WhenUsingItemAndCollectionIsNull_Throw()
+        public void WhenSourceIsNullArray_Throw()
         {
             //Arrange
-            Dummy[] collection = null!;
+            Dummy[] source = null!;
             var item = Fixture.Create<Dummy>();
 
             //Act
-            var action = () => collection.RemoveFirst(item);
+            var action = () => source.RemoveFirst(item);
 
             //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("collection");
+            action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(source));
         }
 
         [TestMethod]
-        public void WhenUsingLambdaAndCollectionIsNull_Throw()
+        public void WhenSourceIsArray_Throw()
         {
             //Arrange
-            Dummy[] collection = null!;
-            var match = Fixture.Create<Func<Dummy, bool>>();
+            var source = Fixture.Create<Dummy[]>();
+            var item = source.GetRandom();
 
             //Act
-            var action = () => collection.RemoveFirst(match);
-
-            //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("collection");
-        }
-
-        [TestMethod]
-        public void WhenUsingLambdaAndLambdaIsNull_Throw()
-        {
-            //Arrange
-            var collection = Fixture.Create<Dummy[]>();
-            Func<Dummy, bool> match = null!;
-
-            //Act
-            var action = () => collection.RemoveFirst(match);
-
-            //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("match");
-        }
-
-        [TestMethod]
-        public void Always_Throw()
-        {
-            //Arrange
-            var collection = Fixture.Create<Dummy[]>();
-            var match = Fixture.Create<Func<Dummy, bool>>();
-
-            //Act
-            var action = () => collection.RemoveFirst(match);
+            var action = () => source.RemoveFirst(item);
 
             //Assert
             action.Should().Throw<NotSupportedException>().WithMessage(string.Format(Exceptions.CannotUseMethodBecauseIsFixedSize, nameof(ToolBX.OPEX.CollectionExtensions.RemoveFirst)));
         }
-    }
 
-    [TestClass]
-    public class WithList : Tester
-    {
         [TestMethod]
-        public void WhenUsingItemAndCollectionIsNull_Throw()
+        public void WhenSourceIsNullList_Throw()
         {
             //Arrange
-            List<Dummy> collection = null!;
+            List<Dummy> source = null!;
             var item = Fixture.Create<Dummy>();
 
             //Act
-            var action = () => collection.RemoveFirst(item);
+            var action = () => source.RemoveFirst(item);
 
             //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("collection");
+            action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(source));
         }
 
         [TestMethod]
-        public void WhenUsingLambdaAndCollectionIsNull_Throw()
-        {
-            //Arrange
-            List<Dummy> collection = null!;
-            var match = Fixture.Create<Func<Dummy, bool>>();
-
-            //Act
-            var action = () => collection.RemoveFirst(match);
-
-            //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("collection");
-        }
-
-        [TestMethod]
-        public void WhenUsingLambdaAndLambdaIsNull_Throw()
-        {
-            //Arrange
-            var collection = Fixture.Create<List<Dummy>>();
-            Func<Dummy, bool> match = null!;
-
-            //Act
-            var action = () => collection.RemoveFirst(match);
-
-            //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("match");
-        }
-
-        [TestMethod]
-        public void WhenUsingItemAndItemIsNullAndThereIsNoNullInCollection_Throw()
+        public void WhenSourceIsListAndItemIsNullAndThereIsNoNullInCollection_Throw()
         {
             //Arrange
             var collection = Fixture.Create<List<Dummy>>();
@@ -123,7 +63,7 @@ public class RemoveFirst
         }
 
         [TestMethod]
-        public void WhenUsingItemAndItemNotFoundInCollection_Throw()
+        public void WhenSourceIsListAndItemNotFoundInCollection_Throw()
         {
             //Arrange
             var collection = Fixture.Create<List<Dummy>>();
@@ -137,20 +77,7 @@ public class RemoveFirst
         }
 
         [TestMethod]
-        public void WhenUsingLambdaAndItemNotFoundInCollection_Throw()
-        {
-            //Arrange
-            var collection = Fixture.Create<List<Dummy>>();
-
-            //Act
-            var action = () => collection.RemoveFirst(x => x.Name == Fixture.Create<string>());
-
-            //Assert
-            action.Should().Throw<Exception>().WithMessage(Exceptions.PredicateItemCouldNotBeRemoved);
-        }
-
-        [TestMethod]
-        public void WhenUsingItemAndThereIsOneOccurenceOfItem_RemoveItem()
+        public void WhenSourceIsListAndThereIsOneOccurenceOfItem_RemoveItem()
         {
             //Arrange
             var collection = Fixture.CreateMany<Dummy>().ToList();
@@ -168,25 +95,7 @@ public class RemoveFirst
         }
 
         [TestMethod]
-        public void WhenUsingLambdaAndThereIsOneOccurenceOfItem_RemoveItem()
-        {
-            //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToList();
-            var original = collection.ToList();
-            var item = collection[1];
-
-            //Act
-            collection.RemoveFirst(x => x.Name == item.Name);
-
-            //Assert
-            collection.Should().BeEquivalentTo(new List<Dummy>
-            {
-                original[0], original[2]
-            });
-        }
-
-        [TestMethod]
-        public void WhenUsingItemAndThereAreMultipleOccurencesOfItem_RemoveTheFirstOne()
+        public void WhenSourceIsListAndThereAreMultipleOccurencesOfItem_RemoveTheFirstOne()
         {
             //Arrange
             var item = Fixture.Create<Dummy>();
@@ -210,6 +119,111 @@ public class RemoveFirst
                 item,
                 original[3],
                 item
+            });
+        }
+    }
+
+    [TestClass]
+    public class Predicate : Tester
+    {
+        [TestMethod]
+        public void WhenSourceIsNullArray_Throw()
+        {
+            //Arrange
+            Dummy[] source = null!;
+            var match = Fixture.Create<Func<Dummy, bool>>();
+
+            //Act
+            var action = () => source.RemoveFirst(match);
+
+            //Assert
+            action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(source));
+        }
+
+        [TestMethod]
+        public void WhenSourceIsArrayAndPredicateIsNull_Throw()
+        {
+            //Arrange
+            var collection = Fixture.Create<Dummy[]>();
+            Func<Dummy, bool> predicate = null!;
+
+            //Act
+            var action = () => collection.RemoveFirst(predicate);
+
+            //Assert
+            action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(predicate));
+        }
+
+        [TestMethod]
+        public void WhenSourceIsArray_Throw()
+        {
+            //Arrange
+            var collection = Fixture.Create<Dummy[]>();
+            var match = Fixture.Create<Func<Dummy, bool>>();
+
+            //Act
+            var action = () => collection.RemoveFirst(match);
+
+            //Assert
+            action.Should().Throw<NotSupportedException>().WithMessage(string.Format(Exceptions.CannotUseMethodBecauseIsFixedSize, nameof(ToolBX.OPEX.CollectionExtensions.RemoveFirst)));
+        }
+
+        [TestMethod]
+        public void WhenSourceIsNullList_Throw()
+        {
+            //Arrange
+            List<Dummy> source = null!;
+            var predicate = Fixture.Create<Func<Dummy, bool>>();
+
+            //Act
+            var action = () => source.RemoveFirst(predicate);
+
+            //Assert
+            action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(source));
+        }
+
+        [TestMethod]
+        public void WhenSourceIsListAndPredicateIsNull_Throw()
+        {
+            //Arrange
+            var source = Fixture.Create<List<Dummy>>();
+            Func<Dummy, bool> predicate = null!;
+
+            //Act
+            var action = () => source.RemoveFirst(predicate);
+
+            //Assert
+            action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(predicate));
+        }
+
+        [TestMethod]
+        public void WhenSourceIsListAndItemNotFoundInCollection_Throw()
+        {
+            //Arrange
+            var source = Fixture.Create<List<Dummy>>();
+
+            //Act
+            var action = () => source.RemoveFirst(x => x.Name == Fixture.Create<string>());
+
+            //Assert
+            action.Should().Throw<Exception>().WithMessage(Exceptions.PredicateItemCouldNotBeRemoved);
+        }
+
+        [TestMethod]
+        public void WhenThereIsOneOccurenceOfItem_RemoveItem()
+        {
+            //Arrange
+            var source = Fixture.CreateMany<Dummy>().ToList();
+            var original = source.ToList();
+            var item = source[1];
+
+            //Act
+            source.RemoveFirst(x => x.Name == item.Name);
+
+            //Assert
+            source.Should().BeEquivalentTo(new List<Dummy>
+            {
+                original[0], original[2]
             });
         }
 
