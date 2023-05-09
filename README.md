@@ -3,7 +3,7 @@
 OverPowered Enumerable eXtensions - _It makes your collections OP AF!_
 
 ## Good to know
-If you are already familiar with [ToolBX.Collections](https://github.com/Moreault/Collections) then the extension methods will feel natural. We like to throw a lot but we also provide "Try" overloads for the lazy devs out there.
+If you are already familiar with [ToolBX.Collections](https://github.com/Moreault/Collections) then these extension methods will feel natural. As with the rest of ToolBX, we like to throw a lot but we also provide "Try" overloads for the lazier devs out there.
 
 ## IsNullOrEmpty
 You used to do this
