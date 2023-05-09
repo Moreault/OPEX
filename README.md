@@ -7,7 +7,7 @@ If you are already familiar with [ToolBX.Collections](https://github.com/Moreaul
 
 ## IsNullOrEmpty
 You used to do this
-````c#
+```c#
 if (collection == null || !collection.Any())
 {
 	...
@@ -15,7 +15,7 @@ if (collection == null || !collection.Any())
 ```
 
 Now you can do this for the exact same effect
-````c#
+```c#
 if (collection.IsNullOrEmpty())
 {
 	...
