@@ -1,293 +1,81 @@
 ﻿namespace OPEX.Tests;
 
 [TestClass]
-public class GetRandom
+public sealed class GetRandomWithArrayOfDummyTests : GetRandomTester<Dummy[]>
 {
-    [TestClass]
-    public class WithArray : Tester
+
+}
+
+[TestClass]
+public sealed class GetRandomWithListOfDummyTests : GetRandomTester<List<Dummy>>
+{
+
+}
+
+[TestClass]
+public sealed class GetRandomWithWriteOnlyListOfDummyTests : GetRandomTester<WriteOnlyList<Dummy>>
+{
+
+}
+
+[TestClass]
+public sealed class GetRandomWithImmutableListOfDummyTests : GetRandomTester<ImmutableList<Dummy>>
+{
+
+}
+
+public abstract class GetRandomTester<TCollection> : Tester where TCollection : class, IEnumerable<Dummy>
+{
+    [TestMethod]
+    public void WhenSourceIsNull_Throw()
     {
-        [TestMethod]
-        public void WhenSourceIsNull_Throw()
-        {
-            //Arrange
-            Dummy[] source = null!;
+        //Arrange
+        TCollection source = null!;
 
-            //Act
-            var action = () => source.GetRandom();
+        //Act
+        var action = () => source.GetRandom();
 
-            //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(source));
-        }
-
-        [TestMethod]
-        public void WhenSourceIsEmpty_ReturnNull()
-        {
-            //Arrange
-            var source = Array.Empty<Dummy>();
-
-            //Act
-            var result = source.GetRandom();
-
-            //Assert
-            result.Should().BeNull();
-        }
-
-        [TestMethod]
-        public void WhenSourceIsEmptyAndValueType_ReturnDefault()
-        {
-            //Arrange
-            var source = Array.Empty<int>();
-
-            //Act
-            var result = source.GetRandom();
-
-            //Assert
-            result.Should().Be(default);
-        }
-
-        [TestMethod]
-        public void WhenSourceContainsOnlyOneItem_ReturnSingleItem()
-        {
-            //Arrange
-            var source = new[]
-            {
-                Fixture.Create<Dummy>()
-            };
-
-            //Act
-            var result = source.GetRandom();
-
-            //Assert
-            result.Should().Be(source.Single());
-        }
-
-        [TestMethod]
-        public void WhenSourceContainsMultipleItems_ReturnAnyOfThem()
-        {
-            //Arrange
-            var source = Fixture.CreateMany<Dummy>(10).ToArray();
-
-            //Act
-            var result = source.GetRandom()!;
-
-            //Assert
-            source.Should().Contain(result);
-        }
+        //Assert
+        action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(source));
     }
 
-    [TestClass]
-    public class WithList : Tester
+    [TestMethod]
+    public void WhenSourceIsEmpty_ReturnNull()
     {
-        [TestMethod]
-        public void WhenSourceIsNull_Throw()
-        {
-            //Arrange
-            List<Dummy> source = null!;
+        //Arrange
+        var source = new List<Dummy>().To<TCollection, Dummy>();
 
-            //Act
-            var action = () => source.GetRandom();
+        //Act
+        var result = source.GetRandom();
 
-            //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(source));
-        }
-
-        [TestMethod]
-        public void WhenSourceIsEmpty_ReturnNull()
-        {
-            //Arrange
-            var source = new List<Dummy>();
-
-            //Act
-            var result = source.GetRandom();
-
-            //Assert
-            result.Should().BeNull();
-        }
-
-        [TestMethod]
-        public void WhenSourceIsEmptyAndValueType_ReturnDefault()
-        {
-            //Arrange
-            var source = new List<int>();
-
-            //Act
-            var result = source.GetRandom();
-
-            //Assert
-            result.Should().Be(default);
-        }
-
-        [TestMethod]
-        public void WhenSourceContainsOnlyOneItem_ReturnSingleItem()
-        {
-            //Arrange
-            var source = new List<Dummy>
-            {
-                Fixture.Create<Dummy>()
-            };
-
-            //Act
-            var result = source.GetRandom();
-
-            //Assert
-            result.Should().Be(source.Single());
-        }
-
-        [TestMethod]
-        public void WhenSourceContainsMultipleItems_ReturnAnyOfThem()
-        {
-            //Arrange
-            var source = Fixture.CreateMany<Dummy>(10).ToList();
-
-            //Act
-            var result = source.GetRandom()!;
-
-            //Assert
-            source.Should().Contain(result);
-        }
+        //Assert
+        result.Should().BeNull();
     }
 
-    [TestClass]
-    public class WithReadOnlyList : Tester
+
+    [TestMethod]
+    public void WhenSourceContainsOnlyOneItem_ReturnSingleItem()
     {
-        [TestMethod]
-        public void WhenSourceIsNull_Throw()
-        {
-            //Arrange
-            IReadOnlyList<Dummy> source = null!;
+        //Arrange
+        var source = Fixture.CreateMany<Dummy>(1).To<TCollection, Dummy>();
 
-            //Act
-            var action = () => source.GetRandom();
+        //Act
+        var result = source.GetRandom();
 
-            //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(source));
-        }
-
-        [TestMethod]
-        public void WhenSourceIsEmpty_ReturnNull()
-        {
-            //Arrange
-            IReadOnlyList<Dummy> source = new List<Dummy>();
-
-            //Act
-            var result = source.GetRandom();
-
-            //Assert
-            result.Should().BeNull();
-        }
-
-        [TestMethod]
-        public void WhenSourceIsEmptyAndValueType_ReturnDefault()
-        {
-            //Arrange
-            IReadOnlyList<int> source = new List<int>();
-
-            //Act
-            var result = source.GetRandom();
-
-            //Assert
-            result.Should().Be(default);
-        }
-
-        [TestMethod]
-        public void WhenSourceContainsOnlyOneItem_ReturnSingleItem()
-        {
-            //Arrange
-            IReadOnlyList<Dummy> source = new List<Dummy>
-            {
-                Fixture.Create<Dummy>()
-            };
-
-            //Act
-            var result = source.GetRandom();
-
-            //Assert
-            result.Should().Be(source.Single());
-        }
-
-        [TestMethod]
-        public void WhenSourceContainsMultipleItems_ReturnAnyOfThem()
-        {
-            //Arrange
-            IReadOnlyList<Dummy> source = Fixture.CreateMany<Dummy>(10).ToList();
-
-            //Act
-            var result = source.GetRandom()!;
-
-            //Assert
-            source.Should().Contain(result);
-        }
+        //Assert
+        result.Should().Be(source.Single());
     }
 
-    [TestClass]
-    public class WithWriteOnlyList : Tester
+    [TestMethod]
+    public void WhenSourceContainsMultipleItems_ReturnAnyOfThem()
     {
-        [TestMethod]
-        public void WhenSourceIsNull_Throw()
-        {
-            //Arrange
-            WriteOnlyList<Dummy> source = null!;
+        //Arrange
+        var source = Fixture.CreateMany<Dummy>(10).To<TCollection, Dummy>();
 
-            //Act
-            var action = () => source.GetRandom();
+        //Act
+        var result = source.GetRandom()!;
 
-            //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(source));
-        }
-
-        [TestMethod]
-        public void WhenSourceIsEmpty_ReturnNull()
-        {
-            //Arrange
-            var source = new WriteOnlyList<Dummy>();
-
-            //Act
-            var result = source.GetRandom();
-
-            //Assert
-            result.Should().BeNull();
-        }
-
-        [TestMethod]
-        public void WhenSourceIsEmptyAndValueType_ReturnDefault()
-        {
-            //Arrange
-            var source = new WriteOnlyList<int>();
-
-            //Act
-            var result = source.GetRandom();
-
-            //Assert
-            result.Should().Be(default);
-        }
-
-        [TestMethod]
-        public void WhenSourceContainsOnlyOneItem_ReturnSingleItem()
-        {
-            //Arrange
-            var source = new WriteOnlyList<Dummy>
-            {
-                Fixture.Create<Dummy>()
-            };
-
-            //Act
-            var result = source.GetRandom();
-
-            //Assert
-            result.Should().Be(source.Single());
-        }
-
-        [TestMethod]
-        public void WhenSourceContainsMultipleItems_ReturnAnyOfThem()
-        {
-            //Arrange
-            var source = Fixture.CreateMany<Dummy>(10).ToWriteOnlyList();
-
-            //Act
-            var result = source.GetRandom()!;
-
-            //Assert
-            source.Should().Contain(result);
-        }
+        //Assert
+        source.Should().Contain(result);
     }
 }

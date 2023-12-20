@@ -2,13 +2,16 @@
 
 public static partial class CollectionExtensions
 {
-    public static int FirstIndexOf<T>(this IEnumerable<T> collection, T? item) => collection.FirstIndexOf(x => Equals(x, item));
+    /// <summary>
+    /// Removes and returns the first item from collection.
+    /// </summary>
+    public static int FirstIndexOf<TSource>(this IEnumerable<TSource> source, TSource? item) => source.FirstIndexOf(x => Equals(x, item));
 
-    public static int FirstIndexOf<T>(this IEnumerable<T> collection, Func<T, bool> match)
+    public static int FirstIndexOf<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> match)
     {
-        if (collection == null) throw new ArgumentNullException(nameof(collection));
+        if (source == null) throw new ArgumentNullException(nameof(source));
         if (match == null) throw new ArgumentNullException(nameof(match));
-        var list = collection as IList<T> ?? collection.ToArray();
+        var list = source as IList<TSource> ?? source.ToArray();
 
         for (var i = 0; i < list.Count; i++)
             if (match(list[i]))

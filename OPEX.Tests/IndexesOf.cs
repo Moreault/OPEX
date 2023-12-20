@@ -1,637 +1,184 @@
 ﻿namespace OPEX.Tests;
 
 [TestClass]
-public class IndexesOf
+public sealed class IndexesOfWithArrayOfDummyTests : IndexesOfTester<Dummy[]>
 {
-    [TestClass]
-    public class WithArray : Tester
+
+}
+
+[TestClass]
+public sealed class IndexesOfWithListOfDummyTests : IndexesOfTester<List<Dummy>>
+{
+
+}
+
+[TestClass]
+public sealed class IndexesOfWithWriteOnlyListOfDummyTests : IndexesOfTester<WriteOnlyList<Dummy>>
+{
+
+}
+
+[TestClass]
+public sealed class IndexesOfWithImmutableListOfDummyTests : IndexesOfTester<ImmutableList<Dummy>>
+{
+
+}
+
+public abstract class IndexesOfTester<TCollection> : Tester where TCollection : class, IEnumerable<Dummy>
+{
+    [TestMethod]
+    public void WhenUsingItemAndCollectionIsNull_Throw()
     {
-        [TestMethod]
-        public void WhenUsingItemAndCollectionIsNull_Throw()
-        {
-            //Arrange
-            Dummy[] collection = null!;
+        //Arrange
+        TCollection source = null!;
 
-            //Act
-            var action = () => collection.IndexesOf(Fixture.Create<Dummy>());
+        //Act
+        var action = () => source.IndexesOf(Fixture.Create<Dummy>());
 
-            //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("collection");
-        }
-
-        [TestMethod]
-        public void WhenUsingLambdaAndCollectionIsNull_Throw()
-        {
-            //Arrange
-            Dummy[] collection = null!;
-
-            //Act
-            var action = () => collection.IndexesOf(Fixture.Create<Func<Dummy, bool>>());
-
-            //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("collection");
-        }
-
-        [TestMethod]
-        public void WhenUsingLambdaAndLambdaIsNull_Throw()
-        {
-            //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToArray();
-            Func<Dummy, bool> match = null!;
-
-            //Act
-            var action = () => collection.IndexesOf(match);
-
-            //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("match");
-        }
-
-        [TestMethod]
-        public void WhenUsingItemAndCollectionIsEmpty_ReturnEmpty()
-        {
-            //Arrange
-            var collection = Array.Empty<Dummy>();
-            var item = Fixture.Create<Dummy>();
-
-            //Act
-            var result = collection.IndexesOf(item);
-
-            //Assert
-            result.Should().BeEmpty();
-        }
-
-        [TestMethod]
-        public void WhenUsingLambdaAndCollectionIsEmpty_ReturnEmpty()
-        {
-            //Arrange
-            var collection = Array.Empty<Dummy>();
-            var item = Fixture.Create<Dummy>();
-
-            //Act
-            var result = collection.IndexesOf(x => x.Name == item.Name);
-
-            //Assert
-            result.Should().BeEmpty();
-        }
-
-        [TestMethod]
-        public void WhenUsingItemAndItemIsNotInCollection_ReturnEmpty()
-        {
-            //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToArray();
-            var item = Fixture.Create<Dummy>();
-
-            //Act
-            var result = collection.IndexesOf(item);
-
-            //Assert
-            result.Should().BeEmpty();
-        }
-
-        [TestMethod]
-        public void WhenUsingLambdaAndItemIsNotInCollection_ReturnEmpty()
-        {
-            //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToArray();
-            var item = Fixture.Create<Dummy>();
-
-            //Act
-            var result = collection.IndexesOf(x => x.Name == item.Name);
-
-            //Assert
-            result.Should().BeEmpty();
-        }
-
-        [TestMethod]
-        public void WhenUsingItemAndThereIsOneCorrespondingItem_ReturnSingleItem()
-        {
-            //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToArray();
-            var itemIndex = collection.GetRandomIndex();
-            var item = collection[itemIndex];
-
-            //Act
-            var result = collection.IndexesOf(item);
-
-            //Assert
-            result.Should().BeEquivalentTo(new List<int> { itemIndex });
-        }
-
-        [TestMethod]
-        public void WhenUsingLambdaAndThereIsOneCorrespondingItem_ReturnSingleItem()
-        {
-            //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToArray();
-            var itemIndex = collection.GetRandomIndex();
-            var item = collection[itemIndex];
-
-            //Act
-            var result = collection.IndexesOf(x => x.Name == item.Name);
-
-            //Assert
-            result.Should().BeEquivalentTo(new List<int> { itemIndex });
-        }
-
-        [TestMethod]
-        public void WhenUsingItemAndThereAreMultipleOccurences_ReturnAllOccurences()
-        {
-            //Arrange
-            var item = Fixture.Create<Dummy>();
-            var collection = Fixture.CreateMany<Dummy>().Concat(item, Fixture.Create<Dummy>(), item, item, Fixture.Create<Dummy>(), Fixture.Create<Dummy>()).ToArray();
-
-            //Act
-            var result = collection.IndexesOf(item);
-
-            //Assert
-            result.Should().BeEquivalentTo(new List<int> { 3, 5, 6 });
-        }
-
-        [TestMethod]
-        public void WhenUsingLambdaAndThereAreMultipleOccurences_ReturnAllOccurences()
-        {
-            //Arrange
-            var item = Fixture.Create<Dummy>();
-            var collection = Fixture.CreateMany<Dummy>().Concat(item, Fixture.Create<Dummy>(), item, item, Fixture.Create<Dummy>(), Fixture.Create<Dummy>()).ToArray();
-
-            //Act
-            var result = collection.IndexesOf(x => x.Name == item.Name);
-
-            //Assert
-            result.Should().BeEquivalentTo(new List<int> { 3, 5, 6 });
-        }
+        //Assert
+        action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(source));
     }
 
-    [TestClass]
-    public class WithList : Tester
+    [TestMethod]
+    public void WhenUsingLambdaAndCollectionIsNull_Throw()
     {
-        [TestMethod]
-        public void WhenUsingItemAndCollectionIsNull_Throw()
-        {
-            //Arrange
-            List<Dummy> collection = null!;
+        //Arrange
+        TCollection source = null!;
 
-            //Act
-            var action = () => collection.IndexesOf(Fixture.Create<Dummy>());
+        //Act
+        var action = () => source.IndexesOf(Fixture.Create<Func<Dummy, bool>>());
 
-            //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("collection");
-        }
-
-        [TestMethod]
-        public void WhenUsingLambdaAndCollectionIsNull_Throw()
-        {
-            //Arrange
-            List<Dummy> collection = null!;
-
-            //Act
-            var action = () => collection.IndexesOf(Fixture.Create<Func<Dummy, bool>>());
-
-            //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("collection");
-        }
-
-        [TestMethod]
-        public void WhenUsingLambdaAndLambdaIsNull_Throw()
-        {
-            //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToList();
-            Func<Dummy, bool> match = null!;
-
-            //Act
-            var action = () => collection.IndexesOf(match);
-
-            //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("match");
-        }
-
-        [TestMethod]
-        public void WhenUsingItemAndCollectionIsEmpty_ReturnEmpty()
-        {
-            //Arrange
-            var collection = new List<Dummy>();
-            var item = Fixture.Create<Dummy>();
-
-            //Act
-            var result = collection.IndexesOf(item);
-
-            //Assert
-            result.Should().BeEmpty();
-        }
-
-        [TestMethod]
-        public void WhenUsingLambdaAndCollectionIsEmpty_ReturnEmpty()
-        {
-            //Arrange
-            var collection = new List<Dummy>();
-            var item = Fixture.Create<Dummy>();
-
-            //Act
-            var result = collection.IndexesOf(x => x.Name == item.Name);
-
-            //Assert
-            result.Should().BeEmpty();
-        }
-
-        [TestMethod]
-        public void WhenUsingItemAndItemIsNotInCollection_ReturnEmpty()
-        {
-            //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToList();
-            var item = Fixture.Create<Dummy>();
-
-            //Act
-            var result = collection.IndexesOf(item);
-
-            //Assert
-            result.Should().BeEmpty();
-        }
-
-        [TestMethod]
-        public void WhenUsingLambdaAndItemIsNotInCollection_ReturnEmpty()
-        {
-            //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToList();
-            var item = Fixture.Create<Dummy>();
-
-            //Act
-            var result = collection.IndexesOf(x => x.Name == item.Name);
-
-            //Assert
-            result.Should().BeEmpty();
-        }
-
-        [TestMethod]
-        public void WhenUsingItemAndThereIsOneCorrespondingItem_ReturnSingleItem()
-        {
-            //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToList();
-            var itemIndex = collection.GetRandomIndex();
-            var item = collection[itemIndex];
-
-            //Act
-            var result = collection.IndexesOf(item);
-
-            //Assert
-            result.Should().BeEquivalentTo(new List<int> { itemIndex });
-        }
-
-        [TestMethod]
-        public void WhenUsingLambdaAndThereIsOneCorrespondingItem_ReturnSingleItem()
-        {
-            //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToList();
-            var itemIndex = collection.GetRandomIndex();
-            var item = collection[itemIndex];
-
-            //Act
-            var result = collection.IndexesOf(x => x.Name == item.Name);
-
-            //Assert
-            result.Should().BeEquivalentTo(new List<int> { itemIndex });
-        }
-
-        [TestMethod]
-        public void WhenUsingItemAndThereAreMultipleOccurences_ReturnAllOccurences()
-        {
-            //Arrange
-            var item = Fixture.Create<Dummy>();
-            var collection = Fixture.CreateMany<Dummy>().Concat(item, Fixture.Create<Dummy>(), item, item, Fixture.Create<Dummy>(), Fixture.Create<Dummy>()).ToList();
-
-            //Act
-            var result = collection.IndexesOf(item);
-
-            //Assert
-            result.Should().BeEquivalentTo(new List<int> { 3, 5, 6 });
-        }
-
-        [TestMethod]
-        public void WhenUsingLambdaAndThereAreMultipleOccurences_ReturnAllOccurences()
-        {
-            //Arrange
-            var item = Fixture.Create<Dummy>();
-            var collection = Fixture.CreateMany<Dummy>().Concat(item, Fixture.Create<Dummy>(), item, item, Fixture.Create<Dummy>(), Fixture.Create<Dummy>()).ToList();
-
-            //Act
-            var result = collection.IndexesOf(x => x.Name == item.Name);
-
-            //Assert
-            result.Should().BeEquivalentTo(new List<int> { 3, 5, 6 });
-        }
+        //Assert
+        action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(source));
     }
 
-    [TestClass]
-    public class WithWriteOnlyList : Tester
+    [TestMethod]
+    public void WhenUsingLambdaAndLambdaIsNull_Throw()
     {
-        [TestMethod]
-        public void WhenUsingItemAndCollectionIsNull_Throw()
-        {
-            //Arrange
-            WriteOnlyList<Dummy> collection = null!;
+        //Arrange
+        var source = Fixture.CreateMany<Dummy>().To<TCollection, Dummy>();
+        Func<Dummy, bool> match = null!;
 
-            //Act
-            var action = () => collection.IndexesOf(Fixture.Create<Dummy>());
+        //Act
+        var action = () => source.IndexesOf(match);
 
-            //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("collection");
-        }
-
-        [TestMethod]
-        public void WhenUsingLambdaAndCollectionIsNull_Throw()
-        {
-            //Arrange
-            WriteOnlyList<Dummy> collection = null!;
-
-            //Act
-            var action = () => collection.IndexesOf(Fixture.Create<Func<Dummy, bool>>());
-
-            //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("collection");
-        }
-
-        [TestMethod]
-        public void WhenUsingLambdaAndLambdaIsNull_Throw()
-        {
-            //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToWriteOnlyList();
-            Func<Dummy, bool> match = null!;
-
-            //Act
-            var action = () => collection.IndexesOf(match);
-
-            //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("match");
-        }
-
-        [TestMethod]
-        public void WhenUsingItemAndCollectionIsEmpty_ReturnEmpty()
-        {
-            //Arrange
-            var collection = new WriteOnlyList<Dummy>();
-            var item = Fixture.Create<Dummy>();
-
-            //Act
-            var result = collection.IndexesOf(item);
-
-            //Assert
-            result.Should().BeEmpty();
-        }
-
-        [TestMethod]
-        public void WhenUsingLambdaAndCollectionIsEmpty_ReturnEmpty()
-        {
-            //Arrange
-            var collection = new WriteOnlyList<Dummy>();
-            var item = Fixture.Create<Dummy>();
-
-            //Act
-            var result = collection.IndexesOf(x => x.Name == item.Name);
-
-            //Assert
-            result.Should().BeEmpty();
-        }
-
-        [TestMethod]
-        public void WhenUsingItemAndItemIsNotInCollection_ReturnEmpty()
-        {
-            //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToWriteOnlyList();
-            var item = Fixture.Create<Dummy>();
-
-            //Act
-            var result = collection.IndexesOf(item);
-
-            //Assert
-            result.Should().BeEmpty();
-        }
-
-        [TestMethod]
-        public void WhenUsingLambdaAndItemIsNotInCollection_ReturnEmpty()
-        {
-            //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToWriteOnlyList();
-            var item = Fixture.Create<Dummy>();
-
-            //Act
-            var result = collection.IndexesOf(x => x.Name == item.Name);
-
-            //Assert
-            result.Should().BeEmpty();
-        }
-
-        [TestMethod]
-        public void WhenUsingItemAndThereIsOneCorrespondingItem_ReturnSingleItem()
-        {
-            //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToWriteOnlyList();
-            var itemIndex = collection.GetRandomIndex();
-            var item = collection[itemIndex];
-
-            //Act
-            var result = collection.IndexesOf(item);
-
-            //Assert
-            result.Should().BeEquivalentTo(new List<int> { itemIndex });
-        }
-
-        [TestMethod]
-        public void WhenUsingLambdaAndThereIsOneCorrespondingItem_ReturnSingleItem()
-        {
-            //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToWriteOnlyList();
-            var itemIndex = collection.GetRandomIndex();
-            var item = collection[itemIndex];
-
-            //Act
-            var result = collection.IndexesOf(x => x.Name == item.Name);
-
-            //Assert
-            result.Should().BeEquivalentTo(new List<int> { itemIndex });
-        }
-
-        [TestMethod]
-        public void WhenUsingItemAndThereAreMultipleOccurences_ReturnAllOccurences()
-        {
-            //Arrange
-            var item = Fixture.Create<Dummy>();
-            var collection = Fixture.CreateMany<Dummy>().Concat(item, Fixture.Create<Dummy>(), item, item, Fixture.Create<Dummy>(), Fixture.Create<Dummy>()).ToWriteOnlyList();
-
-            //Act
-            var result = collection.IndexesOf(item);
-
-            //Assert
-            result.Should().BeEquivalentTo(new List<int> { 3, 5, 6 });
-        }
-
-        [TestMethod]
-        public void WhenUsingLambdaAndThereAreMultipleOccurences_ReturnAllOccurences()
-        {
-            //Arrange
-            var item = Fixture.Create<Dummy>();
-            var collection = Fixture.CreateMany<Dummy>().Concat(item, Fixture.Create<Dummy>(), item, item, Fixture.Create<Dummy>(), Fixture.Create<Dummy>()).ToWriteOnlyList();
-
-            //Act
-            var result = collection.IndexesOf(x => x.Name == item.Name);
-
-            //Assert
-            result.Should().BeEquivalentTo(new List<int> { 3, 5, 6 });
-        }
+        //Assert
+        action.Should().Throw<ArgumentNullException>().WithParameterName("match");
     }
 
-    [TestClass]
-    public class WithReadOnlyList : Tester
+    [TestMethod]
+    public void WhenUsingItemAndCollectionIsEmpty_ReturnEmpty()
     {
-        [TestMethod]
-        public void WhenUsingItemAndCollectionIsNull_Throw()
-        {
-            //Arrange
-            IReadOnlyList<Dummy> collection = null!;
+        //Arrange
+        var source = new List<Dummy>().To<TCollection, Dummy>();
+        var item = Fixture.Create<Dummy>();
 
-            //Act
-            var action = () => collection.IndexesOf(Fixture.Create<Dummy>());
+        //Act
+        var result = source.IndexesOf(item);
 
-            //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("collection");
-        }
+        //Assert
+        result.Should().BeEmpty();
+    }
 
-        [TestMethod]
-        public void WhenUsingLambdaAndCollectionIsNull_Throw()
-        {
-            //Arrange
-            IReadOnlyList<Dummy> collection = null!;
+    [TestMethod]
+    public void WhenUsingLambdaAndCollectionIsEmpty_ReturnEmpty()
+    {
+        //Arrange
+        var source = new List<Dummy>().To<TCollection, Dummy>();
+        var item = Fixture.Create<Dummy>();
 
-            //Act
-            var action = () => collection.IndexesOf(Fixture.Create<Func<Dummy, bool>>());
+        //Act
+        var result = source.IndexesOf(x => x.Name == item.Name);
 
-            //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("collection");
-        }
+        //Assert
+        result.Should().BeEmpty();
+    }
 
-        [TestMethod]
-        public void WhenUsingLambdaAndLambdaIsNull_Throw()
-        {
-            //Arrange
-            IReadOnlyList<Dummy> collection = Fixture.CreateMany<Dummy>().ToList();
-            Func<Dummy, bool> match = null!;
+    [TestMethod]
+    public void WhenUsingItemAndItemIsNotInCollection_ReturnEmpty()
+    {
+        //Arrange
+        var source = Fixture.CreateMany<Dummy>().To<TCollection, Dummy>();
+        var item = Fixture.Create<Dummy>();
 
-            //Act
-            var action = () => collection.IndexesOf(match);
+        //Act
+        var result = source.IndexesOf(item);
 
-            //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("match");
-        }
+        //Assert
+        result.Should().BeEmpty();
+    }
 
-        [TestMethod]
-        public void WhenUsingItemAndCollectionIsEmpty_ReturnEmpty()
-        {
-            //Arrange
-            IReadOnlyList<Dummy> collection = new List<Dummy>();
-            var item = Fixture.Create<Dummy>();
+    [TestMethod]
+    public void WhenUsingLambdaAndItemIsNotInCollection_ReturnEmpty()
+    {
+        //Arrange
+        var source = Fixture.CreateMany<Dummy>().To<TCollection, Dummy>();
+        var item = Fixture.Create<Dummy>();
 
-            //Act
-            var result = collection.IndexesOf(item);
+        //Act
+        var result = source.IndexesOf(x => x.Name == item.Name);
 
-            //Assert
-            result.Should().BeEmpty();
-        }
+        //Assert
+        result.Should().BeEmpty();
+    }
 
-        [TestMethod]
-        public void WhenUsingLambdaAndCollectionIsEmpty_ReturnEmpty()
-        {
-            //Arrange
-            IReadOnlyList<Dummy> collection = new List<Dummy>();
-            var item = Fixture.Create<Dummy>();
+    [TestMethod]
+    public void WhenUsingItemAndThereIsOneCorrespondingItem_ReturnSingleItem()
+    {
+        //Arrange
+        var originalSource = Fixture.CreateMany<Dummy>().ToList();
+        var source = originalSource.To<TCollection, Dummy>();
+        var itemIndex = source.GetRandomIndex();
+        var item = originalSource[itemIndex];
 
-            //Act
-            var result = collection.IndexesOf(x => x.Name == item.Name);
+        //Act
+        var result = source.IndexesOf(item);
 
-            //Assert
-            result.Should().BeEmpty();
-        }
+        //Assert
+        result.Should().BeEquivalentTo(new List<int> { itemIndex });
+    }
 
-        [TestMethod]
-        public void WhenUsingItemAndItemIsNotInCollection_ReturnEmpty()
-        {
-            //Arrange
-            IReadOnlyList<Dummy> collection = Fixture.CreateMany<Dummy>().ToList();
-            var item = Fixture.Create<Dummy>();
+    [TestMethod]
+    public void WhenUsingLambdaAndThereIsOneCorrespondingItem_ReturnSingleItem()
+    {
+        //Arrange
+        var originalSource = Fixture.CreateMany<Dummy>().ToList();
+        var source = originalSource.To<TCollection, Dummy>();
+        var itemIndex = source.GetRandomIndex();
+        var item = originalSource[itemIndex];
 
-            //Act
-            var result = collection.IndexesOf(item);
+        //Act
+        var result = source.IndexesOf(x => x.Name == item.Name);
 
-            //Assert
-            result.Should().BeEmpty();
-        }
+        //Assert
+        result.Should().BeEquivalentTo(new List<int> { itemIndex });
+    }
 
-        [TestMethod]
-        public void WhenUsingLambdaAndItemIsNotInCollection_ReturnEmpty()
-        {
-            //Arrange
-            IReadOnlyList<Dummy> collection = Fixture.CreateMany<Dummy>().ToList();
-            var item = Fixture.Create<Dummy>();
+    [TestMethod]
+    public void WhenUsingItemAndThereAreMultipleOccurences_ReturnAllOccurences()
+    {
+        //Arrange
+        var item = Fixture.Create<Dummy>();
+        var source = Fixture.CreateMany<Dummy>().Concat(item, Fixture.Create<Dummy>(), item, item, Fixture.Create<Dummy>(), Fixture.Create<Dummy>()).To<TCollection, Dummy>();
 
-            //Act
-            var result = collection.IndexesOf(x => x.Name == item.Name);
+        //Act
+        var result = source.IndexesOf(item);
 
-            //Assert
-            result.Should().BeEmpty();
-        }
+        //Assert
+        result.Should().BeEquivalentTo(new List<int> { 3, 5, 6 });
+    }
 
-        [TestMethod]
-        public void WhenUsingItemAndThereIsOneCorrespondingItem_ReturnSingleItem()
-        {
-            //Arrange
-            IReadOnlyList<Dummy> collection = Fixture.CreateMany<Dummy>().ToList();
-            var itemIndex = collection.GetRandomIndex();
-            var item = collection[itemIndex];
+    [TestMethod]
+    public void WhenUsingLambdaAndThereAreMultipleOccurences_ReturnAllOccurences()
+    {
+        //Arrange
+        var item = Fixture.Create<Dummy>();
+        var source = Fixture.CreateMany<Dummy>().Concat(item, Fixture.Create<Dummy>(), item, item, Fixture.Create<Dummy>(), Fixture.Create<Dummy>()).To<TCollection, Dummy>();
 
-            //Act
-            var result = collection.IndexesOf(item);
+        //Act
+        var result = source.IndexesOf(x => x.Name == item.Name);
 
-            //Assert
-            result.Should().BeEquivalentTo(new List<int> { itemIndex });
-        }
-
-        [TestMethod]
-        public void WhenUsingLambdaAndThereIsOneCorrespondingItem_ReturnSingleItem()
-        {
-            //Arrange
-            IReadOnlyList<Dummy> collection = Fixture.CreateMany<Dummy>().ToList();
-            var itemIndex = collection.GetRandomIndex();
-            var item = collection[itemIndex];
-
-            //Act
-            var result = collection.IndexesOf(x => x.Name == item.Name);
-
-            //Assert
-            result.Should().BeEquivalentTo(new List<int> { itemIndex });
-        }
-
-        [TestMethod]
-        public void WhenUsingItemAndThereAreMultipleOccurences_ReturnAllOccurences()
-        {
-            //Arrange
-            var item = Fixture.Create<Dummy>();
-            IReadOnlyList<Dummy> collection = Fixture.CreateMany<Dummy>().Concat(item, Fixture.Create<Dummy>(), item, item, Fixture.Create<Dummy>(), Fixture.Create<Dummy>()).ToList();
-
-            //Act
-            var result = collection.IndexesOf(item);
-
-            //Assert
-            result.Should().BeEquivalentTo(new List<int> { 3, 5, 6 });
-        }
-
-        [TestMethod]
-        public void WhenUsingLambdaAndThereAreMultipleOccurences_ReturnAllOccurences()
-        {
-            //Arrange
-            var item = Fixture.Create<Dummy>();
-            IReadOnlyList<Dummy> collection = Fixture.CreateMany<Dummy>().Concat(item, Fixture.Create<Dummy>(), item, item, Fixture.Create<Dummy>(), Fixture.Create<Dummy>()).ToList();
-
-            //Act
-            var result = collection.IndexesOf(x => x.Name == item.Name);
-
-            //Assert
-            result.Should().BeEquivalentTo(new List<int> { 3, 5, 6 });
-        }
+        //Assert
+        result.Should().BeEquivalentTo(new List<int> { 3, 5, 6 });
     }
 }

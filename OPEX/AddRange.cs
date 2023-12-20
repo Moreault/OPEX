@@ -2,14 +2,20 @@
 
 public static partial class CollectionExtensions
 {
-    public static void AddRange<T>(this IList<T> collection, params T[] items) => collection.AddRange((IEnumerable<T>)items);
+    /// <summary>
+    /// Adds the specified items to the end of the collection.
+    /// </summary>
+    public static void AddRange<TSource>(this IList<TSource> source, params TSource[] items) => source.AddRange((IEnumerable<TSource>)items);
 
-    public static void AddRange<T>(this IList<T> collection, IEnumerable<T> items)
+    /// <summary>
+    /// Adds the specified items to the end of the collection.
+    /// </summary>
+    public static void AddRange<TSource>(this IList<TSource> source, IEnumerable<TSource> items)
     {
-        if (collection == null) throw new ArgumentNullException(nameof(collection));
+        if (source == null) throw new ArgumentNullException(nameof(source));
         if (items == null) throw new ArgumentNullException(nameof(items));
-        if (collection.IsFixedSize()) throw new NotSupportedException(string.Format(Exceptions.CannotUseMethodBecauseIsFixedSize, nameof(AddRange)));
+        if (source.IsFixedSize()) throw new NotSupportedException(string.Format(Exceptions.CannotUseMethodBecauseIsFixedSize, nameof(AddRange)));
         foreach (var item in items)
-            collection.Add(item);
+            source.Add(item);
     }
 }

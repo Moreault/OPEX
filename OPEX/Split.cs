@@ -10,16 +10,8 @@ public static partial class CollectionExtensions
         if (source == null) throw new ArgumentNullException(nameof(source));
         if (match == null) throw new ArgumentNullException(nameof(match));
 
-        var remaining = new List<TSource>();
-        var excluded = new List<TSource>();
-
-        foreach (var item in source)
-        {
-            if (match(item))
-                excluded.Add(item);
-            else
-                remaining.Add(item);
-        }
+        var remaining = source.ToList();
+        var excluded = remaining.PopAll(match);
 
         return new Splitted<TSource>
         {

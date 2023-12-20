@@ -10,10 +10,10 @@ public class IsNullOrEmpty
         public void WhenIsNull_ReturnTrue()
         {
             //Arrange
-            string[] collection = null!;
+            string[] source = null!;
 
             //Act
-            var result = collection.IsNullOrEmpty();
+            var result = source.IsNullOrEmpty();
 
             //Assert
             result.Should().BeTrue();
@@ -23,10 +23,10 @@ public class IsNullOrEmpty
         public void WhenIsNotNullButEmpty_ReturnTrue()
         {
             //Arrange
-            var collection = Array.Empty<string>();
+            var source = Array.Empty<string>();
 
             //Act
-            var result = collection.IsNullOrEmpty();
+            var result = source.IsNullOrEmpty();
 
             //Assert
             result.Should().BeTrue();
@@ -36,10 +36,10 @@ public class IsNullOrEmpty
         public void WhenIsNotNullAndContainsItems_ReturnFalse()
         {
             //Arrange
-            var collection = Fixture.CreateMany<string>().ToArray();
+            var source = Fixture.CreateMany<string>().ToArray();
 
             //Act
-            var result = collection.IsNullOrEmpty();
+            var result = source.IsNullOrEmpty();
 
             //Assert
             result.Should().BeFalse();
@@ -53,10 +53,10 @@ public class IsNullOrEmpty
         public void WhenIsNull_ReturnTrue()
         {
             //Arrange
-            List<string> collection = null!;
+            List<string> source = null!;
 
             //Act
-            var result = collection.IsNullOrEmpty();
+            var result = source.IsNullOrEmpty();
 
             //Assert
             result.Should().BeTrue();
@@ -66,10 +66,10 @@ public class IsNullOrEmpty
         public void WhenIsNotNullButEmpty_ReturnTrue()
         {
             //Arrange
-            var collection = new List<string>();
+            var source = new List<string>();
 
             //Act
-            var result = collection.IsNullOrEmpty();
+            var result = source.IsNullOrEmpty();
 
             //Assert
             result.Should().BeTrue();
@@ -79,10 +79,10 @@ public class IsNullOrEmpty
         public void WhenIsNotNullAndContainsItems_ReturnFalse()
         {
             //Arrange
-            var collection = Fixture.CreateMany<string>().ToList();
+            var source = Fixture.CreateMany<string>().ToList();
 
             //Act
-            var result = collection.IsNullOrEmpty();
+            var result = source.IsNullOrEmpty();
 
             //Assert
             result.Should().BeFalse();
@@ -96,10 +96,10 @@ public class IsNullOrEmpty
         public void WhenIsNull_ReturnTrue()
         {
             //Arrange
-            IReadOnlyList<string> collection = null!;
+            IReadOnlyList<string> source = null!;
 
             //Act
-            var result = collection.IsNullOrEmpty();
+            var result = source.IsNullOrEmpty();
 
             //Assert
             result.Should().BeTrue();
@@ -109,10 +109,10 @@ public class IsNullOrEmpty
         public void WhenIsNotNullButEmpty_ReturnTrue()
         {
             //Arrange
-            IReadOnlyList<string> collection = new List<string>();
+            IReadOnlyList<string> source = new List<string>();
 
             //Act
-            var result = collection.IsNullOrEmpty();
+            var result = source.IsNullOrEmpty();
 
             //Assert
             result.Should().BeTrue();
@@ -122,10 +122,10 @@ public class IsNullOrEmpty
         public void WhenIsNotNullAndContainsItems_ReturnFalse()
         {
             //Arrange
-            IReadOnlyList<string> collection = Fixture.CreateMany<string>().ToList();
+            IReadOnlyList<string> source = Fixture.CreateMany<string>().ToList();
 
             //Act
-            var result = collection.IsNullOrEmpty();
+            var result = source.IsNullOrEmpty();
 
             //Assert
             result.Should().BeFalse();
@@ -139,10 +139,10 @@ public class IsNullOrEmpty
         public void WhenIsNull_ReturnTrue()
         {
             //Arrange
-            Dictionary<int, string> collection = null!;
+            Dictionary<int, string> source = null!;
 
             //Act
-            var result = collection.IsNullOrEmpty();
+            var result = source.IsNullOrEmpty();
 
             //Assert
             result.Should().BeTrue();
@@ -152,10 +152,10 @@ public class IsNullOrEmpty
         public void WhenIsNotNullButEmpty_ReturnTrue()
         {
             //Arrange
-            var collection = new Dictionary<int, string>();
+            var source = new Dictionary<int, string>();
 
             //Act
-            var result = collection.IsNullOrEmpty();
+            var result = source.IsNullOrEmpty();
 
             //Assert
             result.Should().BeTrue();
@@ -165,10 +165,10 @@ public class IsNullOrEmpty
         public void WhenIsNotNullAndContainsItems_ReturnFalse()
         {
             //Arrange
-            var collection = Fixture.Create<Dictionary<int, string>>();
+            var source = Fixture.Create<Dictionary<int, string>>();
 
             //Act
-            var result = collection.IsNullOrEmpty();
+            var result = source.IsNullOrEmpty();
 
             //Assert
             result.Should().BeFalse();

@@ -5,12 +5,12 @@ public static partial class CollectionExtensions
     /// <summary>
     /// Returns the last element of the sequence or a failed TryGetResult if it's empty.
     /// </summary>
-    public static TryGetResult<TSource> TryGetLast<TSource>(this IEnumerable<TSource> source)
+    public static Result<TSource> TryGetLast<TSource>(this IEnumerable<TSource> source)
     {
         if (source == null) throw new ArgumentNullException(nameof(source));
 
         if (source is IReadOnlyList<TSource> list)
-            return list.Any() ? new TryGetResult<TSource>(list[list.LastIndex()]) : TryGetResult<TSource>.Failure;
+            return list.Any() ? Result<TSource>.Success(list[list.LastIndex()]) : Result<TSource>.Failure();
 
         using var enumerator = source.GetEnumerator();
 
@@ -22,13 +22,13 @@ public static partial class CollectionExtensions
             last = enumerator.Current;
         }
 
-        return isFound ? new TryGetResult<TSource>(last) : TryGetResult<TSource>.Failure;
+        return isFound ? Result<TSource>.Success(last) : Result<TSource>.Failure();
     }
 
     /// <summary>
     /// Returns the last element of the sequence or a failed TryGetResult if it's empty.
     /// </summary>
-    public static TryGetResult<TSource> TryGetLast<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate)
+    public static Result<TSource> TryGetLast<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate)
     {
         if (source == null) throw new ArgumentNullException(nameof(source));
         if (predicate == null) throw new ArgumentNullException(nameof(predicate));
@@ -37,9 +37,9 @@ public static partial class CollectionExtensions
         {
             for (var i = list.LastIndex(); i > 0; i--)
             {
-                if (predicate(list[i])) return new TryGetResult<TSource>(list[i]);
+                if (predicate(list[i])) return Result<TSource>.Success(list[i]);
             }
-            return TryGetResult<TSource>.Failure;
+            return Result<TSource>.Failure();
         }
 
         using var enumerator = source.GetEnumerator();
@@ -52,9 +52,9 @@ public static partial class CollectionExtensions
             {
                 isFound = true;
                 last = enumerator.Current;
-            };
+            }
         }
 
-        return isFound ? new TryGetResult<TSource>(last) : TryGetResult<TSource>.Failure;
+        return isFound ? Result<TSource>.Success(last) : Result<TSource>.Failure();
     }
 }

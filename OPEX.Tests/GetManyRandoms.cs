@@ -1,477 +1,142 @@
 ﻿namespace OPEX.Tests;
 
 [TestClass]
-public class GetManyRandoms
+public sealed class GetManyRandomsithArrayOfDummyTests : GetManyRandomsTester<Dummy[]>
 {
-    [TestClass]
-    public class WithArray : Tester
+
+}
+
+[TestClass]
+public sealed class GetManyRandomsWithListOfDummyTests : GetManyRandomsTester<List<Dummy>>
+{
+
+}
+
+[TestClass]
+public sealed class GetManyRandomsWithWriteOnlyListOfDummyTests : GetManyRandomsTester<WriteOnlyList<Dummy>>
+{
+
+}
+
+[TestClass]
+public sealed class GetManyRandomsWithImmutableListOfDummyTests : GetManyRandomsTester<ImmutableList<Dummy>>
+{
+
+}
+
+public abstract class GetManyRandomsTester<TCollection> : Tester where TCollection : class, IEnumerable<Dummy>
+{
+    [TestMethod]
+    public void WhenCollectionIsNull_Throw()
     {
-        [TestMethod]
-        public void WhenCollectionIsNull_Throw()
-        {
-            //Arrange
-            Dummy[] collection = null!;
-            var numberOfElements = Fixture.Create<int>();
+        //Arrange
+        TCollection source = null!;
+        var numberOfElements = Fixture.Create<int>();
 
-            //Act
-            var action = () => collection.GetManyRandoms(numberOfElements);
+        //Act
+        var action = () => source.GetManyRandoms(numberOfElements);
 
-            //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("collection");
-        }
-
-        [TestMethod]
-        public void WhenNumberOfElementsIsNegative_Throw()
-        {
-            //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToArray();
-            var numberOfElements = -Fixture.Create<int>();
-
-            //Act
-            var action = () => collection.GetManyRandoms(numberOfElements);
-
-            //Assert
-            action.Should().Throw<ArgumentException>().WithMessage(string.Format(Exceptions.CannotGetManyRandomsBecauseNumberNegative, numberOfElements));
-        }
-
-        [TestMethod]
-        public void WhenNumberOfElementsIsZero_ReturnEmpty()
-        {
-            //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToArray();
-            var numberOfElements = 0;
-
-            //Act
-            var result = collection.GetManyRandoms(numberOfElements);
-
-            //Assert
-            result.Should().BeEmpty();
-        }
-
-        [TestMethod]
-        public void WhenCollectionIsEmpty_ReturnEmpty()
-        {
-            //Arrange
-            var collection = Array.Empty<Dummy>();
-            var numberOfElements = Fixture.Create<int>();
-
-            //Act
-            var result = collection.GetManyRandoms(numberOfElements);
-
-            //Assert
-            result.Should().BeEmpty();
-        }
-
-        [TestMethod]
-        public void WhenNumberOfElementsIsOne_ReturnSingleItemFromCollection()
-        {
-            //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToArray();
-            var numberOfElements = 1;
-
-            //Act
-            var result = collection.GetManyRandoms(numberOfElements);
-
-            //Assert
-            result.Should().HaveCount(1);
-            collection.Should().Contain(result);
-        }
-
-        [TestMethod]
-        public void WhenNumberOfElementsIsTheSameAsSizeOfCollection_ReturnEntireCollection()
-        {
-            //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToArray();
-            var numberOfElements = collection.Length;
-
-            //Act
-            var result = collection.GetManyRandoms(numberOfElements);
-
-            //Assert
-            result.Should().BeEquivalentTo(collection);
-        }
-
-        [TestMethod]
-        public void WhenNumberOfElementsIsGreaterThanSizeOfCollection_ReturnEntireCollection()
-        {
-            //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToArray();
-            var numberOfElements = collection.Length + Fixture.Create<int>();
-
-            //Act
-            var result = collection.GetManyRandoms(numberOfElements);
-
-            //Assert
-            result.Should().BeEquivalentTo(collection);
-        }
-
-        [TestMethod]
-        public void WhenNumberOfElementsIsSmallerThanSizeOfCollection_ReturnRandomElementsFromCollection()
-        {
-            //Arrange
-            var collection = Fixture.CreateMany<Dummy>(15).ToArray();
-            var numberOfElements = 5;
-
-            //Act
-            var result = collection.GetManyRandoms(numberOfElements);
-
-            //Assert
-            result.Should().HaveCount(5);
-            collection.Should().Contain(result);
-        }
+        //Assert
+        action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(source));
     }
 
-    [TestClass]
-    public class WithList : Tester
+    [TestMethod]
+    public void WhenNumberOfElementsIsNegative_Throw()
     {
-        [TestMethod]
-        public void WhenCollectionIsNull_Throw()
-        {
-            //Arrange
-            List<Dummy> collection = null!;
-            var numberOfElements = Fixture.Create<int>();
+        //Arrange
+        var source = Fixture.CreateMany<Dummy>().To<TCollection, Dummy>();
+        var numberOfElements = -Fixture.Create<int>();
 
-            //Act
-            var action = () => collection.GetManyRandoms(numberOfElements);
+        //Act
+        var action = () => source.GetManyRandoms(numberOfElements);
 
-            //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("collection");
-        }
-
-        [TestMethod]
-        public void WhenNumberOfElementsIsNegative_Throw()
-        {
-            //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToList();
-            var numberOfElements = -Fixture.Create<int>();
-
-            //Act
-            var action = () => collection.GetManyRandoms(numberOfElements);
-
-            //Assert
-            action.Should().Throw<ArgumentException>().WithMessage(string.Format(Exceptions.CannotGetManyRandomsBecauseNumberNegative, numberOfElements));
-        }
-
-        [TestMethod]
-        public void WhenNumberOfElementsIsZero_ReturnEmpty()
-        {
-            //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToList();
-            var numberOfElements = 0;
-
-            //Act
-            var result = collection.GetManyRandoms(numberOfElements);
-
-            //Assert
-            result.Should().BeEmpty();
-        }
-
-        [TestMethod]
-        public void WhenCollectionIsEmpty_ReturnEmpty()
-        {
-            //Arrange
-            var collection = new List<Dummy>();
-            var numberOfElements = Fixture.Create<int>();
-
-            //Act
-            var result = collection.GetManyRandoms(numberOfElements);
-
-            //Assert
-            result.Should().BeEmpty();
-        }
-
-        [TestMethod]
-        public void WhenNumberOfElementsIsOne_ReturnSingleItemFromCollection()
-        {
-            //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToList();
-            var numberOfElements = 1;
-
-            //Act
-            var result = collection.GetManyRandoms(numberOfElements);
-
-            //Assert
-            result.Should().HaveCount(1);
-            collection.Should().Contain(result);
-        }
-
-        [TestMethod]
-        public void WhenNumberOfElementsIsTheSameAsSizeOfCollection_ReturnEntireCollection()
-        {
-            //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToList();
-            var numberOfElements = collection.Count;
-
-            //Act
-            var result = collection.GetManyRandoms(numberOfElements);
-
-            //Assert
-            result.Should().BeEquivalentTo(collection);
-        }
-
-        [TestMethod]
-        public void WhenNumberOfElementsIsGreaterThanSizeOfCollection_ReturnEntireCollection()
-        {
-            //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToList();
-            var numberOfElements = collection.Count + Fixture.Create<int>();
-
-            //Act
-            var result = collection.GetManyRandoms(numberOfElements);
-
-            //Assert
-            result.Should().BeEquivalentTo(collection);
-        }
-
-        [TestMethod]
-        public void WhenNumberOfElementsIsSmallerThanSizeOfCollection_ReturnRandomElementsFromCollection()
-        {
-            //Arrange
-            var collection = Fixture.CreateMany<Dummy>(15).ToList();
-            var numberOfElements = 5;
-
-            //Act
-            var result = collection.GetManyRandoms(numberOfElements);
-
-            //Assert
-            result.Should().HaveCount(5);
-            collection.Should().Contain(result);
-        }
+        //Assert
+        action.Should().Throw<ArgumentException>().WithMessage(string.Format(Exceptions.CannotGetManyRandomsBecauseNumberNegative, numberOfElements));
     }
 
-    [TestClass]
-    public class WithReadOnlyList : Tester
+    [TestMethod]
+    public void WhenNumberOfElementsIsZero_ReturnEmpty()
     {
-        [TestMethod]
-        public void WhenCollectionIsNull_Throw()
-        {
-            //Arrange
-            IReadOnlyList<Dummy> collection = null!;
-            var numberOfElements = Fixture.Create<int>();
+        //Arrange
+        var source = Fixture.CreateMany<Dummy>().To<TCollection, Dummy>();
+        var numberOfElements = 0;
 
-            //Act
-            var action = () => collection.GetManyRandoms(numberOfElements);
+        //Act
+        var result = source.GetManyRandoms(numberOfElements);
 
-            //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("collection");
-        }
-
-        [TestMethod]
-        public void WhenNumberOfElementsIsNegative_Throw()
-        {
-            //Arrange
-            IReadOnlyList<Dummy> collection = Fixture.CreateMany<Dummy>().ToList();
-            var numberOfElements = -Fixture.Create<int>();
-
-            //Act
-            var action = () => collection.GetManyRandoms(numberOfElements);
-
-            //Assert
-            action.Should().Throw<ArgumentException>().WithMessage(string.Format(Exceptions.CannotGetManyRandomsBecauseNumberNegative, numberOfElements));
-        }
-
-        [TestMethod]
-        public void WhenNumberOfElementsIsZero_ReturnEmpty()
-        {
-            //Arrange
-            IReadOnlyList<Dummy> collection = Fixture.CreateMany<Dummy>().ToList();
-            var numberOfElements = 0;
-
-            //Act
-            var result = collection.GetManyRandoms(numberOfElements);
-
-            //Assert
-            result.Should().BeEmpty();
-        }
-
-        [TestMethod]
-        public void WhenCollectionIsEmpty_ReturnEmpty()
-        {
-            //Arrange
-            IReadOnlyList<Dummy> collection = new List<Dummy>();
-            var numberOfElements = Fixture.Create<int>();
-
-            //Act
-            var result = collection.GetManyRandoms(numberOfElements);
-
-            //Assert
-            result.Should().BeEmpty();
-        }
-
-        [TestMethod]
-        public void WhenNumberOfElementsIsOne_ReturnSingleItemFromCollection()
-        {
-            //Arrange
-            IReadOnlyList<Dummy> collection = Fixture.CreateMany<Dummy>().ToList();
-            var numberOfElements = 1;
-
-            //Act
-            var result = collection.GetManyRandoms(numberOfElements);
-
-            //Assert
-            result.Should().HaveCount(1);
-            collection.Should().Contain(result);
-        }
-
-        [TestMethod]
-        public void WhenNumberOfElementsIsTheSameAsSizeOfCollection_ReturnEntireCollection()
-        {
-            //Arrange
-            IReadOnlyList<Dummy> collection = Fixture.CreateMany<Dummy>().ToList();
-            var numberOfElements = collection.Count;
-
-            //Act
-            var result = collection.GetManyRandoms(numberOfElements);
-
-            //Assert
-            result.Should().BeEquivalentTo(collection);
-        }
-
-        [TestMethod]
-        public void WhenNumberOfElementsIsGreaterThanSizeOfCollection_ReturnEntireCollection()
-        {
-            //Arrange
-            IReadOnlyList<Dummy> collection = Fixture.CreateMany<Dummy>().ToList();
-            var numberOfElements = collection.Count + Fixture.Create<int>();
-
-            //Act
-            var result = collection.GetManyRandoms(numberOfElements);
-
-            //Assert
-            result.Should().BeEquivalentTo(collection);
-        }
-
-        [TestMethod]
-        public void WhenNumberOfElementsIsSmallerThanSizeOfCollection_ReturnRandomElementsFromCollection()
-        {
-            //Arrange
-            IReadOnlyList<Dummy> collection = Fixture.CreateMany<Dummy>(15).ToList();
-            var numberOfElements = 5;
-
-            //Act
-            var result = collection.GetManyRandoms(numberOfElements);
-
-            //Assert
-            result.Should().HaveCount(5);
-            collection.Should().Contain(result);
-        }
+        //Assert
+        result.Should().BeEmpty();
     }
 
-    [TestClass]
-    public class WithWriteOnlyList : Tester
+    [TestMethod]
+    public void WhenCollectionIsEmpty_ReturnEmpty()
     {
-        [TestMethod]
-        public void WhenCollectionIsNull_Throw()
-        {
-            //Arrange
-            WriteOnlyList<Dummy> collection = null!;
-            var numberOfElements = Fixture.Create<int>();
+        //Arrange
+        var source = new List<Dummy>().To<TCollection, Dummy>();
+        var numberOfElements = Fixture.Create<int>();
 
-            //Act
-            var action = () => collection.GetManyRandoms(numberOfElements);
+        //Act
+        var result = source.GetManyRandoms(numberOfElements);
 
-            //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("collection");
-        }
+        //Assert
+        result.Should().BeEmpty();
+    }
 
-        [TestMethod]
-        public void WhenNumberOfElementsIsNegative_Throw()
-        {
-            //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToWriteOnlyList();
-            var numberOfElements = -Fixture.Create<int>();
+    [TestMethod]
+    public void WhenNumberOfElementsIsOne_ReturnSingleItemFromCollection()
+    {
+        //Arrange
+        var source = Fixture.CreateMany<Dummy>().To<TCollection, Dummy>();
+        var numberOfElements = 1;
 
-            //Act
-            var action = () => collection.GetManyRandoms(numberOfElements);
+        //Act
+        var result = source.GetManyRandoms(numberOfElements);
 
-            //Assert
-            action.Should().Throw<ArgumentException>().WithMessage(string.Format(Exceptions.CannotGetManyRandomsBecauseNumberNegative, numberOfElements));
-        }
+        //Assert
+        result.Should().HaveCount(1);
+        source.Should().Contain(result);
+    }
 
-        [TestMethod]
-        public void WhenNumberOfElementsIsZero_ReturnEmpty()
-        {
-            //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToWriteOnlyList();
-            var numberOfElements = 0;
+    [TestMethod]
+    public void WhenNumberOfElementsIsTheSameAsSizeOfCollection_ReturnEntireCollection()
+    {
+        //Arrange
+        var source = Fixture.CreateMany<Dummy>().To<TCollection, Dummy>();
+        var numberOfElements = source.Count();
 
-            //Act
-            var result = collection.GetManyRandoms(numberOfElements);
+        //Act
+        var result = source.GetManyRandoms(numberOfElements);
 
-            //Assert
-            result.Should().BeEmpty();
-        }
+        //Assert
+        result.Should().BeEquivalentTo(source);
+    }
 
-        [TestMethod]
-        public void WhenCollectionIsEmpty_ReturnEmpty()
-        {
-            //Arrange
-            var collection = new WriteOnlyList<Dummy>();
-            var numberOfElements = Fixture.Create<int>();
+    [TestMethod]
+    public void WhenNumberOfElementsIsGreaterThanSizeOfCollection_ReturnEntireCollection()
+    {
+        //Arrange
+        var source = Fixture.CreateMany<Dummy>().To<TCollection, Dummy>();
+        var numberOfElements = source.Count() + Fixture.Create<int>();
 
-            //Act
-            var result = collection.GetManyRandoms(numberOfElements);
+        //Act
+        var result = source.GetManyRandoms(numberOfElements);
 
-            //Assert
-            result.Should().BeEmpty();
-        }
+        //Assert
+        result.Should().BeEquivalentTo(source);
+    }
 
-        [TestMethod]
-        public void WhenNumberOfElementsIsOne_ReturnSingleItemFromCollection()
-        {
-            //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToWriteOnlyList();
-            var numberOfElements = 1;
+    [TestMethod]
+    public void WhenNumberOfElementsIsSmallerThanSizeOfCollection_ReturnRandomElementsFromCollection()
+    {
+        //Arrange
+        var source = Fixture.CreateMany<Dummy>(15).To<TCollection, Dummy>();
+        var numberOfElements = 5;
 
-            //Act
-            var result = collection.GetManyRandoms(numberOfElements);
+        //Act
+        var result = source.GetManyRandoms(numberOfElements);
 
-            //Assert
-            result.Should().HaveCount(1);
-            collection.Should().Contain(result);
-        }
-
-        [TestMethod]
-        public void WhenNumberOfElementsIsTheSameAsSizeOfCollection_ReturnEntireCollection()
-        {
-            //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToWriteOnlyList();
-            var numberOfElements = collection.Count;
-
-            //Act
-            var result = collection.GetManyRandoms(numberOfElements);
-
-            //Assert
-            result.Should().BeEquivalentTo(collection);
-        }
-
-        [TestMethod]
-        public void WhenNumberOfElementsIsGreaterThanSizeOfCollection_ReturnEntireCollection()
-        {
-            //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToWriteOnlyList();
-            var numberOfElements = collection.Count + Fixture.Create<int>();
-
-            //Act
-            var result = collection.GetManyRandoms(numberOfElements);
-
-            //Assert
-            result.Should().BeEquivalentTo(collection);
-        }
-
-        [TestMethod]
-        public void WhenNumberOfElementsIsSmallerThanSizeOfCollection_ReturnRandomElementsFromCollection()
-        {
-            //Arrange
-            var collection = Fixture.CreateMany<Dummy>(15).ToWriteOnlyList();
-            var numberOfElements = 5;
-
-            //Act
-            var result = collection.GetManyRandoms(numberOfElements);
-
-            //Assert
-            result.Should().HaveCount(5);
-            collection.Should().Contain(result);
-        }
+        //Assert
+        result.Should().HaveCount(5);
+        source.Should().Contain(result);
     }
 }

@@ -2,18 +2,18 @@
 
 public static partial class CollectionExtensions
 {
-    public static IReadOnlyList<T> GetManyRandoms<T>(this IEnumerable<T> collection, int numberOfElements)
+    public static IReadOnlyList<TSource> GetManyRandoms<TSource>(this IEnumerable<TSource> source, int count)
     {
-        if (collection == null) throw new ArgumentNullException(nameof(collection));
-        if (numberOfElements < 0) throw new ArgumentException(string.Format(Exceptions.CannotGetManyRandomsBecauseNumberNegative, numberOfElements));
-        var list = collection.ToList();
+        if (source == null) throw new ArgumentNullException(nameof(source));
+        if (count < 0) throw new ArgumentException(string.Format(Exceptions.CannotGetManyRandomsBecauseNumberNegative, count));
+        var list = source.ToList();
 
-        numberOfElements = Math.Clamp(numberOfElements, 0, list.Count);
-        if (numberOfElements == 0) return Array.Empty<T>();
-        if (numberOfElements == list.Count) return list;
+        count = Math.Clamp(count, 0, list.Count);
+        if (count == 0) return Array.Empty<TSource>();
+        if (count == list.Count) return list;
 
-        var output = new List<T>();
-        for (var i = 0; i < numberOfElements; i++)
+        var output = new List<TSource>();
+        for (var i = 0; i < count; i++)
         {
             var random = list.GetRandom()!;
             list.Remove(random);

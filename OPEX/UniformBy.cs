@@ -20,7 +20,7 @@ public static partial class CollectionExtensions
         return result.Value!;
     }
 
-    private static TryGetResult<TSource> TryGetUniformBy<TSource, TProperty>(this IEnumerable<TSource> source, Func<TSource, TProperty> selector, IEqualityComparer<TProperty>? comparer = null)
+    private static Result<TSource> TryGetUniformBy<TSource, TProperty>(this IEnumerable<TSource> source, Func<TSource, TProperty> selector, IEqualityComparer<TProperty>? comparer = null)
     {
         if (source == null) throw new ArgumentNullException(nameof(source));
         if (selector == null) throw new ArgumentNullException(nameof(selector));
@@ -29,7 +29,7 @@ public static partial class CollectionExtensions
         using var enumerator = source.GetEnumerator();
 
         if (!enumerator.MoveNext())
-            return TryGetResult<TSource>.Failure;
+            return Result<TSource>.Failure();
 
         var first = enumerator.Current;
         var firstKey = selector(enumerator.Current);
@@ -40,6 +40,6 @@ public static partial class CollectionExtensions
                 throw new InvalidOperationException(Exceptions.UniformFoundNonDuplicates);
         }
 
-        return new TryGetResult<TSource>(true, first);
+        return Result<TSource>.Success(first);
     }
 }

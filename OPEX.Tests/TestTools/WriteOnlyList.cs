@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-namespace OPEX.Tests.Dummies;
+namespace OPEX.Tests.TestTools;
 
 public static class WriteOnlyListExtensions
 {

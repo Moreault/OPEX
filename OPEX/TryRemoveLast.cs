@@ -2,24 +2,24 @@
 
 public static partial class CollectionExtensions
 {
-    public static void TryRemoveLast<T>(this IList<T> collection, T? item)
+    public static void TryRemoveLast<TSource>(this IList<TSource> source, TSource? item)
     {
-        if (collection == null) throw new ArgumentNullException(nameof(collection));
-        collection.TryRemoveLast(x => Equals(x, item));
+        if (source == null) throw new ArgumentNullException(nameof(source));
+        source.TryRemoveLast(x => Equals(x, item));
     }
 
-    public static void TryRemoveLast<T>(this IList<T> collection, Func<T, bool> match)
+    public static void TryRemoveLast<TSource>(this IList<TSource> source, Func<TSource, bool> match)
     {
-        if (collection == null) throw new ArgumentNullException(nameof(collection));
+        if (source == null) throw new ArgumentNullException(nameof(source));
         if (match == null) throw new ArgumentNullException(nameof(match));
-        if (collection.IsFixedSize()) throw new NotSupportedException(string.Format(Exceptions.CannotUseMethodBecauseIsFixedSize, nameof(TryRemoveLast)));
+        if (source.IsFixedSize()) throw new NotSupportedException(string.Format(Exceptions.CannotUseMethodBecauseIsFixedSize, nameof(TryRemoveLast)));
 
-        for (var index = collection.Count - 1; index >= 0; index--)
+        for (var index = source.Count - 1; index >= 0; index--)
         {
-            var item = collection[index];
+            var item = source[index];
             if (match(item))
             {
-                collection.RemoveAt(index);
+                source.RemoveAt(index);
                 return;
             }
         }

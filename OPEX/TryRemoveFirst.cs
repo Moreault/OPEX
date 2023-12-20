@@ -2,24 +2,24 @@
 
 public static partial class CollectionExtensions
 {
-    public static void TryRemoveFirst<T>(this IList<T> collection, T item)
+    public static void TryRemoveFirst<TSource>(this IList<TSource> source, TSource item)
     {
-        if (collection == null) throw new ArgumentNullException(nameof(collection));
-        collection.Remove(item);
+        if (source == null) throw new ArgumentNullException(nameof(source));
+        source.Remove(item);
     }
 
-    public static void TryRemoveFirst<T>(this IList<T> collection, Func<T, bool> match)
+    public static void TryRemoveFirst<TSource>(this IList<TSource> source, Func<TSource, bool> match)
     {
-        if (collection == null) throw new ArgumentNullException(nameof(collection));
+        if (source == null) throw new ArgumentNullException(nameof(source));
         if (match == null) throw new ArgumentNullException(nameof(match));
-        if (collection.IsFixedSize()) throw new NotSupportedException(string.Format(Exceptions.CannotUseMethodBecauseIsFixedSize, nameof(TryRemoveFirst)));
+        if (source.IsFixedSize()) throw new NotSupportedException(string.Format(Exceptions.CannotUseMethodBecauseIsFixedSize, nameof(TryRemoveFirst)));
 
-        for (var index = 0; index < collection.Count; index++)
+        for (var index = 0; index < source.Count; index++)
         {
-            var item = collection[index];
+            var item = source[index];
             if (match(item))
             {
-                collection.RemoveAt(index);
+                source.RemoveAt(index);
                 return;
             }
         }

@@ -29,7 +29,7 @@ public class TryGetFirst
             var result = source.TryGetFirst();
 
             //Assert
-            result.Should().Be(TryGetResult<Dummy>.Failure);
+            result.Should().Be(Result<Dummy>.Failure());
         }
 
         [TestMethod]
@@ -42,7 +42,7 @@ public class TryGetFirst
             var result = source.TryGetFirst();
 
             //Assert
-            result.Should().BeEquivalentTo(new TryGetResult<Dummy>(true, source.Single()));
+            result.Should().BeEquivalentTo( Result<Dummy>.Success(source.Single()));
         }
 
         [TestMethod]
@@ -57,7 +57,7 @@ public class TryGetFirst
             var result = source.TryGetFirst();
 
             //Assert
-            result.Should().Be(new TryGetResult<Dummy>(true, first));
+            result.Should().Be(Result<Dummy>.Success(first));
         }
     }
 
@@ -101,7 +101,7 @@ public class TryGetFirst
             var result = source.TryGetFirst(x => x.Name == "Something");
 
             //Assert
-            result.Should().Be(TryGetResult<Dummy>.Failure);
+            result.Should().Be(Result<Dummy>.Failure());
         }
 
         [TestMethod]
@@ -114,7 +114,7 @@ public class TryGetFirst
             var result = source.TryGetFirst(x => x.Name == "Something");
 
             //Assert
-            result.Should().Be(TryGetResult<Dummy>.Failure);
+            result.Should().Be(Result<Dummy>.Failure());
         }
 
         [TestMethod]
@@ -130,7 +130,7 @@ public class TryGetFirst
             var result = source.TryGetFirst(x => x.Name == "Something");
 
             //Assert
-            result.Should().Be(new TryGetResult<Dummy>(true, first));
+            result.Should().Be(Result<Dummy>.Success(first));
         }
 
         [TestMethod]
@@ -143,7 +143,7 @@ public class TryGetFirst
             var result = source.TryGetFirst(x => x.Name == "Something");
 
             //Assert
-            result.Should().Be(new TryGetResult<Dummy>(true, source[0]));
+            result.Should().Be(Result<Dummy>.Success(source[0]));
         }
     }
 }

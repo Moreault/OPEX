@@ -1,229 +1,172 @@
 ﻿namespace OPEX.Tests;
 
 [TestClass]
-public class AddRange
+public class AddRangeWithListOfDummyTests : AddRangeTester<List<Dummy>, Dummy>
 {
-    [TestClass]
-    public class WithArray : Tester
+    [TestMethod]
+    public void WhenUsingParamsAndItemsIsEmpty_DoNothing()
     {
-        [TestMethod]
-        public void WhenUsingParamsAndCollectionIsNull_Throw()
-        {
-            //Arrange
-            Dummy[] collection = null!;
-            var items = Fixture.CreateMany<Dummy>().ToArray();
+        //Arrange
+        IList<Dummy> source = Fixture.CreateMany<Dummy>().ToList();
+        var original = source.ToList();
+        var items = Array.Empty<Dummy>();
 
-            //Act
-            var action = () => collection.AddRange(items);
+        //Act
+        source.AddRange(items);
 
-            //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("collection");
-        }
-
-        [TestMethod]
-        public void WhenUsingEnumerableAndCollectionIsNull_Throw()
-        {
-            //Arrange
-            Dummy[] collection = null!;
-            var items = Fixture.CreateMany<Dummy>().ToList();
-
-            //Act
-            var action = () => collection.AddRange(items);
-
-            //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("collection");
-        }
-
-        [TestMethod]
-        public void WhenUsingParamsAndItemsAreNull_Throw()
-        {
-            //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToArray();
-            Dummy[] items = null!;
-
-            //Act
-            var action = () => collection.AddRange(items);
-
-            //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("items");
-        }
-
-        [TestMethod]
-        public void WhenUsingEnumerableAndItemsAreNull_Throw()
-        {
-            //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToArray();
-            IEnumerable<Dummy> items = null!;
-
-            //Act
-            var action = () => collection.AddRange(items);
-
-            //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("items");
-        }
-
-        [TestMethod]
-        public void WhenUsingParams_Throw()
-        {
-            //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToArray();
-            var items = Fixture.CreateMany<Dummy>().ToArray();
-
-            //Act
-            var action = () => collection.AddRange(items);
-
-            //Assert
-            action.Should().Throw<NotSupportedException>().WithMessage(string.Format(Exceptions.CannotUseMethodBecauseIsFixedSize, nameof(AddRange)));
-        }
+        //Assert
+        source.Should().BeEquivalentTo(original);
     }
 
-    [TestClass]
-    public class WithList : Tester
+    [TestMethod]
+    public void WhenUsingEnumerableAndItemsIsEmpty_DoNothing()
     {
-        [TestMethod]
-        public void WhenUsingParamsAndCollectionIsNull_Throw()
-        {
-            //Arrange
-            IList<Dummy> collection = null!;
-            var items = Fixture.CreateMany<Dummy>().ToArray();
+        //Arrange
+        IList<Dummy> source = Fixture.CreateMany<Dummy>().ToList();
+        var original = source.ToList();
+        var items = new List<Dummy>();
 
-            //Act
-            var action = () => collection.AddRange(items);
+        //Act
+        source.AddRange(items);
 
-            //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("collection");
-        }
+        //Assert
+        source.Should().BeEquivalentTo(original);
+    }
 
-        [TestMethod]
-        public void WhenUsingEnumerableAndCollectionIsNull_Throw()
-        {
-            //Arrange
-            IList<Dummy> collection = null!;
-            var items = Fixture.CreateMany<Dummy>().ToList();
+    [TestMethod]
+    public void WhenUsingParamsAndItemsContainsOnlyOneItem_AddOneItem()
+    {
+        //Arrange
+        IList<Dummy> source = Fixture.CreateMany<Dummy>().ToList();
+        var original = source.ToList();
+        var items = new[] { Fixture.Create<Dummy>() };
 
-            //Act
-            var action = () => collection.AddRange(items);
+        //Act
+        source.AddRange(items);
 
-            //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("collection");
-        }
+        //Assert
+        source.Should().BeEquivalentTo(original.Concat(items));
+    }
 
-        [TestMethod]
-        public void WhenUsingParamsAndItemsAreNull_Throw()
-        {
-            //Arrange
-            IList<Dummy> collection = Fixture.CreateMany<Dummy>().ToList();
-            Dummy[] items = null!;
+    [TestMethod]
+    public void WhenUsingEnumerableAndItemsContainsOnlyOneItem_AddOneItem()
+    {
+        //Arrange
+        IList<Dummy> source = Fixture.CreateMany<Dummy>().ToList();
+        var original = source.ToList();
+        var items = new List<Dummy> { Fixture.Create<Dummy>() };
 
-            //Act
-            var action = () => collection.AddRange(items);
+        //Act
+        source.AddRange(items);
 
-            //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("items");
-        }
+        //Assert
+        source.Should().BeEquivalentTo(original.Concat(items));
+    }
 
-        [TestMethod]
-        public void WhenUsingEnumerableAndItemsAreNull_Throw()
-        {
-            //Arrange
-            IList<Dummy> collection = Fixture.CreateMany<Dummy>().ToList();
-            IEnumerable<Dummy> items = null!;
+    [TestMethod]
+    public void WhenUsingParamsAndMultipleItems_AddAllItems()
+    {
+        //Arrange
+        IList<Dummy> source = Fixture.CreateMany<Dummy>().ToList();
+        var original = source.ToList();
+        var items = Fixture.CreateMany<Dummy>().ToArray();
 
-            //Act
-            var action = () => collection.AddRange(items);
+        //Act
+        source.AddRange(items);
 
-            //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("items");
-        }
+        //Assert
+        source.Should().BeEquivalentTo(original.Concat(items));
+    }
 
-        [TestMethod]
-        public void WhenUsingParamsAndItemsIsEmpty_DoNothing()
-        {
-            //Arrange
-            IList<Dummy> collection = Fixture.CreateMany<Dummy>().ToList();
-            var original = collection.ToList();
-            var items = Array.Empty<Dummy>();
+    [TestMethod]
+    public void WhenUsingEnumerableAndMultipleItems_AddAllItems()
+    {
+        //Arrange
+        IList<Dummy> source = Fixture.CreateMany<Dummy>().ToList();
+        var original = source.ToList();
+        var items = Fixture.CreateMany<Dummy>().ToList();
 
-            //Act
-            collection.AddRange(items);
+        //Act
+        source.AddRange(items);
 
-            //Assert
-            collection.Should().BeEquivalentTo(original);
-        }
+        //Assert
+        source.Should().BeEquivalentTo(original.Concat(items));
+    }
+}
 
-        [TestMethod]
-        public void WhenUsingEnumerableAndItemsIsEmpty_DoNothing()
-        {
-            //Arrange
-            IList<Dummy> collection = Fixture.CreateMany<Dummy>().ToList();
-            var original = collection.ToList();
-            var items = new List<Dummy>();
+[TestClass]
+public class AddRangeWithArrayOfDummyTests : AddRangeTester<Dummy[], Dummy>
+{
+    [TestMethod]
+    public void WhenUsingParams_Throw()
+    {
+        //Arrange
+        var source = Fixture.Create<Dummy[]>();
+        var items = Fixture.CreateMany<Dummy>().ToArray();
 
-            //Act
-            collection.AddRange(items);
+        //Act
+        var action = () => source.AddRange(items);
 
-            //Assert
-            collection.Should().BeEquivalentTo(original);
-        }
+        //Assert
+        action.Should().Throw<NotSupportedException>().WithMessage(string.Format(Exceptions.CannotUseMethodBecauseIsFixedSize, nameof(ToolBX.OPEX.CollectionExtensions.AddRange)));
+    }
+}
 
-        [TestMethod]
-        public void WhenUsingParamsAndItemsContainsOnlyOneItem_AddOneItem()
-        {
-            //Arrange
-            IList<Dummy> collection = Fixture.CreateMany<Dummy>().ToList();
-            var original = collection.ToList();
-            var items = new[] { Fixture.Create<Dummy>() };
+public abstract class AddRangeTester<TCollection, TSource> : Tester where TCollection : class, IList<TSource>
+{
+    [TestMethod]
+    public void WhenUsingParamsAndCollectionIsNull_Throw()
+    {
+        //Arrange
+        TCollection source = null!;
+        var items = Fixture.CreateMany<TSource>().ToArray();
 
-            //Act
-            collection.AddRange(items);
+        //Act
+        var action = () => source.AddRange(items);
 
-            //Assert
-            collection.Should().BeEquivalentTo(original.Concat(items));
-        }
+        //Assert
+        action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(source));
+    }
 
-        [TestMethod]
-        public void WhenUsingEnumerableAndItemsContainsOnlyOneItem_AddOneItem()
-        {
-            //Arrange
-            IList<Dummy> collection = Fixture.CreateMany<Dummy>().ToList();
-            var original = collection.ToList();
-            var items = new List<Dummy> { Fixture.Create<Dummy>() };
+    [TestMethod]
+    public void WhenUsingEnumerableAndCollectionIsNull_Throw()
+    {
+        //Arrange
+        TCollection source = null!;
+        var items = Fixture.CreateMany<TSource>().ToList();
 
-            //Act
-            collection.AddRange(items);
+        //Act
+        var action = () => source.AddRange(items);
 
-            //Assert
-            collection.Should().BeEquivalentTo(original.Concat(items));
-        }
+        //Assert
+        action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(source));
+    }
 
-        [TestMethod]
-        public void WhenUsingParamsAndMultipleItems_AddAllItems()
-        {
-            //Arrange
-            IList<Dummy> collection = Fixture.CreateMany<Dummy>().ToList();
-            var original = collection.ToList();
-            var items = Fixture.CreateMany<Dummy>().ToArray();
+    [TestMethod]
+    public void WhenUsingParamsAndItemsAreNull_Throw()
+    {
+        //Arrange
+        var source = Fixture.Create<TCollection>();
+        TCollection items = null!;
 
-            //Act
-            collection.AddRange(items);
+        //Act
+        var action = () => source.AddRange(items);
 
-            //Assert
-            collection.Should().BeEquivalentTo(original.Concat(items));
-        }
+        //Assert
+        action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(items));
+    }
 
-        [TestMethod]
-        public void WhenUsingEnumerableAndMultipleItems_AddAllItems()
-        {
-            //Arrange
-            IList<Dummy> collection = Fixture.CreateMany<Dummy>().ToList();
-            var original = collection.ToList();
-            var items = Fixture.CreateMany<Dummy>().ToList();
+    [TestMethod]
+    public void WhenUsingEnumerableAndItemsAreNull_Throw()
+    {
+        //Arrange
+        var source = Fixture.Create<TCollection>();
+        IEnumerable<TSource> items = null!;
 
-            //Act
-            collection.AddRange(items);
+        //Act
+        var action = () => source.AddRange(items);
 
-            //Assert
-            collection.Should().BeEquivalentTo(original.Concat(items));
-        }
+        //Assert
+        action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(items));
     }
 }

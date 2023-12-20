@@ -10,55 +10,55 @@ public class Shuffle
         public void WhenCollectionIsNull_Throw()
         {
             //Arrange
-            Dummy[] collection = null!;
+            Dummy[] source = null!;
 
             //Act
-            var action = () => collection.Shuffle();
+            var action = () => source.Shuffle();
 
             //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("collection");
+            action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(source));
         }
 
         [TestMethod]
         public void WhenCollectionIsEmpty_DoNothing()
         {
             //Arrange
-            var collection = Array.Empty<Dummy>();
+            var source = Array.Empty<Dummy>();
 
             //Act
-            collection.Shuffle();
+            source.Shuffle();
 
             //Assert
-            collection.Should().BeEmpty();
+            source.Should().BeEmpty();
         }
 
         [TestMethod]
         public void WhenCollectionContainsOneItem_DoNothing()
         {
             //Arrange
-            var collection = new[] { Fixture.Create<Dummy>() };
-            var original = collection.ToList();
+            var source = new[] { Fixture.Create<Dummy>() };
+            var original = source.ToList();
 
             //Act
-            collection.Shuffle();
+            source.Shuffle();
 
             //Assert
-            collection.Should().BeEquivalentTo(original);
+            source.Should().BeEquivalentTo(original);
         }
 
         [TestMethod]
         public void WhenCollectionContainsMultipleItems_ContainTheSameItemsButInDifferentOrder()
         {
             //Arrange
-            var collection = Fixture.CreateMany<Dummy>(10).ToArray();
-            var original = collection.ToList();
+            var source = Fixture.CreateMany<Dummy>(10).ToArray();
+            var original = source.ToList();
 
             //Act
-            collection.Shuffle();
+            source.Shuffle();
 
             //Assert
-            collection.Should().BeEquivalentTo(original);
-            collection.Should().NotContainInOrder(original);
+            source.Should().BeEquivalentTo(original);
+            source.Should().NotContainInOrder(original);
         }
     }
 
@@ -69,55 +69,55 @@ public class Shuffle
         public void WhenCollectionIsNull_Throw()
         {
             //Arrange
-            List<Dummy> collection = null!;
+            List<Dummy> source = null!;
 
             //Act
-            var action = () => collection.Shuffle();
+            var action = () => source.Shuffle();
 
             //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("collection");
+            action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(source));
         }
 
         [TestMethod]
         public void WhenCollectionIsEmpty_DoNothing()
         {
             //Arrange
-            var collection = new List<Dummy>();
+            var source = new List<Dummy>();
 
             //Act
-            collection.Shuffle();
+            source.Shuffle();
 
             //Assert
-            collection.Should().BeEmpty();
+            source.Should().BeEmpty();
         }
 
         [TestMethod]
         public void WhenCollectionContainsOneItem_DoNothing()
         {
             //Arrange
-            var collection = new List<Dummy> { Fixture.Create<Dummy>() };
-            var original = collection.ToList();
+            var source = new List<Dummy> { Fixture.Create<Dummy>() };
+            var original = source.ToList();
 
             //Act
-            collection.Shuffle();
+            source.Shuffle();
 
             //Assert
-            collection.Should().BeEquivalentTo(original);
+            source.Should().BeEquivalentTo(original);
         }
 
         [TestMethod]
         public void WhenCollectionContainsMultipleItems_ContainTheSameItemsButInDifferentOrder()
         {
             //Arrange
-            var collection = Fixture.CreateMany<Dummy>(10).ToList();
-            var original = collection.ToList();
+            var source = Fixture.CreateMany<Dummy>(10).ToList();
+            var original = source.ToList();
 
             //Act
-            collection.Shuffle();
+            source.Shuffle();
 
             //Assert
-            collection.Should().BeEquivalentTo(original);
-            collection.Should().NotContainInOrder(original);
+            source.Should().BeEquivalentTo(original);
+            source.Should().NotContainInOrder(original);
         }
     }
 }
