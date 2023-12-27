@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using AutoFixture.Kernel;
-using ToolBX.Eloquentest.Customizations;
-
-namespace OPEX.Tests.Customizations;
+﻿namespace OPEX.Tests.Customizations;
 
 [AutoCustomization]
 public sealed class WriteOnlyListCustomization : ICustomization
@@ -24,8 +20,6 @@ public class WriteOnlyListSpecimenBuilder : ISpecimenBuilder
             var listType = typeof(WriteOnlyList<>).MakeGenericType(elementType);
             var list = Activator.CreateInstance(listType);
 
-            // You can customize the population logic based on your requirements.
-            // Here, we assume that the WriteOnlyList<T> has an "Add" method.
             var addMethod = type.GetMethod("Add");
             if (addMethod != null)
             {

@@ -224,6 +224,22 @@ public bool Equals(Thingy other)
 }
 ```
 
+## UnorderedEqualOrNull
+Behaves like `SequenceEqualOrNull` with the exception that it ignores order.
+
+```cs
+public string? Name { get; init; }
+
+public IReadOnlyList<int>? Ids { get; init; }
+
+public bool Equals(Thingy other)
+{
+	if (other is null) return false;
+	if (ReferenceEquals(this, other)) return true;
+	return Name == other.Name && Ids.UnorderedEqualOrNull(other.Ids);
+}
+```
+
 ## Split
 Splits a collection into two by keeping the results into two collections in a `Splitted<T>` object.
 
