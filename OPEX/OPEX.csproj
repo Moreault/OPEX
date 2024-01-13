@@ -4,7 +4,7 @@
 		<TargetFramework>net7.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-		<Version>2.2.0-beta2</Version>
+		<Version>2.2.0</Version>
 		<RootNamespace>ToolBX.$(AssemblyName)</RootNamespace>
 		<PackageId>ToolBX.$(AssemblyName)</PackageId>
 		<Product>ToolBX.$(AssemblyName)</Product>
@@ -51,8 +51,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="ToolBX.OutWarden" Version="2.2.0-beta2" />
-	  <PackageReference Include="ToolBX.Reflection4Humans.ValueEquality" Version="2.2.0-beta9" />
+	  <PackageReference Include="ToolBX.OutWarden" Version="2.2.0" />
+	  <PackageReference Include="ToolBX.Reflection4Humans.ValueEquality" Version="2.2.0" />
 	</ItemGroup>
 
 </Project>
