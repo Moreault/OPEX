@@ -1,4 +1,4 @@
-﻿namespace OPEX.Tests;
+﻿namespace OPEX.Tests.TestTools;
 
 public record Dummy
 {

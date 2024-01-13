@@ -1,213 +1,76 @@
 ﻿namespace OPEX.Tests;
 
 [TestClass]
-public class Concat
+public class ConcatWithArrayOfDummyTests : ConcatTester<Dummy[], Dummy>
 {
-    [TestClass]
-    public class WithArray : Tester
+
+}
+
+[TestClass]
+public class ConcatWithListOfDummyTests : ConcatTester<List<Dummy>, Dummy>
+{
+
+}
+
+[TestClass]
+public class ConcatWithWriteOnlyListOfDummyTests : ConcatTester<WriteOnlyList<Dummy>, Dummy>
+{
+
+}
+
+[TestClass]
+public class ConcatWithDictionaryOfDummyTests : ConcatTester<Dictionary<int, Dummy>, KeyValuePair<int, Dummy>>
+{
+
+}
+
+public abstract class ConcatTester<TCollection, TSource> : Tester where TCollection : class, IEnumerable<TSource>
+{
+    [TestMethod]
+    public void WhenCollectionIsNull_Throw()
     {
-        [TestMethod]
-        public void WhenCollectionIsNull_Throw()
-        {
-            //Arrange
-            Dummy[] collection = null!;
-            var items = Fixture.CreateMany<Dummy>().ToArray();
+        //Arrange
+        TCollection source = null!;
+        var items = Fixture.CreateMany<TSource>().ToArray();
 
-            //Act
-            var action = () => collection.Concat(items);
+        //Act
+        var action = () => source.Concat(items);
 
-            //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("first");
-        }
-
-        [TestMethod]
-        public void WhenItemsIsEmpty_DoNothing()
-        {
-            //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToArray();
-            var original = collection.ToArray();
-            var items = Array.Empty<Dummy>();
-
-            //Act
-            var result = collection.Concat(items);
-
-            //Assert
-            result.Should().BeEquivalentTo(original);
-        }
-
-        [TestMethod]
-        public void WhenThereAreMultipleItems_AddThemAll()
-        {
-            //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToArray();
-            var original = collection.ToArray();
-            var items = Fixture.CreateMany<Dummy>().ToArray();
-
-            var expected = original.ToList();
-            foreach (var item in items)
-                expected.Add(item);
-
-            //Act
-            var result = collection.Concat(items);
-
-            //Assert
-            result.Should().BeEquivalentTo(expected);
-        }
+        //Assert
+        action.Should().Throw<ArgumentNullException>().WithParameterName("first");
     }
 
-    [TestClass]
-    public class WithList : Tester
+    [TestMethod]
+    public void WhenItemsIsEmpty_DoNothing()
     {
-        [TestMethod]
-        public void WhenCollectionIsNull_Throw()
-        {
-            //Arrange
-            List<Dummy> collection = null!;
-            var items = Fixture.CreateMany<Dummy>().ToArray();
+        //Arrange
+        var source = Fixture.Create<TCollection>();
+        var original = source.ToArray();
+        var items = Array.Empty<TSource>();
 
-            //Act
-            var action = () => collection.Concat(items);
+        //Act
+        var result = source.Concat(items);
 
-            //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("first");
-        }
-
-        [TestMethod]
-        public void WhenItemsIsEmpty_DoNothing()
-        {
-            //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToList();
-            var original = collection.ToArray();
-            var items = Array.Empty<Dummy>();
-
-            //Act
-            var result = collection.Concat(items);
-
-            //Assert
-            result.Should().BeEquivalentTo(original);
-        }
-
-        [TestMethod]
-        public void WhenThereAreMultipleItems_AddThemAll()
-        {
-            //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToList();
-            var original = collection.ToArray();
-            var items = Fixture.CreateMany<Dummy>().ToArray();
-
-            var expected = original.ToList();
-            foreach (var item in items)
-                expected.Add(item);
-
-            //Act
-            var result = collection.Concat(items);
-
-            //Assert
-            result.Should().BeEquivalentTo(expected);
-        }
+        //Assert
+        result.Should().BeEquivalentTo(original);
     }
 
-    [TestClass]
-    public class WithReadOnlyList : Tester
+    [TestMethod]
+    public void WhenThereAreMultipleItems_AddThemAll()
     {
-        [TestMethod]
-        public void WhenCollectionIsNull_Throw()
-        {
-            //Arrange
-            IReadOnlyList<Dummy> collection = null!;
-            var items = Fixture.CreateMany<Dummy>().ToArray();
+        //Arrange
+        var source = Fixture.Create<TCollection>();
+        var original = source.ToArray();
+        var items = Fixture.CreateMany<TSource>().ToArray();
 
-            //Act
-            var action = () => collection.Concat(items);
+        var expected = original.ToList();
+        foreach (var item in items)
+            expected.Add(item);
 
-            //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("first");
-        }
+        //Act
+        var result = source.Concat(items);
 
-        [TestMethod]
-        public void WhenItemsIsEmpty_DoNothing()
-        {
-            //Arrange
-            IReadOnlyList<Dummy> collection = Fixture.CreateMany<Dummy>().ToArray();
-            var original = collection.ToArray();
-            var items = Array.Empty<Dummy>();
-
-            //Act
-            var result = collection.Concat(items);
-
-            //Assert
-            result.Should().BeEquivalentTo(original);
-        }
-
-        [TestMethod]
-        public void WhenThereAreMultipleItems_AddThemAll()
-        {
-            //Arrange
-            IReadOnlyList<Dummy> collection = Fixture.CreateMany<Dummy>().ToArray();
-            var original = collection.ToArray();
-            var items = Fixture.CreateMany<Dummy>().ToArray();
-
-            var expected = original.ToList();
-            foreach (var item in items)
-                expected.Add(item);
-
-            //Act
-            var result = collection.Concat(items);
-
-            //Assert
-            result.Should().BeEquivalentTo(expected);
-        }
-    }
-
-    [TestClass]
-    public class WithDictionary : Tester
-    {
-        [TestMethod]
-        public void WhenCollectionIsNull_Throw()
-        {
-            //Arrange
-            Dictionary<int, Dummy> collection = null!;
-            var items = Fixture.CreateMany<KeyValuePair<int, Dummy>>().ToArray();
-
-            //Act
-            var action = () => collection.Concat(items);
-
-            //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("first");
-        }
-
-        [TestMethod]
-        public void WhenItemsIsEmpty_DoNothing()
-        {
-            //Arrange
-            var collection = Fixture.CreateMany<KeyValuePair<int, Dummy>>().ToDictionary(x => x.Key, x => x.Value);
-            var original = collection.ToArray();
-            var items = Array.Empty<KeyValuePair<int, Dummy>>();
-
-            //Act
-            var result = collection.Concat(items);
-
-            //Assert
-            result.Should().BeEquivalentTo(original);
-        }
-
-        [TestMethod]
-        public void WhenThereAreMultipleItems_AddThemAll()
-        {
-            //Arrange
-            var collection = Fixture.CreateMany<KeyValuePair<int, Dummy>>().ToDictionary(x => x.Key, x => x.Value);
-            var original = collection.ToArray();
-            var items = Fixture.CreateMany<KeyValuePair<int, Dummy>>().ToArray();
-
-            var expected = original.ToDictionary(x => x.Key, x => x.Value);
-            foreach (var item in items)
-                expected.Add(item.Key, item.Value);
-
-            //Act
-            var result = collection.Concat(items);
-
-            //Assert
-            result.Should().BeEquivalentTo(expected);
-        }
+        //Assert
+        result.Should().BeEquivalentTo(expected);
     }
 }

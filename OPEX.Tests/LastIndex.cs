@@ -10,23 +10,23 @@ public class LastIndex
         public void WhenCollectionIsNull_Throw()
         {
             //Arrange
-            string[] collection = null!;
+            string[] source = null!;
 
             //Act
-            var action = () => collection.LastIndex();
+            var action = () => source.LastIndex();
 
             //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("collection");
+            action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(source));
         }
 
         [TestMethod]
         public void WhenCollectionIsEmpty_ReturnMinusOne()
         {
             //Arrange
-            var collection = Array.Empty<int>();
+            var source = Array.Empty<int>();
 
             //Act
-            var result = collection.LastIndex();
+            var result = source.LastIndex();
 
             //Assert
             result.Should().Be(-1);
@@ -36,10 +36,10 @@ public class LastIndex
         public void WhenCollectionContainsOnlyOneItem_ReturnZero()
         {
             //Arrange
-            var collection = new[] { Fixture.Create<string>() };
+            var source = new[] { Fixture.Create<string>() };
 
             //Act
-            var result = collection.LastIndex();
+            var result = source.LastIndex();
 
             //Assert
             result.Should().Be(0);
@@ -49,13 +49,13 @@ public class LastIndex
         public void WhenCollectionContainsMultipleItems_ReturnLastIndex()
         {
             //Arrange
-            var collection = Fixture.CreateMany<string>().ToArray();
+            var source = Fixture.CreateMany<string>().ToArray();
 
             //Act
-            var result = collection.LastIndex();
+            var result = source.LastIndex();
 
             //Assert
-            result.Should().Be(collection.Length - 1);
+            result.Should().Be(source.Length - 1);
         }
     }
 
@@ -66,23 +66,23 @@ public class LastIndex
         public void WhenCollectionIsNull_Throw()
         {
             //Arrange
-            List<string> collection = null!;
+            List<string> source = null!;
 
             //Act
-            var action = () => collection.LastIndex();
+            var action = () => source.LastIndex();
 
             //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("collection");
+            action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(source));
         }
 
         [TestMethod]
         public void WhenCollectionIsEmpty_ReturnMinusOne()
         {
             //Arrange
-            var collection = new List<int>();
+            var source = new List<int>();
 
             //Act
-            var result = collection.LastIndex();
+            var result = source.LastIndex();
 
             //Assert
             result.Should().Be(-1);
@@ -92,10 +92,10 @@ public class LastIndex
         public void WhenCollectionContainsOnlyOneItem_ReturnZero()
         {
             //Arrange
-            var collection = new List<string> { Fixture.Create<string>() };
+            var source = new List<string> { Fixture.Create<string>() };
 
             //Act
-            var result = collection.LastIndex();
+            var result = source.LastIndex();
 
             //Assert
             result.Should().Be(0);
@@ -105,13 +105,13 @@ public class LastIndex
         public void WhenCollectionContainsMultipleItems_ReturnLastIndex()
         {
             //Arrange
-            var collection = Fixture.CreateMany<string>().ToList();
+            var source = Fixture.CreateMany<string>().ToList();
 
             //Act
-            var result = collection.LastIndex();
+            var result = source.LastIndex();
 
             //Assert
-            result.Should().Be(collection.Count - 1);
+            result.Should().Be(source.Count - 1);
         }
     }
 
@@ -122,23 +122,23 @@ public class LastIndex
         public void WhenCollectionIsNull_Throw()
         {
             //Arrange
-            IReadOnlyList<string> collection = null!;
+            IReadOnlyList<string> source = null!;
 
             //Act
-            var action = () => collection.LastIndex();
+            var action = () => source.LastIndex();
 
             //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("collection");
+            action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(source));
         }
 
         [TestMethod]
         public void WhenCollectionIsEmpty_ReturnMinusOne()
         {
             //Arrange
-            IReadOnlyList<int> collection = new List<int>();
+            IReadOnlyList<int> source = new List<int>();
 
             //Act
-            var result = collection.LastIndex();
+            var result = source.LastIndex();
 
             //Assert
             result.Should().Be(-1);
@@ -148,10 +148,10 @@ public class LastIndex
         public void WhenCollectionContainsOnlyOneItem_ReturnZero()
         {
             //Arrange
-            IReadOnlyList<string> collection = new List<string> { Fixture.Create<string>() };
+            IReadOnlyList<string> source = new List<string> { Fixture.Create<string>() };
 
             //Act
-            var result = collection.LastIndex();
+            var result = source.LastIndex();
 
             //Assert
             result.Should().Be(0);
@@ -161,13 +161,13 @@ public class LastIndex
         public void WhenCollectionContainsMultipleItems_ReturnLastIndex()
         {
             //Arrange
-            IReadOnlyList<string> collection = Fixture.CreateMany<string>().ToList();
+            IReadOnlyList<string> source = Fixture.CreateMany<string>().ToList();
 
             //Act
-            var result = collection.LastIndex();
+            var result = source.LastIndex();
 
             //Assert
-            result.Should().Be(collection.Count - 1);
+            result.Should().Be(source.Count - 1);
         }
     }
 
@@ -178,23 +178,23 @@ public class LastIndex
         public void WhenCollectionIsNull_Throw()
         {
             //Arrange
-            WriteOnlyList<string> collection = null!;
+            WriteOnlyList<string> source = null!;
 
             //Act
-            var action = () => collection.LastIndex();
+            var action = () => source.LastIndex();
 
             //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("collection");
+            action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(source));
         }
 
         [TestMethod]
         public void WhenCollectionIsEmpty_ReturnMinusOne()
         {
             //Arrange
-            var collection = new WriteOnlyList<int>();
+            var source = new WriteOnlyList<int>();
 
             //Act
-            var result = collection.LastIndex();
+            var result = source.LastIndex();
 
             //Assert
             result.Should().Be(-1);
@@ -204,10 +204,10 @@ public class LastIndex
         public void WhenCollectionContainsOnlyOneItem_ReturnZero()
         {
             //Arrange
-            var collection = new WriteOnlyList<string> { Fixture.Create<string>() };
+            var source = new WriteOnlyList<string> { Fixture.Create<string>() };
 
             //Act
-            var result = collection.LastIndex();
+            var result = source.LastIndex();
 
             //Assert
             result.Should().Be(0);
@@ -217,13 +217,13 @@ public class LastIndex
         public void WhenCollectionContainsMultipleItems_ReturnLastIndex()
         {
             //Arrange
-            var collection = Fixture.CreateMany<string>().ToWriteOnlyList();
+            var source = Fixture.CreateMany<string>().ToWriteOnlyList();
 
             //Act
-            var result = collection.LastIndex();
+            var result = source.LastIndex();
 
             //Assert
-            result.Should().Be(collection.Count - 1);
+            result.Should().Be(source.Count - 1);
         }
     }
 }

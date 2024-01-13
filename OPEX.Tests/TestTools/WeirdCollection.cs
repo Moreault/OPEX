@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-namespace OPEX.Tests.Dummies;
+namespace OPEX.Tests.TestTools;
 
 /// <summary>
 /// Collection that does not implement IList or IReadOnlyList and only IEnumerable

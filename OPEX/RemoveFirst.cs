@@ -2,7 +2,7 @@
 
 public static partial class CollectionExtensions
 {
-    public static void RemoveFirst<T>(this IList<T> source, T item)
+    public static void RemoveFirst<TSource>(this IList<TSource> source, TSource item)
     {
         if (source == null) throw new ArgumentNullException(nameof(source));
         if (source.IsFixedSize()) throw new NotSupportedException(string.Format(Exceptions.CannotUseMethodBecauseIsFixedSize, nameof(RemoveFirst)));
@@ -12,7 +12,7 @@ public static partial class CollectionExtensions
             throw new Exception(item is null ? Exceptions.NullCouldNotBeRemoved : string.Format(Exceptions.ItemCouldNotBeRemoved, item));
     }
 
-    public static void RemoveFirst<T>(this IList<T> source, Func<T, bool> predicate)
+    public static void RemoveFirst<TSource>(this IList<TSource> source, Func<TSource, bool> predicate)
     {
         if (source == null) throw new ArgumentNullException(nameof(source));
         if (predicate == null) throw new ArgumentNullException(nameof(predicate));

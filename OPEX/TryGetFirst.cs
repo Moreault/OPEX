@@ -5,18 +5,18 @@ public static partial class CollectionExtensions
     /// <summary>
     /// Returns the first element of the sequence or a failed TryGetResult if it's empty.
     /// </summary>
-    public static TryGetResult<TSource> TryGetFirst<TSource>(this IEnumerable<TSource> source)
+    public static Result<TSource> TryGetFirst<TSource>(this IEnumerable<TSource> source)
     {
         if (source == null) throw new ArgumentNullException(nameof(source));
 
         using var enumerator = source.GetEnumerator();
-        return enumerator.MoveNext() ? new TryGetResult<TSource>(enumerator.Current) : TryGetResult<TSource>.Failure;
+        return enumerator.MoveNext() ? Result<TSource>.Success(enumerator.Current) : Result<TSource>.Failure();
     }
 
     /// <summary>
     /// Returns the first element of the sequence or a failed TryGetResult if it's empty.
     /// </summary>
-    public static TryGetResult<TSource> TryGetFirst<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate)
+    public static Result<TSource> TryGetFirst<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate)
     {
         if (source == null) throw new ArgumentNullException(nameof(source));
         if (predicate == null) throw new ArgumentNullException(nameof(predicate));
@@ -26,9 +26,9 @@ public static partial class CollectionExtensions
         while (enumerator.MoveNext())
         {
             if (predicate.Invoke(enumerator.Current))
-                return new TryGetResult<TSource>(enumerator.Current);
+                return  Result<TSource>.Success(enumerator.Current);
         }
 
-        return TryGetResult<TSource>.Failure;
+        return Result<TSource>.Failure();;
     }
 }

@@ -1,521 +1,153 @@
 ﻿namespace OPEX.Tests;
 
 [TestClass]
-public class FirstIndexOf
+public sealed class FirstIndexOfWithArrayOfDummyTests : FirstIndexOfTester<Dummy[]>
 {
-    [TestClass]
-    public class WithArray : Tester
+
+}
+
+[TestClass]
+public sealed class FirstIndexOfWithListOfDummyTests : FirstIndexOfTester<List<Dummy>>
+{
+
+}
+
+[TestClass]
+public sealed class FirstIndexOfWithWriteOnlyListOfDummyTests : FirstIndexOfTester<WriteOnlyList<Dummy>>
+{
+
+}
+
+[TestClass]
+public sealed class FirstIndexOfWithImmutableListOfDummyTests : FirstIndexOfTester<ImmutableList<Dummy>>
+{
+
+}
+
+public abstract class FirstIndexOfTester<TCollection> : Tester where TCollection : class, IList<Dummy>
+{
+    [TestMethod]
+    public void WhenUsingItemAndCollectionIsNull_Throw()
     {
-        [TestMethod]
-        public void WhenUsingItemAndCollectionIsNull_Throw()
-        {
-            //Arrange
-            Dummy[] collection = null!;
-            var item = Fixture.Create<Dummy>();
+        //Arrange
+        TCollection source = null!;
+        var item = Fixture.Create<Dummy>();
 
-            //Act
-            var action = () => collection.FirstIndexOf(item);
+        //Act
+        var action = () => source.FirstIndexOf(item);
 
-            //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("collection");
-        }
-
-        [TestMethod]
-        public void WhenUsingLambaAndCollectionIsNull_Throw()
-        {
-            //Arrange
-            Dummy[] collection = null!;
-            var match = Fixture.Create<Func<Dummy, bool>>();
-
-            //Act
-            var action = () => collection.FirstIndexOf(match);
-
-            //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("collection");
-        }
-
-        [TestMethod]
-        public void WhenUsingLambaAndLambdaIsNull_Throw()
-        {
-            //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToArray();
-            Func<Dummy, bool> match = null!;
-
-            //Act
-            var action = () => collection.FirstIndexOf(match);
-
-            //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("match");
-        }
-
-        [TestMethod]
-        public void WhenUsingItemAndItemIsNotInCollection_ReturnMinusOne()
-        {
-            //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToArray();
-
-            //Act
-            var result = collection.FirstIndexOf(Fixture.Create<Dummy>());
-
-            //Assert
-            result.Should().Be(-1);
-        }
-
-        [TestMethod]
-        public void WhenUsingLambdaAndItemIsNotInCollection_ReturnMinusOne()
-        {
-            //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToArray();
-
-            //Act
-            var result = collection.FirstIndexOf(x => x.Name == Fixture.Create<string>());
-
-            //Assert
-            result.Should().Be(-1);
-        }
-
-        [TestMethod]
-        public void WhenUsingItemAndItemIsInCollectionOnce_ReturnItemIndex()
-        {
-            //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToArray();
-            var itemIndex = collection.GetRandomIndex();
-            var item = collection[itemIndex];
-
-            //Act
-            var result = collection.FirstIndexOf(item);
-
-            //Assert
-            result.Should().Be(itemIndex);
-        }
-
-        [TestMethod]
-        public void WhenUsingLambaAndItemIsInCollectionOnce_ReturnIndex()
-        {
-            //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToArray();
-            var itemIndex = collection.GetRandomIndex();
-
-            //Act
-            var result = collection.FirstIndexOf(x => x.Name == collection[itemIndex].Name);
-
-            //Assert
-            result.Should().Be(itemIndex);
-        }
-
-        [TestMethod]
-        public void WhenUsingItemAndItemIsInCollectionMultipleTimes_ReturnOnlyTheFirstOccurence()
-        {
-            //Arrange
-            var item = Fixture.Create<Dummy>();
-            var collection = Fixture.CreateMany<Dummy>(3).Concat(item, item, item).ToArray();
-
-            //Act
-            var result = collection.FirstIndexOf(item);
-
-            //Assert
-            result.Should().Be(3);
-        }
-
-        [TestMethod]
-        public void WhenUsingLambdaAndItemIsInCollectionMultipleTimes_ReturnOnlyTheFirstOccurence()
-        {
-            //Arrange
-            var item = Fixture.Create<Dummy>();
-            var collection = Fixture.CreateMany<Dummy>(3).Concat(item, item, item).ToArray();
-
-            //Act
-            var result = collection.FirstIndexOf(x => x.Name == item.Name);
-
-            //Assert
-            result.Should().Be(3);
-        }
+        //Assert
+        action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(source));
     }
 
-    [TestClass]
-    public class WithList : Tester
+    [TestMethod]
+    public void WhenUsingLambaAndCollectionIsNull_Throw()
     {
-        [TestMethod]
-        public void WhenUsingItemAndCollectionIsNull_Throw()
-        {
-            //Arrange
-            List<Dummy> collection = null!;
-            var item = Fixture.Create<Dummy>();
+        //Arrange
+        TCollection source = null!;
+        var item = Fixture.Create<Func<Dummy, bool>>();
 
-            //Act
-            var action = () => collection.FirstIndexOf(item);
+        //Act
+        var action = () => source.FirstIndexOf(item);
 
-            //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("collection");
-        }
-
-        [TestMethod]
-        public void WhenUsingLambaAndCollectionIsNull_Throw()
-        {
-            //Arrange
-            List<Dummy> collection = null!;
-            var item = Fixture.Create<Func<Dummy, bool>>();
-
-            //Act
-            var action = () => collection.FirstIndexOf(item);
-
-            //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("collection");
-        }
-
-        [TestMethod]
-        public void WhenUsingLambaAndLambdaIsNull_Throw()
-        {
-            //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToList();
-            Func<Dummy, bool> match = null!;
-
-            //Act
-            var action = () => collection.FirstIndexOf(match);
-
-            //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("match");
-        }
-
-        [TestMethod]
-        public void WhenUsingItemAndItemIsNotInCollection_ReturnMinusOne()
-        {
-            //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToList();
-
-            //Act
-            var result = collection.FirstIndexOf(Fixture.Create<Dummy>());
-
-            //Assert
-            result.Should().Be(-1);
-        }
-
-        [TestMethod]
-        public void WhenUsingLambdaAndItemIsNotInCollection_ReturnMinusOne()
-        {
-            //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToList();
-
-            //Act
-            var result = collection.FirstIndexOf(x => x.Name == Fixture.Create<string>());
-
-            //Assert
-            result.Should().Be(-1);
-        }
-
-        [TestMethod]
-        public void WhenUsingItemAndItemIsInCollectionOnce_ReturnItemIndex()
-        {
-            //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToList();
-            var itemIndex = collection.GetRandomIndex();
-            var item = collection[itemIndex];
-
-            //Act
-            var result = collection.FirstIndexOf(item);
-
-            //Assert
-            result.Should().Be(itemIndex);
-        }
-
-        [TestMethod]
-        public void WhenUsingLambaAndItemIsInCollectionOnce_ReturnIndex()
-        {
-            //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToList();
-            var itemIndex = collection.GetRandomIndex();
-
-            //Act
-            var result = collection.FirstIndexOf(x => x.Name == collection[itemIndex].Name);
-
-            //Assert
-            result.Should().Be(itemIndex);
-        }
-
-        [TestMethod]
-        public void WhenUsingItemAndItemIsInCollectionMultipleTimes_ReturnOnlyTheFirstOccurence()
-        {
-            //Arrange
-            var item = Fixture.Create<Dummy>();
-            var collection = Fixture.CreateMany<Dummy>(3).Concat(item, item, item).ToList();
-
-            //Act
-            var result = collection.FirstIndexOf(item);
-
-            //Assert
-            result.Should().Be(3);
-        }
-
-        [TestMethod]
-        public void WhenUsingLambdaAndItemIsInCollectionMultipleTimes_ReturnOnlyTheFirstOccurence()
-        {
-            //Arrange
-            var item = Fixture.Create<Dummy>();
-            var collection = Fixture.CreateMany<Dummy>(3).Concat(item, item, item).ToList();
-
-            //Act
-            var result = collection.FirstIndexOf(x => x.Name == item.Name);
-
-            //Assert
-            result.Should().Be(3);
-        }
+        //Assert
+        action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(source));
     }
 
-    [TestClass]
-    public class WithWriteOnlyList : Tester
+    [TestMethod]
+    public void WhenUsingLambaAndLambdaIsNull_Throw()
     {
-        [TestMethod]
-        public void WhenUsingItemAndCollectionIsNull_Throw()
-        {
-            //Arrange
-            WriteOnlyList<Dummy> collection = null!;
-            var item = Fixture.Create<Dummy>();
+        //Arrange
+        var source = Fixture.Create<TCollection>();
+        Func<Dummy, bool> match = null!;
 
-            //Act
-            var action = () => collection.FirstIndexOf(item);
+        //Act
+        var action = () => source.FirstIndexOf(match);
 
-            //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("collection");
-        }
-
-        [TestMethod]
-        public void WhenUsingLambaAndCollectionIsNull_Throw()
-        {
-            //Arrange
-            WriteOnlyList<Dummy> collection = null!;
-            var item = Fixture.Create<Func<Dummy, bool>>();
-
-            //Act
-            var action = () => collection.FirstIndexOf(item);
-
-            //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("collection");
-        }
-
-        [TestMethod]
-        public void WhenUsingLambaAndLambdaIsNull_Throw()
-        {
-            //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToWriteOnlyList();
-            Func<Dummy, bool> match = null!;
-
-            //Act
-            var action = () => collection.FirstIndexOf(match);
-
-            //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("match");
-        }
-
-        [TestMethod]
-        public void WhenUsingItemAndItemIsNotInCollection_ReturnMinusOne()
-        {
-            //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToWriteOnlyList();
-
-            //Act
-            var result = collection.FirstIndexOf(Fixture.Create<Dummy>());
-
-            //Assert
-            result.Should().Be(-1);
-        }
-
-        [TestMethod]
-        public void WhenUsingLambdaAndItemIsNotInCollection_ReturnMinusOne()
-        {
-            //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToWriteOnlyList();
-
-            //Act
-            var result = collection.FirstIndexOf(x => x.Name == Fixture.Create<string>());
-
-            //Assert
-            result.Should().Be(-1);
-        }
-
-        [TestMethod]
-        public void WhenUsingItemAndItemIsInCollectionOnce_ReturnItemIndex()
-        {
-            //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToWriteOnlyList();
-            var itemIndex = collection.GetRandomIndex();
-            var item = collection[itemIndex];
-
-            //Act
-            var result = collection.FirstIndexOf(item);
-
-            //Assert
-            result.Should().Be(itemIndex);
-        }
-
-        [TestMethod]
-        public void WhenUsingLambaAndItemIsInCollectionOnce_ReturnIndex()
-        {
-            //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToWriteOnlyList();
-            var itemIndex = collection.GetRandomIndex();
-
-            //Act
-            var result = collection.FirstIndexOf(x => x.Name == collection[itemIndex].Name);
-
-            //Assert
-            result.Should().Be(itemIndex);
-        }
-
-        [TestMethod]
-        public void WhenUsingItemAndItemIsInCollectionMultipleTimes_ReturnOnlyTheFirstOccurence()
-        {
-            //Arrange
-            var item = Fixture.Create<Dummy>();
-            var collection = Fixture.CreateMany<Dummy>(3).Concat(item, item, item).ToWriteOnlyList();
-
-            //Act
-            var result = collection.FirstIndexOf(item);
-
-            //Assert
-            result.Should().Be(3);
-        }
-
-        [TestMethod]
-        public void WhenUsingLambdaAndItemIsInCollectionMultipleTimes_ReturnOnlyTheFirstOccurence()
-        {
-            //Arrange
-            var item = Fixture.Create<Dummy>();
-            var collection = Fixture.CreateMany<Dummy>(3).Concat(item, item, item).ToWriteOnlyList();
-
-            //Act
-            var result = collection.FirstIndexOf(x => x.Name == item.Name);
-
-            //Assert
-            result.Should().Be(3);
-        }
+        //Assert
+        action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(match));
     }
 
-    [TestClass]
-    public class WithReadOnlyList : Tester
+    [TestMethod]
+    public void WhenUsingItemAndItemIsNotInCollection_ReturnMinusOne()
     {
-        [TestMethod]
-        public void WhenUsingItemAndCollectionIsNull_Throw()
-        {
-            //Arrange
-            IReadOnlyList<Dummy> collection = null!;
-            var item = Fixture.Create<Dummy>();
+        //Arrange
+        var source = Fixture.Create<TCollection>();
 
-            //Act
-            var action = () => collection.FirstIndexOf(item);
+        //Act
+        var result = source.FirstIndexOf(Fixture.Create<Dummy>());
 
-            //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("collection");
-        }
+        //Assert
+        result.Should().Be(-1);
+    }
 
-        [TestMethod]
-        public void WhenUsingLambaAndCollectionIsNull_Throw()
-        {
-            //Arrange
-            IReadOnlyList<Dummy> collection = null!;
-            var item = Fixture.Create<Func<Dummy, bool>>();
+    [TestMethod]
+    public void WhenUsingLambdaAndItemIsNotInCollection_ReturnMinusOne()
+    {
+        //Arrange
+        var source = Fixture.Create<TCollection>();
 
-            //Act
-            var action = () => collection.FirstIndexOf(item);
+        //Act
+        var result = source.FirstIndexOf(x => x.Name == Fixture.Create<string>());
 
-            //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("collection");
-        }
+        //Assert
+        result.Should().Be(-1);
+    }
 
-        [TestMethod]
-        public void WhenUsingLambaAndLambdaIsNull_Throw()
-        {
-            //Arrange
-            IReadOnlyList<Dummy> collection = Fixture.CreateMany<Dummy>().ToList();
-            Func<Dummy, bool> match = null!;
+    [TestMethod]
+    public void WhenUsingItemAndItemIsInCollectionOnce_ReturnItemIndex()
+    {
+        //Arrange
+        var source = Fixture.Create<TCollection>();
+        var itemIndex = source.GetRandomIndex();
+        var item = source[itemIndex];
 
-            //Act
-            var action = () => collection.FirstIndexOf(match);
+        //Act
+        var result = source.FirstIndexOf(item);
 
-            //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("match");
-        }
+        //Assert
+        result.Should().Be(itemIndex);
+    }
 
-        [TestMethod]
-        public void WhenUsingItemAndItemIsNotInCollection_ReturnMinusOne()
-        {
-            //Arrange
-            IReadOnlyList<Dummy> collection = Fixture.CreateMany<Dummy>().ToList();
+    [TestMethod]
+    public void WhenUsingLambaAndItemIsInCollectionOnce_ReturnIndex()
+    {
+        //Arrange
+        var source = Fixture.Create<TCollection>();
+        var itemIndex = source.GetRandomIndex();
 
-            //Act
-            var result = collection.FirstIndexOf(Fixture.Create<Dummy>());
+        //Act
+        var result = source.FirstIndexOf(x => x.Name == source[itemIndex].Name);
 
-            //Assert
-            result.Should().Be(-1);
-        }
+        //Assert
+        result.Should().Be(itemIndex);
+    }
 
-        [TestMethod]
-        public void WhenUsingLambdaAndItemIsNotInCollection_ReturnMinusOne()
-        {
-            //Arrange
-            IReadOnlyList<Dummy> collection = Fixture.CreateMany<Dummy>().ToList();
+    [TestMethod]
+    public void WhenUsingItemAndItemIsInCollectionMultipleTimes_ReturnOnlyTheFirstOccurence()
+    {
+        //Arrange
+        var item = Fixture.Create<Dummy>();
+        var source = Fixture.CreateMany<Dummy>(3).Concat(item, item, item).To<TCollection, Dummy>();
 
-            //Act
-            var result = collection.FirstIndexOf(x => x.Name == Fixture.Create<string>());
+        //Act
+        var result = source.FirstIndexOf(item);
 
-            //Assert
-            result.Should().Be(-1);
-        }
+        //Assert
+        result.Should().Be(3);
+    }
 
-        [TestMethod]
-        public void WhenUsingItemAndItemIsInCollectionOnce_ReturnItemIndex()
-        {
-            //Arrange
-            IReadOnlyList<Dummy> collection = Fixture.CreateMany<Dummy>().ToList();
-            var itemIndex = collection.GetRandomIndex();
-            var item = collection[itemIndex];
+    [TestMethod]
+    public void WhenUsingLambdaAndItemIsInCollectionMultipleTimes_ReturnOnlyTheFirstOccurence()
+    {
+        //Arrange
+        var item = Fixture.Create<Dummy>();
+        var source = Fixture.CreateMany<Dummy>(3).Concat(item, item, item).To<TCollection, Dummy>();
 
-            //Act
-            var result = collection.FirstIndexOf(item);
+        //Act
+        var result = source.FirstIndexOf(x => x.Name == item.Name);
 
-            //Assert
-            result.Should().Be(itemIndex);
-        }
-
-        [TestMethod]
-        public void WhenUsingLambaAndItemIsInCollectionOnce_ReturnIndex()
-        {
-            //Arrange
-            IReadOnlyList<Dummy> collection = Fixture.CreateMany<Dummy>().ToList();
-            var itemIndex = collection.GetRandomIndex();
-
-            //Act
-            var result = collection.FirstIndexOf(x => x.Name == collection[itemIndex].Name);
-
-            //Assert
-            result.Should().Be(itemIndex);
-        }
-
-        [TestMethod]
-        public void WhenUsingItemAndItemIsInCollectionMultipleTimes_ReturnOnlyTheFirstOccurence()
-        {
-            //Arrange
-            var item = Fixture.Create<Dummy>();
-            IReadOnlyList<Dummy> collection = Fixture.CreateMany<Dummy>(3).Concat(item, item, item).ToList();
-
-            //Act
-            var result = collection.FirstIndexOf(item);
-
-            //Assert
-            result.Should().Be(3);
-        }
-
-        [TestMethod]
-        public void WhenUsingLambdaAndItemIsInCollectionMultipleTimes_ReturnOnlyTheFirstOccurence()
-        {
-            //Arrange
-            var item = Fixture.Create<Dummy>();
-            IReadOnlyList<Dummy> collection = Fixture.CreateMany<Dummy>(3).Concat(item, item, item).ToList();
-
-            //Act
-            var result = collection.FirstIndexOf(x => x.Name == item.Name);
-
-            //Assert
-            result.Should().Be(3);
-        }
+        //Assert
+        result.Should().Be(3);
     }
 }

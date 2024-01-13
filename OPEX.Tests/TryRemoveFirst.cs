@@ -10,39 +10,39 @@ public class TryRemoveFirst
         public void WhenUsingItemAndCollectionIsNull_Throw()
         {
             //Arrange
-            Dummy[] collection = null!;
+            Dummy[] source = null!;
             var item = Fixture.Create<Dummy>();
 
             //Act
-            var action = () => collection.TryRemoveFirst(item);
+            var action = () => source.TryRemoveFirst(item);
 
             //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("collection");
+            action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(source));
         }
 
         [TestMethod]
         public void WhenUsingLambdaAndCollectionIsNull_Throw()
         {
             //Arrange
-            Dummy[] collection = null!;
+            Dummy[] source = null!;
             var match = Fixture.Create<Func<Dummy, bool>>();
 
             //Act
-            var action = () => collection.TryRemoveFirst(match);
+            var action = () => source.TryRemoveFirst(match);
 
             //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("collection");
+            action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(source));
         }
 
         [TestMethod]
         public void WhenUsingLambdaAndLambdaIsNull_Throw()
         {
             //Arrange
-            var collection = Fixture.Create<Dummy[]>();
+            var source = Fixture.Create<Dummy[]>();
             Func<Dummy, bool> match = null!;
 
             //Act
-            var action = () => collection.TryRemoveFirst(match);
+            var action = () => source.TryRemoveFirst(match);
 
             //Assert
             action.Should().Throw<ArgumentNullException>().WithParameterName("match");
@@ -52,11 +52,11 @@ public class TryRemoveFirst
         public void Always_Throw()
         {
             //Arrange
-            var collection = Fixture.Create<Dummy[]>();
+            var source = Fixture.Create<Dummy[]>();
             var match = Fixture.Create<Func<Dummy, bool>>();
 
             //Act
-            var action = () => collection.TryRemoveFirst(match);
+            var action = () => source.TryRemoveFirst(match);
 
             //Assert
             action.Should().Throw<NotSupportedException>().WithMessage(string.Format(Exceptions.CannotUseMethodBecauseIsFixedSize, nameof(ToolBX.OPEX.CollectionExtensions.TryRemoveFirst)));
@@ -70,39 +70,39 @@ public class TryRemoveFirst
         public void WhenUsingItemAndCollectionIsNull_Throw()
         {
             //Arrange
-            List<Dummy> collection = null!;
+            List<Dummy> source = null!;
             var item = Fixture.Create<Dummy>();
 
             //Act
-            var action = () => collection.TryRemoveFirst(item);
+            var action = () => source.TryRemoveFirst(item);
 
             //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("collection");
+            action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(source));
         }
 
         [TestMethod]
         public void WhenUsingLambdaAndCollectionIsNull_Throw()
         {
             //Arrange
-            List<Dummy> collection = null!;
+            List<Dummy> source = null!;
             var match = Fixture.Create<Func<Dummy, bool>>();
 
             //Act
-            var action = () => collection.TryRemoveFirst(match);
+            var action = () => source.TryRemoveFirst(match);
 
             //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("collection");
+            action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(source));
         }
 
         [TestMethod]
         public void WhenUsingLambdaAndLambdaIsNull_Throw()
         {
             //Arrange
-            var collection = Fixture.Create<List<Dummy>>();
+            var source = Fixture.Create<List<Dummy>>();
             Func<Dummy, bool> match = null!;
 
             //Act
-            var action = () => collection.TryRemoveFirst(match);
+            var action = () => source.TryRemoveFirst(match);
 
             //Assert
             action.Should().Throw<ArgumentNullException>().WithParameterName("match");
@@ -112,11 +112,11 @@ public class TryRemoveFirst
         public void WhenUsingItemAndItemIsNullAndThereIsNoNullInCollection_DoNotThrow()
         {
             //Arrange
-            var collection = Fixture.Create<List<Dummy>>();
+            var source = Fixture.Create<List<Dummy>>();
             Dummy item = null!;
 
             //Act
-            var action = () => collection.TryRemoveFirst(item);
+            var action = () => source.TryRemoveFirst(item);
 
             //Assert
             action.Should().NotThrow();
@@ -126,11 +126,11 @@ public class TryRemoveFirst
         public void WhenUsingItemAndItemNotFoundInCollection_Throw()
         {
             //Arrange
-            var collection = Fixture.Create<List<Dummy>>();
+            var source = Fixture.Create<List<Dummy>>();
             var item = Fixture.Create<Dummy>();
 
             //Act
-            var action = () => collection.TryRemoveFirst(item);
+            var action = () => source.TryRemoveFirst(item);
 
             //Assert
             action.Should().NotThrow();
@@ -140,10 +140,10 @@ public class TryRemoveFirst
         public void WhenUsingLambdaAndItemNotFoundInCollection_Throw()
         {
             //Arrange
-            var collection = Fixture.Create<List<Dummy>>();
+            var source = Fixture.Create<List<Dummy>>();
 
             //Act
-            var action = () => collection.TryRemoveFirst(x => x.Name == Fixture.Create<string>());
+            var action = () => source.TryRemoveFirst(x => x.Name == Fixture.Create<string>());
 
             //Assert
             action.Should().NotThrow();
@@ -153,15 +153,15 @@ public class TryRemoveFirst
         public void WhenUsingItemAndThereIsOneOccurenceOfItem_RemoveItem()
         {
             //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToList();
-            var original = collection.ToList();
-            var item = collection[1];
+            var source = Fixture.CreateMany<Dummy>().ToList();
+            var original = source.ToList();
+            var item = source[1];
 
             //Act
-            collection.TryRemoveFirst(item);
+            source.TryRemoveFirst(item);
 
             //Assert
-            collection.Should().BeEquivalentTo(new List<Dummy>
+            source.Should().BeEquivalentTo(new List<Dummy>
             {
                 original[0], original[2]
             });
@@ -171,15 +171,15 @@ public class TryRemoveFirst
         public void WhenUsingLambdaAndThereIsOneOccurenceOfItem_RemoveItem()
         {
             //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToList();
-            var original = collection.ToList();
-            var item = collection[1];
+            var source = Fixture.CreateMany<Dummy>().ToList();
+            var original = source.ToList();
+            var item = source[1];
 
             //Act
-            collection.TryRemoveFirst(x => x.Name == item.Name);
+            source.TryRemoveFirst(x => x.Name == item.Name);
 
             //Assert
-            collection.Should().BeEquivalentTo(new List<Dummy>
+            source.Should().BeEquivalentTo(new List<Dummy>
             {
                 original[0], original[2]
             });
@@ -190,7 +190,7 @@ public class TryRemoveFirst
         {
             //Arrange
             var item = Fixture.Create<Dummy>();
-            var collection = new List<Dummy>
+            var source = new List<Dummy>
             {
                 Fixture.Create<Dummy>(),
                 item,
@@ -198,13 +198,13 @@ public class TryRemoveFirst
                 Fixture.Create<Dummy>(),
                 item
             };
-            var original = collection.ToList();
+            var original = source.ToList();
 
             //Act
-            collection.TryRemoveFirst(item);
+            source.TryRemoveFirst(item);
 
             //Assert
-            collection.Should().BeEquivalentTo(new List<Dummy>
+            source.Should().BeEquivalentTo(new List<Dummy>
             {
                 original[0],
                 item,
@@ -218,7 +218,7 @@ public class TryRemoveFirst
         {
             //Arrange
             var item = Fixture.Create<Dummy>();
-            var collection = new List<Dummy>
+            var source = new List<Dummy>
             {
                 Fixture.Create<Dummy>(),
                 item,
@@ -226,13 +226,13 @@ public class TryRemoveFirst
                 Fixture.Create<Dummy>(),
                 item
             };
-            var original = collection.ToList();
+            var original = source.ToList();
 
             //Act
-            collection.TryRemoveFirst(x => x.Name == item.Name);
+            source.TryRemoveFirst(x => x.Name == item.Name);
 
             //Assert
-            collection.Should().BeEquivalentTo(new List<Dummy>
+            source.Should().BeEquivalentTo(new List<Dummy>
             {
                 original[0],
                 item,

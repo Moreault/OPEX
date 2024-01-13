@@ -1,13 +1,16 @@
 // Global using directives
 
-global using System;
-global using System.Collections.Generic;
-global using System.Linq;
 global using AutoFixture;
 global using FluentAssertions;
 global using Microsoft.VisualStudio.TestTools.UnitTesting;
-global using OPEX.Tests.Dummies;
+global using System;
+global using System.Collections.Generic;
+global using System.Collections.Immutable;
+global using System.Linq;
+global using AutoFixture.Kernel;
+global using OPEX.Tests.TestTools;
 global using ToolBX.Eloquentest;
+global using ToolBX.Eloquentest.Customizations;
 global using ToolBX.OPEX;
 global using ToolBX.OPEX.Resources;
 global using ToolBX.OutWarden;

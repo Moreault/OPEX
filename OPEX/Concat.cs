@@ -2,5 +2,8 @@
 
 public static partial class CollectionExtensions
 {
-    public static IEnumerable<T> Concat<T>(this IEnumerable<T> collection, params T[] items) => collection.Concat((IEnumerable<T>)items);
+    /// <summary>
+    /// Returns the concatenation of two sequences.
+    /// </summary>
+    public static IEnumerable<TSource> Concat<TSource>(this IEnumerable<TSource> source, params TSource[] items) => source.Concat((IEnumerable<TSource>)items);
 }

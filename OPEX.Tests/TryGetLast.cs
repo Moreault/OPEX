@@ -29,7 +29,7 @@ public class TryGetLast
             var result = source.TryGetLast();
 
             //Assert
-            result.Should().Be(TryGetResult<Dummy>.Failure);
+            result.Should().Be(Result<Dummy>.Failure());
         }
 
         [TestMethod]
@@ -42,7 +42,7 @@ public class TryGetLast
             var result = source.TryGetLast();
 
             //Assert
-            result.Should().BeEquivalentTo(new TryGetResult<Dummy>(true, source.Single()));
+            result.Should().BeEquivalentTo(Result<Dummy>.Success(source.Single()));
         }
 
         [TestMethod]
@@ -55,7 +55,7 @@ public class TryGetLast
             var result = source.TryGetLast();
 
             //Assert
-            result.Should().BeEquivalentTo(new TryGetResult<Dummy>(true, source.Single()));
+            result.Should().BeEquivalentTo(Result<Dummy>.Success(source.Single()));
         }
 
         [TestMethod]
@@ -70,7 +70,7 @@ public class TryGetLast
             var result = source.TryGetLast();
 
             //Assert
-            result.Should().Be(new TryGetResult<Dummy>(true, last));
+            result.Should().Be(Result<Dummy>.Success(last));
         }
 
         [TestMethod]
@@ -85,7 +85,7 @@ public class TryGetLast
             var result = source.TryGetLast();
 
             //Assert
-            result.Should().Be(new TryGetResult<Dummy>(true, last));
+            result.Should().Be(Result<Dummy>.Success(last));
         }
     }
 
@@ -129,7 +129,7 @@ public class TryGetLast
             var result = source.TryGetLast(x => x.Name == "Something");
 
             //Assert
-            result.Should().Be(TryGetResult<Dummy>.Failure);
+            result.Should().Be(Result<Dummy>.Failure());
         }
 
         [TestMethod]
@@ -142,7 +142,7 @@ public class TryGetLast
             var result = source.TryGetLast(x => x.Name == "Something");
 
             //Assert
-            result.Should().Be(TryGetResult<Dummy>.Failure);
+            result.Should().Be(Result<Dummy>.Failure());
         }
 
         [TestMethod]
@@ -155,7 +155,7 @@ public class TryGetLast
             var result = source.TryGetLast(x => x.Name == "Something");
 
             //Assert
-            result.Should().Be(TryGetResult<Dummy>.Failure);
+            result.Should().Be(Result<Dummy>.Failure());
         }
 
         [TestMethod]
@@ -168,7 +168,7 @@ public class TryGetLast
             var result = source.TryGetLast(x => x.Name == "Something");
 
             //Assert
-            result.Should().Be(TryGetResult<Dummy>.Failure);
+            result.Should().Be(Result<Dummy>.Failure());
         }
 
         [TestMethod]
@@ -184,7 +184,7 @@ public class TryGetLast
             var result = source.TryGetLast(x => x.Name == "Something");
 
             //Assert
-            result.Should().Be(new TryGetResult<Dummy>(true, first));
+            result.Should().Be(Result<Dummy>.Success(first));
         }
 
         [TestMethod]
@@ -200,7 +200,7 @@ public class TryGetLast
             var result = source.TryGetLast(x => x.Name == "Something");
 
             //Assert
-            result.Should().Be(new TryGetResult<Dummy>(true, first));
+            result.Should().Be(Result<Dummy>.Success(first));
         }
 
         [TestMethod]
@@ -213,7 +213,7 @@ public class TryGetLast
             var result = source.TryGetLast(x => x.Name == "Something");
 
             //Assert
-            result.Should().Be(new TryGetResult<Dummy>(true, source[2]));
+            result.Should().Be(Result<Dummy>.Success(source[2]));
         }
 
         [TestMethod]
@@ -226,7 +226,7 @@ public class TryGetLast
             var result = source.TryGetLast(x => x.Name == "Something");
 
             //Assert
-            result.Should().Be(new TryGetResult<Dummy>(true, source[2]));
+            result.Should().Be(Result<Dummy>.Success(source[2]));
         }
     }
 }

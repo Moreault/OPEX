@@ -12,27 +12,27 @@ public class Swap
         public void WhenCollectionIsNull_Throw()
         {
             //Arrange
-            Dummy[] collection = null!;
+            Dummy[] source = null!;
             var current = Fixture.Create<int>();
             var destination = Fixture.Create<int>();
 
             //Act
-            var action = () => collection.Swap(current, destination);
+            var action = () => source.Swap(current, destination);
 
             //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("collection");
+            action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(source));
         }
 
         [TestMethod]
         public void WhenCurrentIsNegative_Throw()
         {
             //Arrange
-            var collection = Fixture.CreateMany<int>().ToArray();
+            var source = Fixture.CreateMany<int>().ToArray();
             var currentIndex = -Fixture.Create<int>();
-            var destinationIndex = Fixture.CreateBetween(0, collection.Length);
+            var destinationIndex = Fixture.CreateBetween(0, source.Length);
 
             //Act
-            var action = () => collection.Swap(currentIndex, destinationIndex);
+            var action = () => source.Swap(currentIndex, destinationIndex);
 
             //Assert
             action.Should().Throw<ArgumentOutOfRangeException>().WithParameterName("currentIndex");
@@ -42,12 +42,12 @@ public class Swap
         public void WhenCurrentIsOutOfBounds_Throw()
         {
             //Arrange
-            var collection = Fixture.CreateMany<int>().ToArray();
-            var currentIndex = Fixture.CreateGreaterThan(collection.LastIndex());
-            var destinationIndex = Fixture.CreateBetween(0, collection.LastIndex());
+            var source = Fixture.CreateMany<int>().ToArray();
+            var currentIndex = Fixture.CreateGreaterThan(source.LastIndex());
+            var destinationIndex = Fixture.CreateBetween(0, source.LastIndex());
                 
             //Act
-            var action = () => collection.Swap(currentIndex, destinationIndex);
+            var action = () => source.Swap(currentIndex, destinationIndex);
 
             //Assert
             action.Should().Throw<ArgumentOutOfRangeException>().WithParameterName("currentIndex");
@@ -57,12 +57,12 @@ public class Swap
         public void WhenDestinationIsNegative_Throw()
         {
             //Arrange
-            var collection = Fixture.CreateMany<int>().ToArray();
-            var currentIndex = Fixture.CreateBetween(0, collection.LastIndex());
+            var source = Fixture.CreateMany<int>().ToArray();
+            var currentIndex = Fixture.CreateBetween(0, source.LastIndex());
             var destinationIndex = -Fixture.Create<int>();
 
             //Act
-            var action = () => collection.Swap(currentIndex, destinationIndex);
+            var action = () => source.Swap(currentIndex, destinationIndex);
 
             //Assert
             action.Should().Throw<ArgumentOutOfRangeException>().WithParameterName("destinationIndex");
@@ -72,12 +72,12 @@ public class Swap
         public void WhenDestinationIsOutOfBounds_Throw()
         {
             //Arrange
-            var collection = Fixture.CreateMany<int>().ToArray();
-            var currentIndex = Fixture.CreateBetween(0, collection.LastIndex());
-            var destinationIndex = Fixture.CreateGreaterThan(collection.LastIndex());
+            var source = Fixture.CreateMany<int>().ToArray();
+            var currentIndex = Fixture.CreateBetween(0, source.LastIndex());
+            var destinationIndex = Fixture.CreateGreaterThan(source.LastIndex());
 
             //Act
-            var action = () => collection.Swap(currentIndex, destinationIndex);
+            var action = () => source.Swap(currentIndex, destinationIndex);
 
             //Assert
             action.Should().Throw<ArgumentOutOfRangeException>().WithParameterName("destinationIndex");
@@ -87,23 +87,23 @@ public class Swap
         public void WhenCurrentAndDestinationAreWithinBounds_SwapTogether()
         {
             //Arrange
-            var collection = new[]
+            var source = new[]
             {
                 Fixture.Build<Dummy>().With(x => x.Name, "First").Create(),
                 Fixture.Build<Dummy>().With(x => x.Name, "Second").Create(),
                 Fixture.Build<Dummy>().With(x => x.Name, "Third").Create(),
                 Fixture.Build<Dummy>().With(x => x.Name, "Fourth").Create(),
             };
-            var original = collection.ToArray();
+            var original = source.ToArray();
 
             var current = 1;
             var destination = 2;
 
             //Act
-            collection.Swap(current, destination);
+            source.Swap(current, destination);
 
             //Assert
-            collection.Should().ContainInOrder(new List<Dummy>
+            source.Should().ContainInOrder(new List<Dummy>
             {
                 original[0],
                 original[2],
@@ -120,27 +120,27 @@ public class Swap
         public void WhenCollectionIsNull_Throw()
         {
             //Arrange
-            List<Dummy> collection = null!;
+            List<Dummy> source = null!;
             var current = Fixture.Create<int>();
             var destination = Fixture.Create<int>();
 
             //Act
-            var action = () => collection.Swap(current, destination);
+            var action = () => source.Swap(current, destination);
 
             //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("collection");
+            action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(source));
         }
 
         [TestMethod]
         public void WhenCurrentIsNegative_Throw()
         {
             //Arrange
-            var collection = Fixture.CreateMany<int>().ToList();
+            var source = Fixture.CreateMany<int>().ToList();
             var currentIndex = -Fixture.Create<int>();
-            var destinationIndex = Fixture.CreateBetween(0, collection.LastIndex());
+            var destinationIndex = Fixture.CreateBetween(0, source.LastIndex());
 
             //Act
-            var action = () => collection.Swap(currentIndex, destinationIndex);
+            var action = () => source.Swap(currentIndex, destinationIndex);
 
             //Assert
             action.Should().Throw<ArgumentOutOfRangeException>().WithParameterName("currentIndex");
@@ -150,12 +150,12 @@ public class Swap
         public void WhenCurrentIsOutOfBounds_Throw()
         {
             //Arrange
-            var collection = Fixture.CreateMany<int>().ToList();
-            var currentIndex = Fixture.CreateGreaterThan(collection.LastIndex());
-            var destinationIndex = Fixture.CreateBetween(0, collection.LastIndex());
+            var source = Fixture.CreateMany<int>().ToList();
+            var currentIndex = Fixture.CreateGreaterThan(source.LastIndex());
+            var destinationIndex = Fixture.CreateBetween(0, source.LastIndex());
 
             //Act
-            var action = () => collection.Swap(currentIndex, destinationIndex);
+            var action = () => source.Swap(currentIndex, destinationIndex);
 
             //Assert
             action.Should().Throw<ArgumentOutOfRangeException>().WithParameterName("currentIndex");
@@ -165,12 +165,12 @@ public class Swap
         public void WhenDestinationIsNegative_Throw()
         {
             //Arrange
-            var collection = Fixture.CreateMany<int>().ToList();
-            var currentIndex = Fixture.CreateBetween(0, collection.LastIndex());
+            var source = Fixture.CreateMany<int>().ToList();
+            var currentIndex = Fixture.CreateBetween(0, source.LastIndex());
             var destinationIndex = -Fixture.Create<int>();
 
             //Act
-            var action = () => collection.Swap(currentIndex, destinationIndex);
+            var action = () => source.Swap(currentIndex, destinationIndex);
 
             //Assert
             action.Should().Throw<ArgumentOutOfRangeException>().WithParameterName("destinationIndex");
@@ -180,12 +180,12 @@ public class Swap
         public void WhenDestinationIsOutOfBounds_Throw()
         {
             //Arrange
-            var collection = Fixture.CreateMany<int>().ToList();
-            var currentIndex = Fixture.CreateBetween(0, collection.LastIndex());
-            var destinationIndex = Fixture.CreateGreaterThan(collection.LastIndex());
+            var source = Fixture.CreateMany<int>().ToList();
+            var currentIndex = Fixture.CreateBetween(0, source.LastIndex());
+            var destinationIndex = Fixture.CreateGreaterThan(source.LastIndex());
 
             //Act
-            var action = () => collection.Swap(currentIndex, destinationIndex);
+            var action = () => source.Swap(currentIndex, destinationIndex);
 
             //Assert
             action.Should().Throw<ArgumentOutOfRangeException>().WithParameterName("destinationIndex");
@@ -195,23 +195,23 @@ public class Swap
         public void WhenCurrentAndDestinationAreWithinBounds_SwapTogether()
         {
             //Arrange
-            var collection = new List<Dummy>
+            var source = new List<Dummy>
             {
                 Fixture.Build<Dummy>().With(x => x.Name, "First").Create(),
                 Fixture.Build<Dummy>().With(x => x.Name, "Second").Create(),
                 Fixture.Build<Dummy>().With(x => x.Name, "Third").Create(),
                 Fixture.Build<Dummy>().With(x => x.Name, "Fourth").Create(),
             };
-            var original = collection.ToArray();
+            var original = source.ToArray();
 
             var current = 1;
             var destination = 2;
 
             //Act
-            collection.Swap(current, destination);
+            source.Swap(current, destination);
 
             //Assert
-            collection.Should().ContainInOrder(new List<Dummy>
+            source.Should().ContainInOrder(new List<Dummy>
             {
                 original[0],
                 original[2],
@@ -228,27 +228,27 @@ public class Swap
         public void WhenCollectionIsNull_Throw()
         {
             //Arrange
-            WriteOnlyList<Dummy> collection = null!;
+            WriteOnlyList<Dummy> source = null!;
             var current = Fixture.Create<int>();
             var destination = Fixture.Create<int>();
 
             //Act
-            var action = () => collection.Swap(current, destination);
+            var action = () => source.Swap(current, destination);
 
             //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("collection");
+            action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(source));
         }
 
         [TestMethod]
         public void WhenCurrentIsNegative_Throw()
         {
             //Arrange
-            var collection = Fixture.CreateMany<int>().ToWriteOnlyList();
+            var source = Fixture.CreateMany<int>().ToWriteOnlyList();
             var currentIndex = -Fixture.Create<int>();
-            var destinationIndex = Fixture.CreateBetween(0, collection.LastIndex());
+            var destinationIndex = Fixture.CreateBetween(0, source.LastIndex());
 
             //Act
-            var action = () => collection.Swap(currentIndex, destinationIndex);
+            var action = () => source.Swap(currentIndex, destinationIndex);
 
             //Assert
             action.Should().Throw<ArgumentOutOfRangeException>().WithParameterName("currentIndex");
@@ -258,12 +258,12 @@ public class Swap
         public void WhenCurrentIsOutOfBounds_Throw()
         {
             //Arrange
-            var collection = Fixture.CreateMany<int>().ToWriteOnlyList();
-            var currentIndex = Fixture.CreateGreaterThan(collection.LastIndex());
-            var destinationIndex = Fixture.CreateBetween(0, collection.LastIndex());
+            var source = Fixture.CreateMany<int>().ToWriteOnlyList();
+            var currentIndex = Fixture.CreateGreaterThan(source.LastIndex());
+            var destinationIndex = Fixture.CreateBetween(0, source.LastIndex());
 
             //Act
-            var action = () => collection.Swap(currentIndex, destinationIndex);
+            var action = () => source.Swap(currentIndex, destinationIndex);
 
             //Assert
             action.Should().Throw<ArgumentOutOfRangeException>().WithParameterName("currentIndex");
@@ -273,12 +273,12 @@ public class Swap
         public void WhenDestinationIsNegative_Throw()
         {
             //Arrange
-            var collection = Fixture.CreateMany<int>().ToWriteOnlyList();
-            var currentIndex = Fixture.CreateBetween(0, collection.LastIndex());
+            var source = Fixture.CreateMany<int>().ToWriteOnlyList();
+            var currentIndex = Fixture.CreateBetween(0, source.LastIndex());
             var destinationIndex = -Fixture.Create<int>();
 
             //Act
-            var action = () => collection.Swap(currentIndex, destinationIndex);
+            var action = () => source.Swap(currentIndex, destinationIndex);
 
             //Assert
             action.Should().Throw<ArgumentOutOfRangeException>().WithParameterName("destinationIndex");
@@ -288,12 +288,12 @@ public class Swap
         public void WhenDestinationIsOutOfBounds_Throw()
         {
             //Arrange
-            var collection = Fixture.CreateMany<int>().ToWriteOnlyList();
-            var currentIndex = Fixture.CreateBetween(0, collection.LastIndex());
-            var destinationIndex = Fixture.CreateGreaterThan(collection.LastIndex());
+            var source = Fixture.CreateMany<int>().ToWriteOnlyList();
+            var currentIndex = Fixture.CreateBetween(0, source.LastIndex());
+            var destinationIndex = Fixture.CreateGreaterThan(source.LastIndex());
 
             //Act
-            var action = () => collection.Swap(currentIndex, destinationIndex);
+            var action = () => source.Swap(currentIndex, destinationIndex);
 
             //Assert
             action.Should().Throw<ArgumentOutOfRangeException>().WithParameterName("destinationIndex");
@@ -303,23 +303,23 @@ public class Swap
         public void WhenCurrentAndDestinationAreWithinBounds_SwapTogether()
         {
             //Arrange
-            var collection = new WriteOnlyList<Dummy>
+            var source = new WriteOnlyList<Dummy>
             {
                 Fixture.Build<Dummy>().With(x => x.Name, "First").Create(),
                 Fixture.Build<Dummy>().With(x => x.Name, "Second").Create(),
                 Fixture.Build<Dummy>().With(x => x.Name, "Third").Create(),
                 Fixture.Build<Dummy>().With(x => x.Name, "Fourth").Create(),
             };
-            var original = collection.ToArray();
+            var original = source.ToArray();
 
             var current = 1;
             var destination = 2;
 
             //Act
-            collection.Swap(current, destination);
+            source.Swap(current, destination);
 
             //Assert
-            collection.Should().ContainInOrder(new List<Dummy>
+            source.Should().ContainInOrder(new List<Dummy>
             {
                 original[0],
                 original[2],

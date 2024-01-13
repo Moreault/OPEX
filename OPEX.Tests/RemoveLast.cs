@@ -10,39 +10,39 @@ public class RemoveLast
         public void WhenUsingItemAndCollectionIsNull_Throw()
         {
             //Arrange
-            Dummy[] collection = null!;
+            Dummy[] source = null!;
             var item = Fixture.Create<Dummy>();
 
             //Act
-            var action = () => collection.RemoveLast(item);
+            var action = () => source.RemoveLast(item);
 
             //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("collection");
+            action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(source));
         }
 
         [TestMethod]
         public void WhenUsingLambdaAndCollectionIsNull_Throw()
         {
             //Arrange
-            Dummy[] collection = null!;
+            Dummy[] source = null!;
             var match = Fixture.Create<Func<Dummy, bool>>();
 
             //Act
-            var action = () => collection.RemoveLast(match);
+            var action = () => source.RemoveLast(match);
 
             //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("collection");
+            action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(source));
         }
 
         [TestMethod]
         public void WhenUsingLambdaAndLambdaIsNull_Throw()
         {
             //Arrange
-            var collection = Fixture.Create<Dummy[]>();
+            var source = Fixture.Create<Dummy[]>();
             Func<Dummy, bool> match = null!;
 
             //Act
-            var action = () => collection.RemoveLast(match);
+            var action = () => source.RemoveLast(match);
 
             //Assert
             action.Should().Throw<ArgumentNullException>().WithParameterName("match");
@@ -52,11 +52,11 @@ public class RemoveLast
         public void Always_Throw()
         {
             //Arrange
-            var collection = Fixture.Create<Dummy[]>();
+            var source = Fixture.Create<Dummy[]>();
             var match = Fixture.Create<Func<Dummy, bool>>();
 
             //Act
-            var action = () => collection.RemoveLast(match);
+            var action = () => source.RemoveLast(match);
 
             //Assert
             action.Should().Throw<NotSupportedException>().WithMessage(string.Format(Exceptions.CannotUseMethodBecauseIsFixedSize, nameof(ToolBX.OPEX.CollectionExtensions.RemoveLast)));
@@ -66,11 +66,11 @@ public class RemoveLast
         public void WhenUsingItemWithArray_Throw()
         {
             //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToArray();
+            var source = Fixture.CreateMany<Dummy>().ToArray();
             var item = Fixture.Create<Dummy>();
 
             //Act
-            var action = () => collection.RemoveLast(item);
+            var action = () => source.RemoveLast(item);
 
             //Assert
             action.Should().Throw<NotSupportedException>().WithMessage(string.Format(Exceptions.CannotUseMethodBecauseIsFixedSize, nameof(ToolBX.OPEX.CollectionExtensions.RemoveLast)));
@@ -84,39 +84,39 @@ public class RemoveLast
         public void WhenUsingItemAndCollectionIsNull_Throw()
         {
             //Arrange
-            List<Dummy> collection = null!;
+            List<Dummy> source = null!;
             var item = Fixture.Create<Dummy>();
 
             //Act
-            var action = () => collection.RemoveLast(item);
+            var action = () => source.RemoveLast(item);
 
             //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("collection");
+            action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(source));
         }
 
         [TestMethod]
         public void WhenUsingLambdaAndCollectionIsNull_Throw()
         {
             //Arrange
-            List<Dummy> collection = null!;
+            List<Dummy> source = null!;
             var match = Fixture.Create<Func<Dummy, bool>>();
 
             //Act
-            var action = () => collection.RemoveLast(match);
+            var action = () => source.RemoveLast(match);
 
             //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("collection");
+            action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(source));
         }
 
         [TestMethod]
         public void WhenUsingLambdaAndLambdaIsNull_Throw()
         {
             //Arrange
-            var collection = Fixture.Create<List<Dummy>>();
+            var source = Fixture.Create<List<Dummy>>();
             Func<Dummy, bool> match = null!;
 
             //Act
-            var action = () => collection.RemoveLast(match);
+            var action = () => source.RemoveLast(match);
 
             //Assert
             action.Should().Throw<ArgumentNullException>().WithParameterName("match");
@@ -126,11 +126,11 @@ public class RemoveLast
         public void WhenUsingItemAndItemIsNullAndThereIsNoNullInCollection_Throw()
         {
             //Arrange
-            var collection = Fixture.Create<List<Dummy>>();
+            var source = Fixture.Create<List<Dummy>>();
             Dummy item = null!;
 
             //Act
-            var action = () => collection.RemoveLast(item);
+            var action = () => source.RemoveLast(item);
 
             //Assert
             action.Should().Throw<Exception>().WithMessage(Exceptions.NullCouldNotBeRemoved);
@@ -140,11 +140,11 @@ public class RemoveLast
         public void WhenUsingItemAndItemNotFoundInCollection_Throw()
         {
             //Arrange
-            var collection = Fixture.Create<List<Dummy>>();
+            var source = Fixture.Create<List<Dummy>>();
             var item = Fixture.Create<Dummy>();
 
             //Act
-            var action = () => collection.RemoveLast(item);
+            var action = () => source.RemoveLast(item);
 
             //Assert
             action.Should().Throw<Exception>().WithMessage(string.Format(Exceptions.ItemCouldNotBeRemoved, item));
@@ -154,10 +154,10 @@ public class RemoveLast
         public void WhenUsingLambdaAndItemNotFoundInCollection_Throw()
         {
             //Arrange
-            var collection = Fixture.Create<List<Dummy>>();
+            var source = Fixture.Create<List<Dummy>>();
 
             //Act
-            var action = () => collection.RemoveLast(x => x.Name == Fixture.Create<string>());
+            var action = () => source.RemoveLast(x => x.Name == Fixture.Create<string>());
 
             //Assert
             action.Should().Throw<Exception>().WithMessage(Exceptions.PredicateItemCouldNotBeRemoved);
@@ -167,15 +167,15 @@ public class RemoveLast
         public void WhenUsingItemAndThereIsOneOccurenceOfItem_RemoveItem()
         {
             //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToList();
-            var original = collection.ToList();
-            var item = collection[1];
+            var source = Fixture.CreateMany<Dummy>().ToList();
+            var original = source.ToList();
+            var item = source[1];
 
             //Act
-            collection.RemoveLast(item);
+            source.RemoveLast(item);
 
             //Assert
-            collection.Should().BeEquivalentTo(new List<Dummy>
+            source.Should().BeEquivalentTo(new List<Dummy>
             {
                 original[0], original[2]
             });
@@ -185,15 +185,15 @@ public class RemoveLast
         public void WhenUsingLambdaAndThereIsOneOccurenceOfItem_RemoveItem()
         {
             //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToList();
-            var original = collection.ToList();
-            var item = collection[1];
+            var source = Fixture.CreateMany<Dummy>().ToList();
+            var original = source.ToList();
+            var item = source[1];
 
             //Act
-            collection.RemoveLast(x => x.Name == item.Name);
+            source.RemoveLast(x => x.Name == item.Name);
 
             //Assert
-            collection.Should().BeEquivalentTo(new List<Dummy>
+            source.Should().BeEquivalentTo(new List<Dummy>
             {
                 original[0], original[2]
             });
@@ -204,7 +204,7 @@ public class RemoveLast
         {
             //Arrange
             var item = Fixture.Create<Dummy>();
-            var collection = new List<Dummy>
+            var source = new List<Dummy>
             {
                 Fixture.Create<Dummy>(),
                 item,
@@ -212,13 +212,13 @@ public class RemoveLast
                 Fixture.Create<Dummy>(),
                 item
             };
-            var original = collection.ToList();
+            var original = source.ToList();
 
             //Act
-            collection.RemoveLast(item);
+            source.RemoveLast(item);
 
             //Assert
-            collection.Should().BeEquivalentTo(new List<Dummy>
+            source.Should().BeEquivalentTo(new List<Dummy>
             {
                 original[0],
                 item,
@@ -232,7 +232,7 @@ public class RemoveLast
         {
             //Arrange
             var item = Fixture.Create<Dummy>();
-            var collection = new List<Dummy>
+            var source = new List<Dummy>
             {
                 Fixture.Create<Dummy>(),
                 item,
@@ -240,13 +240,13 @@ public class RemoveLast
                 Fixture.Create<Dummy>(),
                 item
             };
-            var original = collection.ToList();
+            var original = source.ToList();
 
             //Act
-            collection.RemoveLast(x => x.Name == item.Name);
+            source.RemoveLast(x => x.Name == item.Name);
 
             //Assert
-            collection.Should().BeEquivalentTo(new List<Dummy>
+            source.Should().BeEquivalentTo(new List<Dummy>
             {
                 original[0],
                 item,

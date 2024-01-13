@@ -10,39 +10,39 @@ public class LastIndexOf
         public void WhenUsingItemAndCollectionIsNull_Throw()
         {
             //Arrange
-            Dummy[] collection = null!;
+            Dummy[] source = null!;
             var item = Fixture.Create<Dummy>();
 
             //Act
-            var action = () => collection.LastIndexOf(item);
+            var action = () => source.LastIndexOf(item);
 
             //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("collection");
+            action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(source));
         }
 
         [TestMethod]
         public void WhenUsingLambaAndCollectionIsNull_Throw()
         {
             //Arrange
-            Dummy[] collection = null!;
+            Dummy[] source = null!;
             var item = Fixture.Create<Func<Dummy, bool>>();
 
             //Act
-            var action = () => collection.LastIndexOf(item);
+            var action = () => source.LastIndexOf(item);
 
             //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("collection");
+            action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(source));
         }
 
         [TestMethod]
         public void WhenUsingLambaAndLambdaIsNull_Throw()
         {
             //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToArray();
+            var source = Fixture.CreateMany<Dummy>().ToArray();
             Func<Dummy, bool> item = null!;
 
             //Act
-            var action = () => collection.LastIndexOf(item);
+            var action = () => source.LastIndexOf(item);
 
             //Assert
             action.Should().Throw<ArgumentNullException>().WithParameterName("match");
@@ -52,10 +52,10 @@ public class LastIndexOf
         public void WhenUsingItemAndItemIsNotInCollection_ReturnMinusOne()
         {
             //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToArray();
+            var source = Fixture.CreateMany<Dummy>().ToArray();
 
             //Act
-            var result = collection.LastIndexOf(Fixture.Create<Dummy>());
+            var result = source.LastIndexOf(Fixture.Create<Dummy>());
 
             //Assert
             result.Should().Be(-1);
@@ -65,10 +65,10 @@ public class LastIndexOf
         public void WhenUsingLambdaAndItemIsNotInCollection_ReturnMinusOne()
         {
             //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToArray();
+            var source = Fixture.CreateMany<Dummy>().ToArray();
 
             //Act
-            var result = collection.LastIndexOf(x => x.Name == Fixture.Create<string>());
+            var result = source.LastIndexOf(x => x.Name == Fixture.Create<string>());
 
             //Assert
             result.Should().Be(-1);
@@ -78,12 +78,12 @@ public class LastIndexOf
         public void WhenUsingItemAndItemIsInCollectionOnce_ReturnItemIndex()
         {
             //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToArray();
-            var itemIndex = collection.GetRandomIndex();
-            var item = collection[itemIndex];
+            var source = Fixture.CreateMany<Dummy>().ToArray();
+            var itemIndex = source.GetRandomIndex();
+            var item = source[itemIndex];
 
             //Act
-            var result = collection.LastIndexOf(item);
+            var result = source.LastIndexOf(item);
 
             //Assert
             result.Should().Be(itemIndex);
@@ -93,11 +93,11 @@ public class LastIndexOf
         public void WhenUsingLambaAndItemIsInCollectionOnce_ReturnIndex()
         {
             //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToArray();
-            var itemIndex = collection.GetRandomIndex();
+            var source = Fixture.CreateMany<Dummy>().ToArray();
+            var itemIndex = source.GetRandomIndex();
 
             //Act
-            var result = collection.LastIndexOf(x => x.Name == collection[itemIndex].Name);
+            var result = source.LastIndexOf(x => x.Name == source[itemIndex].Name);
 
             //Assert
             result.Should().Be(itemIndex);
@@ -108,10 +108,10 @@ public class LastIndexOf
         {
             //Arrange
             var item = Fixture.Create<Dummy>();
-            var collection = Fixture.CreateMany<Dummy>(3).Concat(item, item, item).ToArray();
+            var source = Fixture.CreateMany<Dummy>(3).Concat(item, item, item).ToArray();
 
             //Act
-            var result = collection.LastIndexOf(item);
+            var result = source.LastIndexOf(item);
 
             //Assert
             result.Should().Be(5);
@@ -122,10 +122,10 @@ public class LastIndexOf
         {
             //Arrange
             var item = Fixture.Create<Dummy>();
-            var collection = Fixture.CreateMany<Dummy>(3).Concat(item, item, item).ToArray();
+            var source = Fixture.CreateMany<Dummy>(3).Concat(item, item, item).ToArray();
 
             //Act
-            var result = collection.LastIndexOf(x => x.Name == item.Name);
+            var result = source.LastIndexOf(x => x.Name == item.Name);
 
             //Assert
             result.Should().Be(5);
@@ -139,39 +139,39 @@ public class LastIndexOf
         public void WhenUsingItemAndCollectionIsNull_Throw()
         {
             //Arrange
-            IList<Dummy> collection = null!;
+            IList<Dummy> source = null!;
             var item = Fixture.Create<Dummy>();
 
             //Act
-            var action = () => collection.LastIndexOf(item);
+            var action = () => source.LastIndexOf(item);
 
             //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("collection");
+            action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(source));
         }
 
         [TestMethod]
         public void WhenUsingLambaAndCollectionIsNull_Throw()
         {
             //Arrange
-            IList<Dummy> collection = null!;
+            IList<Dummy> source = null!;
             var item = Fixture.Create<Func<Dummy, bool>>();
 
             //Act
-            var action = () => collection.LastIndexOf(item);
+            var action = () => source.LastIndexOf(item);
 
             //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("collection");
+            action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(source));
         }
 
         [TestMethod]
         public void WhenUsingLambaAndLambdaIsNull_Throw()
         {
             //Arrange
-            IList<Dummy> collection = Fixture.CreateMany<Dummy>().ToList();
+            IList<Dummy> source = Fixture.CreateMany<Dummy>().ToList();
             Func<Dummy, bool> item = null!;
 
             //Act
-            var action = () => collection.LastIndexOf(item);
+            var action = () => source.LastIndexOf(item);
 
             //Assert
             action.Should().Throw<ArgumentNullException>().WithParameterName("match");
@@ -181,10 +181,10 @@ public class LastIndexOf
         public void WhenUsingItemAndItemIsNotInCollection_ReturnMinusOne()
         {
             //Arrange
-            IList<Dummy> collection = Fixture.CreateMany<Dummy>().ToList();
+            IList<Dummy> source = Fixture.CreateMany<Dummy>().ToList();
 
             //Act
-            var result = collection.LastIndexOf(Fixture.Create<Dummy>());
+            var result = source.LastIndexOf(Fixture.Create<Dummy>());
 
             //Assert
             result.Should().Be(-1);
@@ -194,10 +194,10 @@ public class LastIndexOf
         public void WhenUsingLambdaAndItemIsNotInCollection_ReturnMinusOne()
         {
             //Arrange
-            IList<Dummy> collection = Fixture.CreateMany<Dummy>().ToList();
+            IList<Dummy> source = Fixture.CreateMany<Dummy>().ToList();
 
             //Act
-            var result = collection.LastIndexOf(x => x.Name == Fixture.Create<string>());
+            var result = source.LastIndexOf(x => x.Name == Fixture.Create<string>());
 
             //Assert
             result.Should().Be(-1);
@@ -207,12 +207,12 @@ public class LastIndexOf
         public void WhenUsingItemAndItemIsInCollectionOnce_ReturnItemIndex()
         {
             //Arrange
-            IList<Dummy> collection = Fixture.CreateMany<Dummy>().ToList();
-            var itemIndex = collection.GetRandomIndex();
-            var item = collection[itemIndex];
+            IList<Dummy> source = Fixture.CreateMany<Dummy>().ToList();
+            var itemIndex = source.GetRandomIndex();
+            var item = source[itemIndex];
 
             //Act
-            var result = collection.LastIndexOf(item);
+            var result = source.LastIndexOf(item);
 
             //Assert
             result.Should().Be(itemIndex);
@@ -222,11 +222,11 @@ public class LastIndexOf
         public void WhenUsingLambaAndItemIsInCollectionOnce_ReturnIndex()
         {
             //Arrange
-            IList<Dummy> collection = Fixture.CreateMany<Dummy>().ToList();
-            var itemIndex = collection.GetRandomIndex();
+            IList<Dummy> source = Fixture.CreateMany<Dummy>().ToList();
+            var itemIndex = source.GetRandomIndex();
 
             //Act
-            var result = collection.LastIndexOf(x => x.Name == collection[itemIndex].Name);
+            var result = source.LastIndexOf(x => x.Name == source[itemIndex].Name);
 
             //Assert
             result.Should().Be(itemIndex);
@@ -237,10 +237,10 @@ public class LastIndexOf
         {
             //Arrange
             var item = Fixture.Create<Dummy>();
-            IList<Dummy> collection = Fixture.CreateMany<Dummy>(3).Concat(item, item, item).ToList();
+            IList<Dummy> source = Fixture.CreateMany<Dummy>(3).Concat(item, item, item).ToList();
 
             //Act
-            var result = collection.LastIndexOf(item);
+            var result = source.LastIndexOf(item);
 
             //Assert
             result.Should().Be(5);
@@ -251,10 +251,10 @@ public class LastIndexOf
         {
             //Arrange
             var item = Fixture.Create<Dummy>();
-            IList<Dummy> collection = Fixture.CreateMany<Dummy>(3).Concat(item, item, item).ToList();
+            IList<Dummy> source = Fixture.CreateMany<Dummy>(3).Concat(item, item, item).ToList();
 
             //Act
-            var result = collection.LastIndexOf(x => x.Name == item.Name);
+            var result = source.LastIndexOf(x => x.Name == item.Name);
 
             //Assert
             result.Should().Be(5);
@@ -268,39 +268,39 @@ public class LastIndexOf
         public void WhenUsingItemAndCollectionIsNull_Throw()
         {
             //Arrange
-            WriteOnlyList<Dummy> collection = null!;
+            WriteOnlyList<Dummy> source = null!;
             var item = Fixture.Create<Dummy>();
 
             //Act
-            var action = () => collection.LastIndexOf(item);
+            var action = () => source.LastIndexOf(item);
 
             //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("collection");
+            action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(source));
         }
 
         [TestMethod]
         public void WhenUsingLambaAndCollectionIsNull_Throw()
         {
             //Arrange
-            WriteOnlyList<Dummy> collection = null!;
+            WriteOnlyList<Dummy> source = null!;
             var item = Fixture.Create<Func<Dummy, bool>>();
 
             //Act
-            var action = () => collection.LastIndexOf(item);
+            var action = () => source.LastIndexOf(item);
 
             //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("collection");
+            action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(source));
         }
 
         [TestMethod]
         public void WhenUsingLambaAndLambdaIsNull_Throw()
         {
             //Arrange
-            WriteOnlyList<Dummy> collection = Fixture.CreateMany<Dummy>().ToWriteOnlyList();
+            WriteOnlyList<Dummy> source = Fixture.CreateMany<Dummy>().ToWriteOnlyList();
             Func<Dummy, bool> item = null!;
 
             //Act
-            var action = () => collection.LastIndexOf(item);
+            var action = () => source.LastIndexOf(item);
 
             //Assert
             action.Should().Throw<ArgumentNullException>().WithParameterName("match");
@@ -310,10 +310,10 @@ public class LastIndexOf
         public void WhenUsingItemAndItemIsNotInCollection_ReturnMinusOne()
         {
             //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToWriteOnlyList();
+            var source = Fixture.CreateMany<Dummy>().ToWriteOnlyList();
 
             //Act
-            var result = collection.LastIndexOf(Fixture.Create<Dummy>());
+            var result = source.LastIndexOf(Fixture.Create<Dummy>());
 
             //Assert
             result.Should().Be(-1);
@@ -323,10 +323,10 @@ public class LastIndexOf
         public void WhenUsingLambdaAndItemIsNotInCollection_ReturnMinusOne()
         {
             //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToWriteOnlyList();
+            var source = Fixture.CreateMany<Dummy>().ToWriteOnlyList();
 
             //Act
-            var result = collection.LastIndexOf(x => x.Name == Fixture.Create<string>());
+            var result = source.LastIndexOf(x => x.Name == Fixture.Create<string>());
 
             //Assert
             result.Should().Be(-1);
@@ -336,12 +336,12 @@ public class LastIndexOf
         public void WhenUsingItemAndItemIsInCollectionOnce_ReturnItemIndex()
         {
             //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToWriteOnlyList();
-            var itemIndex = collection.GetRandomIndex();
-            var item = collection[itemIndex];
+            var source = Fixture.CreateMany<Dummy>().ToWriteOnlyList();
+            var itemIndex = source.GetRandomIndex();
+            var item = source[itemIndex];
 
             //Act
-            var result = collection.LastIndexOf(item);
+            var result = source.LastIndexOf(item);
 
             //Assert
             result.Should().Be(itemIndex);
@@ -351,11 +351,11 @@ public class LastIndexOf
         public void WhenUsingLambaAndItemIsInCollectionOnce_ReturnIndex()
         {
             //Arrange
-            var collection = Fixture.CreateMany<Dummy>().ToWriteOnlyList();
-            var itemIndex = collection.GetRandomIndex();
+            var source = Fixture.CreateMany<Dummy>().ToWriteOnlyList();
+            var itemIndex = source.GetRandomIndex();
 
             //Act
-            var result = collection.LastIndexOf(x => x.Name == collection[itemIndex].Name);
+            var result = source.LastIndexOf(x => x.Name == source[itemIndex].Name);
 
             //Assert
             result.Should().Be(itemIndex);
@@ -366,10 +366,10 @@ public class LastIndexOf
         {
             //Arrange
             var item = Fixture.Create<Dummy>();
-            var collection = Fixture.CreateMany<Dummy>(3).Concat(item, item, item).ToWriteOnlyList();
+            var source = Fixture.CreateMany<Dummy>(3).Concat(item, item, item).ToWriteOnlyList();
 
             //Act
-            var result = collection.LastIndexOf(item);
+            var result = source.LastIndexOf(item);
 
             //Assert
             result.Should().Be(5);
@@ -380,10 +380,10 @@ public class LastIndexOf
         {
             //Arrange
             var item = Fixture.Create<Dummy>();
-            var collection = Fixture.CreateMany<Dummy>(3).Concat(item, item, item).ToWriteOnlyList();
+            var source = Fixture.CreateMany<Dummy>(3).Concat(item, item, item).ToWriteOnlyList();
 
             //Act
-            var result = collection.LastIndexOf(x => x.Name == item.Name);
+            var result = source.LastIndexOf(x => x.Name == item.Name);
 
             //Assert
             result.Should().Be(5);
@@ -397,39 +397,39 @@ public class LastIndexOf
         public void WhenUsingItemAndCollectionIsNull_Throw()
         {
             //Arrange
-            IReadOnlyList<Dummy> collection = null!;
+            IReadOnlyList<Dummy> source = null!;
             var item = Fixture.Create<Dummy>();
 
             //Act
-            var action = () => collection.LastIndexOf(item);
+            var action = () => source.LastIndexOf(item);
 
             //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("collection");
+            action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(source));
         }
 
         [TestMethod]
         public void WhenUsingLambaAndCollectionIsNull_Throw()
         {
             //Arrange
-            IReadOnlyList<Dummy> collection = null!;
+            IReadOnlyList<Dummy> source = null!;
             var item = Fixture.Create<Func<Dummy, bool>>();
 
             //Act
-            var action = () => collection.LastIndexOf(item);
+            var action = () => source.LastIndexOf(item);
 
             //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName("collection");
+            action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(source));
         }
 
         [TestMethod]
         public void WhenUsingLambaAndLambdaIsNull_Throw()
         {
             //Arrange
-            IReadOnlyList<Dummy> collection = Fixture.CreateMany<Dummy>().ToList();
+            IReadOnlyList<Dummy> source = Fixture.CreateMany<Dummy>().ToList();
             Func<Dummy, bool> item = null!;
 
             //Act
-            var action = () => collection.LastIndexOf(item);
+            var action = () => source.LastIndexOf(item);
 
             //Assert
             action.Should().Throw<ArgumentNullException>().WithParameterName("match");
@@ -439,10 +439,10 @@ public class LastIndexOf
         public void WhenUsingItemAndItemIsNotInCollection_ReturnMinusOne()
         {
             //Arrange
-            IReadOnlyList<Dummy> collection = Fixture.CreateMany<Dummy>().ToList();
+            IReadOnlyList<Dummy> source = Fixture.CreateMany<Dummy>().ToList();
 
             //Act
-            var result = collection.LastIndexOf(Fixture.Create<Dummy>());
+            var result = source.LastIndexOf(Fixture.Create<Dummy>());
 
             //Assert
             result.Should().Be(-1);
@@ -452,10 +452,10 @@ public class LastIndexOf
         public void WhenUsingLambdaAndItemIsNotInCollection_ReturnMinusOne()
         {
             //Arrange
-            IReadOnlyList<Dummy> collection = Fixture.CreateMany<Dummy>().ToList();
+            IReadOnlyList<Dummy> sourec = Fixture.CreateMany<Dummy>().ToList();
 
             //Act
-            var result = collection.LastIndexOf(x => x.Name == Fixture.Create<string>());
+            var result = sourec.LastIndexOf(x => x.Name == Fixture.Create<string>());
 
             //Assert
             result.Should().Be(-1);
@@ -465,12 +465,12 @@ public class LastIndexOf
         public void WhenUsingItemAndItemIsInCollectionOnce_ReturnItemIndex()
         {
             //Arrange
-            IReadOnlyList<Dummy> collection = Fixture.CreateMany<Dummy>().ToList();
-            var itemIndex = collection.GetRandomIndex();
-            var item = collection[itemIndex];
+            IReadOnlyList<Dummy> source = Fixture.CreateMany<Dummy>().ToList();
+            var itemIndex = source.GetRandomIndex();
+            var item = source[itemIndex];
 
             //Act
-            var result = collection.LastIndexOf(item);
+            var result = source.LastIndexOf(item);
 
             //Assert
             result.Should().Be(itemIndex);
@@ -480,11 +480,11 @@ public class LastIndexOf
         public void WhenUsingLambaAndItemIsInCollectionOnce_ReturnIndex()
         {
             //Arrange
-            IReadOnlyList<Dummy> collection = Fixture.CreateMany<Dummy>().ToList();
-            var itemIndex = collection.GetRandomIndex();
+            IReadOnlyList<Dummy> source = Fixture.CreateMany<Dummy>().ToList();
+            var itemIndex = source.GetRandomIndex();
 
             //Act
-            var result = collection.LastIndexOf(x => x.Name == collection[itemIndex].Name);
+            var result = source.LastIndexOf(x => x.Name == source[itemIndex].Name);
 
             //Assert
             result.Should().Be(itemIndex);
@@ -495,10 +495,10 @@ public class LastIndexOf
         {
             //Arrange
             var item = Fixture.Create<Dummy>();
-            IReadOnlyList<Dummy> collection = Fixture.CreateMany<Dummy>(3).Concat(item, item, item).ToList();
+            IReadOnlyList<Dummy> source = Fixture.CreateMany<Dummy>(3).Concat(item, item, item).ToList();
 
             //Act
-            var result = collection.LastIndexOf(item);
+            var result = source.LastIndexOf(item);
 
             //Assert
             result.Should().Be(5);
@@ -509,10 +509,10 @@ public class LastIndexOf
         {
             //Arrange
             var item = Fixture.Create<Dummy>();
-            IReadOnlyList<Dummy> collection = Fixture.CreateMany<Dummy>(3).Concat(item, item, item).ToList();
+            IReadOnlyList<Dummy> source = Fixture.CreateMany<Dummy>(3).Concat(item, item, item).ToList();
 
             //Act
-            var result = collection.LastIndexOf(x => x.Name == item.Name);
+            var result = source.LastIndexOf(x => x.Name == item.Name);
 
             //Assert
             result.Should().Be(5);

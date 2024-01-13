@@ -1,13 +1,36 @@
 ﻿namespace OPEX.Tests;
 
 [TestClass]
-public class GetRandomIndex : Tester
+public sealed class GetRandomIndexWithArrayOfDummyTests : GetRandomIndexTester<Dummy[]>
+{
+
+}
+
+[TestClass]
+public sealed class GetRandomIndexWithListOfDummyTests : GetRandomIndexTester<List<Dummy>>
+{
+
+}
+
+[TestClass]
+public sealed class GetRandomIndexWithWriteOnlyListOfDummyTests : GetRandomIndexTester<WriteOnlyList<Dummy>>
+{
+
+}
+
+[TestClass]
+public sealed class GetRandomIndexWithImmutableListOfDummyTests : GetRandomIndexTester<ImmutableList<Dummy>>
+{
+
+}
+
+public abstract class GetRandomIndexTester<TCollection> : Tester where TCollection : class, IEnumerable<Dummy>
 {
     [TestMethod]
     public void WhenSourceIsNull_Throw()
     {
         //Arrange
-        IEnumerable<Dummy> source = null!;
+        TCollection source = null!;
 
         //Act
         var action = () => source.GetRandomIndex();
@@ -17,10 +40,10 @@ public class GetRandomIndex : Tester
     }
 
     [TestMethod]
-    public void WhenSourceIsArray_ReturnRandomIndexWithinBoundaries()
+    public void WhenSourceContainsItems_ReturnRandomIndexWithinBoundaries()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>(15).ToArray();
+        var source = Fixture.CreateMany<Dummy>(15).To<TCollection, Dummy>();
 
         //Act
         var results = new List<int>();
@@ -32,47 +55,15 @@ public class GetRandomIndex : Tester
     }
 
     [TestMethod]
-    public void WhenSourceIsIList_ReturnRandomIndexWithinBoundaries()
+    public void WhenSourceIsEmpty_ReturnMinusOne()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>(15).ToList();
+        var source = new List<Dummy>().To<TCollection, Dummy>();
 
         //Act
-        var results = new List<int>();
-        for (var i = 0; i < 100; i++)
-            results.Add(source.GetRandomIndex());
+        var result = source.GetRandomIndex();
 
         //Assert
-        results.Should().OnlyContain(x => x >= 0 && x <= 14);
-    }
-
-    [TestMethod]
-    public void WhenSourceIsWriteOnlyList_ReturnRandomIndexWithinBoundaries()
-    {
-        //Arrange
-        var source = Fixture.CreateMany<Dummy>(15).ToWriteOnlyList();
-
-        //Act
-        var results = new List<int>();
-        for (var i = 0; i < 100; i++)
-            results.Add(source.GetRandomIndex());
-
-        //Assert
-        results.Should().OnlyContain(x => x >= 0 && x <= 14);
-    }
-
-    [TestMethod]
-    public void WhenSourceIsReadOnlyList_ReturnRandomIndexWithinBoundaries()
-    {
-        //Arrange
-        IReadOnlyList<Dummy> source = Fixture.CreateMany<Dummy>(15).ToList();
-
-        //Act
-        var results = new List<int>();
-        for (var i = 0; i < 100; i++)
-            results.Add(source.GetRandomIndex());
-
-        //Assert
-        results.Should().OnlyContain(x => x >= 0 && x <= 14);
+        result.Should().Be(-1);
     }
 }

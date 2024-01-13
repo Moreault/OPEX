@@ -2,9 +2,9 @@
 
 internal static class ValidationExtensions
 {
-    public static bool IsFixedSize<T>(this IEnumerable<T> collection)
+    public static bool IsFixedSize<TSource>(this IEnumerable<TSource> source)
     {
-        return collection is T[];
+        return source is TSource[];
     }
 
 }

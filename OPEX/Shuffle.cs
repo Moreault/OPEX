@@ -3,18 +3,18 @@
 public static partial class CollectionExtensions
 {
     /// <summary>
-    /// Reorganizes the collection in a random order.
+    /// Reorganizes the collection in a random order and returns it.
     /// </summary>
-    public static void Shuffle<T>(this IList<T> collection)
+    public static IList<TSource> Shuffle<TSource>(this IList<TSource> source)
     {
-        if (collection == null) throw new ArgumentNullException(nameof(collection));
-        var n = collection.Count;
-        var random = new Random();
+        if (source == null) throw new ArgumentNullException(nameof(source));
+        var n = source.Count;
         while (n > 1)
         {
             n--;
-            var k = random.Next(n + 1);
-            collection.Swap(n, k);
+            var k = Random.Shared.Next(n + 1);
+            source.Swap(n, k);
         }
+        return source;
     }
 }
