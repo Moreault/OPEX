@@ -1,30 +1,30 @@
 ﻿namespace OPEX.Tests;
 
 [TestClass]
-public sealed class GetRandomIndexWithArrayOfDummyTests : GetRandomIndexTester<Dummy[]>
+public sealed class GetRandomIndexWithArrayOfDummyTests : GetRandomIndexTester<Garbage[]>
 {
 
 }
 
 [TestClass]
-public sealed class GetRandomIndexWithListOfDummyTests : GetRandomIndexTester<List<Dummy>>
+public sealed class GetRandomIndexWithListOfDummyTests : GetRandomIndexTester<List<Garbage>>
 {
 
 }
 
 [TestClass]
-public sealed class GetRandomIndexWithWriteOnlyListOfDummyTests : GetRandomIndexTester<WriteOnlyList<Dummy>>
+public sealed class GetRandomIndexWithWriteOnlyListOfDummyTests : GetRandomIndexTester<WriteOnlyList<Garbage>>
 {
 
 }
 
 [TestClass]
-public sealed class GetRandomIndexWithImmutableListOfDummyTests : GetRandomIndexTester<ImmutableList<Dummy>>
+public sealed class GetRandomIndexWithImmutableListOfDummyTests : GetRandomIndexTester<ImmutableList<Garbage>>
 {
 
 }
 
-public abstract class GetRandomIndexTester<TCollection> : Tester where TCollection : class, IEnumerable<Dummy>
+public abstract class GetRandomIndexTester<TCollection> : TestBase where TCollection : class, IEnumerable<Garbage>
 {
     [TestMethod]
     public void WhenSourceIsNull_Throw()
@@ -43,7 +43,7 @@ public abstract class GetRandomIndexTester<TCollection> : Tester where TCollecti
     public void WhenSourceContainsItems_ReturnRandomIndexWithinBoundaries()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>(15).To<TCollection, Dummy>();
+        var source = Dummy.CreateMany<Garbage>(15).To<TCollection, Garbage>();
 
         //Act
         var results = new List<int>();
@@ -58,7 +58,7 @@ public abstract class GetRandomIndexTester<TCollection> : Tester where TCollecti
     public void WhenSourceIsEmpty_ReturnMinusOne()
     {
         //Arrange
-        var source = new List<Dummy>().To<TCollection, Dummy>();
+        var source = new List<Garbage>().To<TCollection, Garbage>();
 
         //Act
         var result = source.GetRandomIndex();

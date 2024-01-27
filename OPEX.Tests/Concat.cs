@@ -1,37 +1,37 @@
 ﻿namespace OPEX.Tests;
 
 [TestClass]
-public class ConcatWithArrayOfDummyTests : ConcatTester<Dummy[], Dummy>
+public class ConcatWithArrayOfDummyTests : ConcatTester<Garbage[], Garbage>
 {
 
 }
 
 [TestClass]
-public class ConcatWithListOfDummyTests : ConcatTester<List<Dummy>, Dummy>
+public class ConcatWithListOfDummyTests : ConcatTester<List<Garbage>, Garbage>
 {
 
 }
 
 [TestClass]
-public class ConcatWithWriteOnlyListOfDummyTests : ConcatTester<WriteOnlyList<Dummy>, Dummy>
+public class ConcatWithWriteOnlyListOfDummyTests : ConcatTester<WriteOnlyList<Garbage>, Garbage>
 {
 
 }
 
 [TestClass]
-public class ConcatWithDictionaryOfDummyTests : ConcatTester<Dictionary<int, Dummy>, KeyValuePair<int, Dummy>>
+public class ConcatWithDictionaryOfDummyTests : ConcatTester<Dictionary<int, Garbage>, KeyValuePair<int, Garbage>>
 {
 
 }
 
-public abstract class ConcatTester<TCollection, TSource> : Tester where TCollection : class, IEnumerable<TSource>
+public abstract class ConcatTester<TCollection, TSource> : TestBase where TCollection : class, IEnumerable<TSource>
 {
     [TestMethod]
     public void WhenCollectionIsNull_Throw()
     {
         //Arrange
         TCollection source = null!;
-        var items = Fixture.CreateMany<TSource>().ToArray();
+        var items = Dummy.CreateMany<TSource>().ToArray();
 
         //Act
         var action = () => source.Concat(items);
@@ -44,7 +44,7 @@ public abstract class ConcatTester<TCollection, TSource> : Tester where TCollect
     public void WhenItemsIsEmpty_DoNothing()
     {
         //Arrange
-        var source = Fixture.Create<TCollection>();
+        var source = Dummy.Create<TCollection>();
         var original = source.ToArray();
         var items = Array.Empty<TSource>();
 
@@ -59,9 +59,9 @@ public abstract class ConcatTester<TCollection, TSource> : Tester where TCollect
     public void WhenThereAreMultipleItems_AddThemAll()
     {
         //Arrange
-        var source = Fixture.Create<TCollection>();
+        var source = Dummy.Create<TCollection>();
         var original = source.ToArray();
-        var items = Fixture.CreateMany<TSource>().ToArray();
+        var items = Dummy.CreateMany<TSource>().ToArray();
 
         var expected = original.ToList();
         foreach (var item in items)

@@ -1,15 +1,15 @@
 ﻿namespace OPEX.Tests;
 
 [TestClass]
-public class AddRangeWithListOfDummyTests : AddRangeTester<List<Dummy>, Dummy>
+public class AddRangeWithListOfDummyTests : AddRangeTester<List<Garbage>, Garbage>
 {
     [TestMethod]
     public void WhenUsingParamsAndItemsIsEmpty_DoNothing()
     {
         //Arrange
-        IList<Dummy> source = Fixture.CreateMany<Dummy>().ToList();
+        IList<Garbage> source = Dummy.CreateMany<Garbage>().ToList();
         var original = source.ToList();
-        var items = Array.Empty<Dummy>();
+        var items = Array.Empty<Garbage>();
 
         //Act
         source.AddRange(items);
@@ -22,9 +22,9 @@ public class AddRangeWithListOfDummyTests : AddRangeTester<List<Dummy>, Dummy>
     public void WhenUsingEnumerableAndItemsIsEmpty_DoNothing()
     {
         //Arrange
-        IList<Dummy> source = Fixture.CreateMany<Dummy>().ToList();
+        IList<Garbage> source = Dummy.CreateMany<Garbage>().ToList();
         var original = source.ToList();
-        var items = new List<Dummy>();
+        var items = new List<Garbage>();
 
         //Act
         source.AddRange(items);
@@ -37,9 +37,9 @@ public class AddRangeWithListOfDummyTests : AddRangeTester<List<Dummy>, Dummy>
     public void WhenUsingParamsAndItemsContainsOnlyOneItem_AddOneItem()
     {
         //Arrange
-        IList<Dummy> source = Fixture.CreateMany<Dummy>().ToList();
+        IList<Garbage> source = Dummy.CreateMany<Garbage>().ToList();
         var original = source.ToList();
-        var items = new[] { Fixture.Create<Dummy>() };
+        var items = new[] { Dummy.Create<Garbage>() };
 
         //Act
         source.AddRange(items);
@@ -52,9 +52,9 @@ public class AddRangeWithListOfDummyTests : AddRangeTester<List<Dummy>, Dummy>
     public void WhenUsingEnumerableAndItemsContainsOnlyOneItem_AddOneItem()
     {
         //Arrange
-        IList<Dummy> source = Fixture.CreateMany<Dummy>().ToList();
+        IList<Garbage> source = Dummy.CreateMany<Garbage>().ToList();
         var original = source.ToList();
-        var items = new List<Dummy> { Fixture.Create<Dummy>() };
+        var items = new List<Garbage> { Dummy.Create<Garbage>() };
 
         //Act
         source.AddRange(items);
@@ -67,9 +67,9 @@ public class AddRangeWithListOfDummyTests : AddRangeTester<List<Dummy>, Dummy>
     public void WhenUsingParamsAndMultipleItems_AddAllItems()
     {
         //Arrange
-        IList<Dummy> source = Fixture.CreateMany<Dummy>().ToList();
+        IList<Garbage> source = Dummy.CreateMany<Garbage>().ToList();
         var original = source.ToList();
-        var items = Fixture.CreateMany<Dummy>().ToArray();
+        var items = Dummy.CreateMany<Garbage>().ToArray();
 
         //Act
         source.AddRange(items);
@@ -82,9 +82,9 @@ public class AddRangeWithListOfDummyTests : AddRangeTester<List<Dummy>, Dummy>
     public void WhenUsingEnumerableAndMultipleItems_AddAllItems()
     {
         //Arrange
-        IList<Dummy> source = Fixture.CreateMany<Dummy>().ToList();
+        IList<Garbage> source = Dummy.CreateMany<Garbage>().ToList();
         var original = source.ToList();
-        var items = Fixture.CreateMany<Dummy>().ToList();
+        var items = Dummy.CreateMany<Garbage>().ToList();
 
         //Act
         source.AddRange(items);
@@ -95,14 +95,14 @@ public class AddRangeWithListOfDummyTests : AddRangeTester<List<Dummy>, Dummy>
 }
 
 [TestClass]
-public class AddRangeWithArrayOfDummyTests : AddRangeTester<Dummy[], Dummy>
+public class AddRangeWithArrayOfDummyTests : AddRangeTester<Garbage[], Garbage>
 {
     [TestMethod]
     public void WhenUsingParams_Throw()
     {
         //Arrange
-        var source = Fixture.Create<Dummy[]>();
-        var items = Fixture.CreateMany<Dummy>().ToArray();
+        var source = Dummy.Create<Garbage[]>();
+        var items = Dummy.CreateMany<Garbage>().ToArray();
 
         //Act
         var action = () => source.AddRange(items);
@@ -112,14 +112,14 @@ public class AddRangeWithArrayOfDummyTests : AddRangeTester<Dummy[], Dummy>
     }
 }
 
-public abstract class AddRangeTester<TCollection, TSource> : Tester where TCollection : class, IList<TSource>
+public abstract class AddRangeTester<TCollection, TSource> : TestBase where TCollection : class, IList<TSource>
 {
     [TestMethod]
     public void WhenUsingParamsAndCollectionIsNull_Throw()
     {
         //Arrange
         TCollection source = null!;
-        var items = Fixture.CreateMany<TSource>().ToArray();
+        var items = Dummy.CreateMany<TSource>().ToArray();
 
         //Act
         var action = () => source.AddRange(items);
@@ -133,7 +133,7 @@ public abstract class AddRangeTester<TCollection, TSource> : Tester where TColle
     {
         //Arrange
         TCollection source = null!;
-        var items = Fixture.CreateMany<TSource>().ToList();
+        var items = Dummy.CreateMany<TSource>().ToList();
 
         //Act
         var action = () => source.AddRange(items);
@@ -146,7 +146,7 @@ public abstract class AddRangeTester<TCollection, TSource> : Tester where TColle
     public void WhenUsingParamsAndItemsAreNull_Throw()
     {
         //Arrange
-        var source = Fixture.Create<TCollection>();
+        var source = Dummy.Create<TCollection>();
         TCollection items = null!;
 
         //Act
@@ -160,7 +160,7 @@ public abstract class AddRangeTester<TCollection, TSource> : Tester where TColle
     public void WhenUsingEnumerableAndItemsAreNull_Throw()
     {
         //Arrange
-        var source = Fixture.Create<TCollection>();
+        var source = Dummy.Create<TCollection>();
         IEnumerable<TSource> items = null!;
 
         //Act

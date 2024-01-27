@@ -3,13 +3,13 @@
 namespace OPEX.Tests;
 
 [TestClass]
-public class PopAll : Tester
+public class PopAll : TestBase
 {
     [TestMethod]
     public void Parameterless_WhenSourceIsNull_Throw()
     {
         //Arrange
-        IList<Dummy> source = null!;
+        IList<Garbage> source = null!;
 
         //Act
         var action = () => source.PopAll();
@@ -22,7 +22,7 @@ public class PopAll : Tester
     public void Parameterless_WhenSourceIsEmpty_ReturnEmpty()
     {
         //Arrange
-        var source = new List<Dummy>();
+        var source = new List<Garbage>();
 
         //Act
         var result = source.PopAll();
@@ -35,7 +35,7 @@ public class PopAll : Tester
     public void Parameterless_WhenSourceIsEmpty_SourceShouldStillBeEmpty()
     {
         //Arrange
-        var source = new List<Dummy>();
+        var source = new List<Garbage>();
 
         //Act
         source.PopAll();
@@ -48,7 +48,7 @@ public class PopAll : Tester
     public void Parameterless_WhenSourceContainsItems_ReturnAllItems()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().ToList();
+        var source = Dummy.CreateMany<Garbage>().ToList();
         var original = source.ToList();
 
         //Act
@@ -62,7 +62,7 @@ public class PopAll : Tester
     public void Parameterless_WhenSourceContainsItems_RemoveAllItems()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().ToList();
+        var source = Dummy.CreateMany<Garbage>().ToList();
 
         //Act
         source.PopAll();
@@ -75,10 +75,10 @@ public class PopAll : Tester
     public void ItemOverload_WhenSourceIsNull_Throw()
     {
         //Arrange
-        IList<Dummy> source = null!;
+        IList<Garbage> source = null!;
 
         //Act
-        var action = () => source.PopAll((Dummy)null!);
+        var action = () => source.PopAll((Garbage)null!);
 
         //Assert
         action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(source));
@@ -88,8 +88,8 @@ public class PopAll : Tester
     public void ItemOverload_WhenItemNotInSource_ReturnEmpty()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().ToList();
-        var item = Fixture.Create<Dummy>();
+        var source = Dummy.CreateMany<Garbage>().ToList();
+        var item = Dummy.Create<Garbage>();
 
         //Act
         var result = source.PopAll(item);
@@ -102,22 +102,22 @@ public class PopAll : Tester
     public void ItemOverload_WhenItemIsInSource_ReturnItem()
     {
         //Arrange
-        var item = Fixture.Create<Dummy>();
-        var source = Fixture.CreateMany<Dummy>(5).Append(item).ToShuffled().ToList();
+        var item = Dummy.Create<Garbage>();
+        var source = Dummy.CreateMany<Garbage>(5).Append(item).ToShuffled().ToList();
 
         //Act
         var result = source.PopAll(item);
 
         //Assert
-        result.Should().BeEquivalentTo(new List<Dummy> { item });
+        result.Should().BeEquivalentTo(new List<Garbage> { item });
     }
 
     [TestMethod]
     public void ItemOverload_WhenItemIsInSource_RemoveFromSource()
     {
         //Arrange
-        var item = Fixture.Create<Dummy>();
-        var source = Fixture.CreateMany<Dummy>(5).Append(item).ToShuffled().ToList();
+        var item = Dummy.Create<Garbage>();
+        var source = Dummy.CreateMany<Garbage>(5).Append(item).ToShuffled().ToList();
 
         //Act
         source.PopAll(item);
@@ -130,22 +130,22 @@ public class PopAll : Tester
     public void ItemOverload_WhenItemIsInSourceMultipleTimes_ReturnAllOccurences()
     {
         //Arrange
-        var item = Fixture.Create<Dummy>();
-        var source = Fixture.CreateMany<Dummy>(5).Append(item).Append(item).Append(item).ToShuffled().ToList();
+        var item = Dummy.Create<Garbage>();
+        var source = Dummy.CreateMany<Garbage>(5).Append(item).Append(item).Append(item).ToShuffled().ToList();
 
         //Act
         var result = source.PopAll(item);
 
         //Assert
-        result.Should().BeEquivalentTo(new List<Dummy> { item, item, item });
+        result.Should().BeEquivalentTo(new List<Garbage> { item, item, item });
     }
 
     [TestMethod]
     public void ItemOverload_WhenItemIsInSource_RemoveAllOccurencesFromSource()
     {
         //Arrange
-        var item = Fixture.Create<Dummy>();
-        var source = Fixture.CreateMany<Dummy>(5).Append(item).Append(item).Append(item).ToShuffled().ToList();
+        var item = Dummy.Create<Garbage>();
+        var source = Dummy.CreateMany<Garbage>(5).Append(item).Append(item).Append(item).ToShuffled().ToList();
 
         //Act
         source.PopAll(item);
@@ -158,8 +158,8 @@ public class PopAll : Tester
     public void LambdaOverload_WhenSourceIsNull_Throw()
     {
         //Arrange
-        IList<Dummy> source = null!;
-        Func<Dummy, bool> predicate = x => x.Name == Fixture.Create<string>();
+        IList<Garbage> source = null!;
+        Func<Garbage, bool> predicate = x => x.Name == Dummy.Create<string>();
 
         //Act
         var action = () => source.PopAll(predicate);
@@ -172,8 +172,8 @@ public class PopAll : Tester
     public void LambdaOverload_WhenMatchIsNull_Throw()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().ToList();
-        Func<Dummy, bool> match = null!;
+        var source = Dummy.CreateMany<Garbage>().ToList();
+        Func<Garbage, bool> match = null!;
 
         //Act
         var action = () => source.PopAll(match);
@@ -186,10 +186,10 @@ public class PopAll : Tester
     public void LambdaOverload_WhenNoMatchInSource_ReturnEmpty()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().ToList();
+        var source = Dummy.CreateMany<Garbage>().ToList();
 
         //Act
-        var result = source.PopAll(x => x.Name == Fixture.Create<string>());
+        var result = source.PopAll(x => x.Name == Dummy.Create<string>());
 
         //Assert
         result.Should().BeEmpty();
@@ -199,11 +199,11 @@ public class PopAll : Tester
     public void LambdaOverload_WhenNoMatchInSource_DoNotModifySource()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().ToList();
+        var source = Dummy.CreateMany<Garbage>().ToList();
         var original = source.ToList();
 
         //Act
-        source.PopAll(x => x.Name == Fixture.Create<string>());
+        source.PopAll(x => x.Name == Dummy.Create<string>());
 
         //Assert
         source.Should().BeEquivalentTo(original);
@@ -213,9 +213,9 @@ public class PopAll : Tester
     public void LambdaOverload_WhenMultipleMatchesInSource_ReturnAllMatches()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>(3).ToList();
-        var name = Fixture.Create<string>();
-        var items = Fixture.Build<Dummy>().With(x => x.Name, name).CreateMany().ToList();
+        var source = Dummy.CreateMany<Garbage>(3).ToList();
+        var name = Dummy.Create<string>();
+        var items = Dummy.Build<Garbage>().With(x => x.Name, name).CreateMany().ToList();
         source.AddRange(items);
 
         //Act
@@ -229,9 +229,9 @@ public class PopAll : Tester
     public void LambdaOverload_WhenMultipleMatchesInSource_RemoveFromSource()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>(3).ToList();
-        var name = Fixture.Create<string>();
-        var items = Fixture.Build<Dummy>().With(x => x.Name, name).CreateMany().ToList();
+        var source = Dummy.CreateMany<Garbage>(3).ToList();
+        var name = Dummy.Create<string>();
+        var items = Dummy.Build<Garbage>().With(x => x.Name, name).CreateMany().ToList();
         source.AddRange(items);
 
         //Act

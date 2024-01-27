@@ -1,37 +1,37 @@
 ﻿namespace OPEX.Tests;
 
 [TestClass]
-public sealed class FirstIndexOfWithArrayOfDummyTests : FirstIndexOfTester<Dummy[]>
+public sealed class FirstIndexOfWithArrayOfDummyTests : FirstIndexOfTester<Garbage[]>
 {
 
 }
 
 [TestClass]
-public sealed class FirstIndexOfWithListOfDummyTests : FirstIndexOfTester<List<Dummy>>
+public sealed class FirstIndexOfWithListOfDummyTests : FirstIndexOfTester<List<Garbage>>
 {
 
 }
 
 [TestClass]
-public sealed class FirstIndexOfWithWriteOnlyListOfDummyTests : FirstIndexOfTester<WriteOnlyList<Dummy>>
+public sealed class FirstIndexOfWithWriteOnlyListOfDummyTests : FirstIndexOfTester<WriteOnlyList<Garbage>>
 {
 
 }
 
 [TestClass]
-public sealed class FirstIndexOfWithImmutableListOfDummyTests : FirstIndexOfTester<ImmutableList<Dummy>>
+public sealed class FirstIndexOfWithImmutableListOfDummyTests : FirstIndexOfTester<ImmutableList<Garbage>>
 {
 
 }
 
-public abstract class FirstIndexOfTester<TCollection> : Tester where TCollection : class, IList<Dummy>
+public abstract class FirstIndexOfTester<TCollection> : TestBase where TCollection : class, IList<Garbage>
 {
     [TestMethod]
     public void WhenUsingItemAndCollectionIsNull_Throw()
     {
         //Arrange
         TCollection source = null!;
-        var item = Fixture.Create<Dummy>();
+        var item = Dummy.Create<Garbage>();
 
         //Act
         var action = () => source.FirstIndexOf(item);
@@ -45,7 +45,7 @@ public abstract class FirstIndexOfTester<TCollection> : Tester where TCollection
     {
         //Arrange
         TCollection source = null!;
-        var item = Fixture.Create<Func<Dummy, bool>>();
+        var item = Dummy.Create<Func<Garbage, bool>>();
 
         //Act
         var action = () => source.FirstIndexOf(item);
@@ -58,8 +58,8 @@ public abstract class FirstIndexOfTester<TCollection> : Tester where TCollection
     public void WhenUsingLambaAndLambdaIsNull_Throw()
     {
         //Arrange
-        var source = Fixture.Create<TCollection>();
-        Func<Dummy, bool> match = null!;
+        var source = Dummy.Create<TCollection>();
+        Func<Garbage, bool> match = null!;
 
         //Act
         var action = () => source.FirstIndexOf(match);
@@ -72,10 +72,10 @@ public abstract class FirstIndexOfTester<TCollection> : Tester where TCollection
     public void WhenUsingItemAndItemIsNotInCollection_ReturnMinusOne()
     {
         //Arrange
-        var source = Fixture.Create<TCollection>();
+        var source = Dummy.Create<TCollection>();
 
         //Act
-        var result = source.FirstIndexOf(Fixture.Create<Dummy>());
+        var result = source.FirstIndexOf(Dummy.Create<Garbage>());
 
         //Assert
         result.Should().Be(-1);
@@ -85,10 +85,10 @@ public abstract class FirstIndexOfTester<TCollection> : Tester where TCollection
     public void WhenUsingLambdaAndItemIsNotInCollection_ReturnMinusOne()
     {
         //Arrange
-        var source = Fixture.Create<TCollection>();
+        var source = Dummy.Create<TCollection>();
 
         //Act
-        var result = source.FirstIndexOf(x => x.Name == Fixture.Create<string>());
+        var result = source.FirstIndexOf(x => x.Name == Dummy.Create<string>());
 
         //Assert
         result.Should().Be(-1);
@@ -98,7 +98,7 @@ public abstract class FirstIndexOfTester<TCollection> : Tester where TCollection
     public void WhenUsingItemAndItemIsInCollectionOnce_ReturnItemIndex()
     {
         //Arrange
-        var source = Fixture.Create<TCollection>();
+        var source = Dummy.Create<TCollection>();
         var itemIndex = source.GetRandomIndex();
         var item = source[itemIndex];
 
@@ -113,7 +113,7 @@ public abstract class FirstIndexOfTester<TCollection> : Tester where TCollection
     public void WhenUsingLambaAndItemIsInCollectionOnce_ReturnIndex()
     {
         //Arrange
-        var source = Fixture.Create<TCollection>();
+        var source = Dummy.Create<TCollection>();
         var itemIndex = source.GetRandomIndex();
 
         //Act
@@ -127,8 +127,8 @@ public abstract class FirstIndexOfTester<TCollection> : Tester where TCollection
     public void WhenUsingItemAndItemIsInCollectionMultipleTimes_ReturnOnlyTheFirstOccurence()
     {
         //Arrange
-        var item = Fixture.Create<Dummy>();
-        var source = Fixture.CreateMany<Dummy>(3).Concat(item, item, item).To<TCollection, Dummy>();
+        var item = Dummy.Create<Garbage>();
+        var source = Dummy.CreateMany<Garbage>(3).Concat(item, item, item).To<TCollection, Garbage>();
 
         //Act
         var result = source.FirstIndexOf(item);
@@ -141,8 +141,8 @@ public abstract class FirstIndexOfTester<TCollection> : Tester where TCollection
     public void WhenUsingLambdaAndItemIsInCollectionMultipleTimes_ReturnOnlyTheFirstOccurence()
     {
         //Arrange
-        var item = Fixture.Create<Dummy>();
-        var source = Fixture.CreateMany<Dummy>(3).Concat(item, item, item).To<TCollection, Dummy>();
+        var item = Dummy.Create<Garbage>();
+        var source = Dummy.CreateMany<Garbage>(3).Concat(item, item, item).To<TCollection, Garbage>();
 
         //Act
         var result = source.FirstIndexOf(x => x.Name == item.Name);

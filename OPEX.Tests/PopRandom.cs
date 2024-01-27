@@ -1,13 +1,13 @@
 ﻿namespace OPEX.Tests;
 
 [TestClass]
-public sealed class PopRandom : Tester
+public sealed class PopRandom : TestBase
 {
     [TestMethod]
     public void WhenSourceIsNull_Throw()
     {
         //Arrange
-        IList<Dummy> source = null!;
+        IList<Garbage> source = null!;
 
         //Act
         var action = () => source.PopRandom();
@@ -20,7 +20,7 @@ public sealed class PopRandom : Tester
     public void WhenSourceIsEmpty_Throw()
     {
         //Arrange
-        var source = new List<Dummy>();
+        var source = new List<Garbage>();
 
         //Act
         var action = () => source.PopRandom();
@@ -33,8 +33,8 @@ public sealed class PopRandom : Tester
     public void WhenSourceContainsOneItem_ReturnItem()
     {
         //Arrange
-        var item = Fixture.Create<Dummy>();
-        var source = new List<Dummy> { item };
+        var item = Dummy.Create<Garbage>();
+        var source = new List<Garbage> { item };
 
         //Act
         var result = source.PopRandom();
@@ -47,8 +47,8 @@ public sealed class PopRandom : Tester
     public void WhenSourceContainsOneItem_RemoveItem()
     {
         //Arrange
-        var item = Fixture.Create<Dummy>();
-        var source = new List<Dummy> { item };
+        var item = Dummy.Create<Garbage>();
+        var source = new List<Garbage> { item };
 
         //Act
         source.PopRandom();
@@ -61,7 +61,7 @@ public sealed class PopRandom : Tester
     public void WhenSourceContainsMultipleItems_ReturnAny()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().ToList();
+        var source = Dummy.CreateMany<Garbage>().ToList();
         var original = source.ToList();
 
         //Act
@@ -76,7 +76,7 @@ public sealed class PopRandom : Tester
     public void WhenSourceContainsMultipleItems_RemoveReturnedItem()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().ToList();
+        var source = Dummy.CreateMany<Garbage>().ToList();
         var original = source.ToList();
 
         //Act

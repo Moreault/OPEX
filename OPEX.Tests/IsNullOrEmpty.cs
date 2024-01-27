@@ -4,7 +4,7 @@ namespace OPEX.Tests;
 public class IsNullOrEmpty
 {
     [TestClass]
-    public class WithArray : Tester
+    public class WithArray : TestBase
     {
         [TestMethod]
         public void WhenIsNull_ReturnTrue()
@@ -36,7 +36,7 @@ public class IsNullOrEmpty
         public void WhenIsNotNullAndContainsItems_ReturnFalse()
         {
             //Arrange
-            var source = Fixture.CreateMany<string>().ToArray();
+            var source = Dummy.CreateMany<string>().ToArray();
 
             //Act
             var result = source.IsNullOrEmpty();
@@ -47,7 +47,7 @@ public class IsNullOrEmpty
     }
 
     [TestClass]
-    public class WithList : Tester
+    public class WithList : TestBase
     {
         [TestMethod]
         public void WhenIsNull_ReturnTrue()
@@ -79,7 +79,7 @@ public class IsNullOrEmpty
         public void WhenIsNotNullAndContainsItems_ReturnFalse()
         {
             //Arrange
-            var source = Fixture.CreateMany<string>().ToList();
+            var source = Dummy.CreateMany<string>().ToList();
 
             //Act
             var result = source.IsNullOrEmpty();
@@ -90,7 +90,7 @@ public class IsNullOrEmpty
     }
 
     [TestClass]
-    public class WithReadOnlyList : Tester
+    public class WithReadOnlyList : TestBase
     {
         [TestMethod]
         public void WhenIsNull_ReturnTrue()
@@ -122,7 +122,7 @@ public class IsNullOrEmpty
         public void WhenIsNotNullAndContainsItems_ReturnFalse()
         {
             //Arrange
-            IReadOnlyList<string> source = Fixture.CreateMany<string>().ToList();
+            IReadOnlyList<string> source = Dummy.CreateMany<string>().ToList();
 
             //Act
             var result = source.IsNullOrEmpty();
@@ -133,7 +133,7 @@ public class IsNullOrEmpty
     }
 
     [TestClass]
-    public class WithDictionary : Tester
+    public class WithDictionary : TestBase
     {
         [TestMethod]
         public void WhenIsNull_ReturnTrue()
@@ -165,7 +165,7 @@ public class IsNullOrEmpty
         public void WhenIsNotNullAndContainsItems_ReturnFalse()
         {
             //Arrange
-            var source = Fixture.Create<Dictionary<int, string>>();
+            var source = Dummy.Create<Dictionary<int, string>>();
 
             //Act
             var result = source.IsNullOrEmpty();

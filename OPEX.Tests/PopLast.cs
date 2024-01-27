@@ -1,13 +1,13 @@
 ﻿namespace OPEX.Tests;
 
 [TestClass]
-public class PopLast : Tester
+public class PopLast : TestBase
 {
     [TestMethod]
     public void Parameterless_WhenSourceIsNull_Throw()
     {
         //Arrange
-        IList<Dummy> source = null!;
+        IList<Garbage> source = null!;
 
         //Act
         var action = () => source.PopLast();
@@ -20,7 +20,7 @@ public class PopLast : Tester
     public void Parameterless_WhenSourceIsEmpty_Throw()
     {
         //Arrange
-        var source = new List<Dummy>();
+        var source = new List<Garbage>();
 
         //Act
         var action = () => source.PopLast();
@@ -33,7 +33,7 @@ public class PopLast : Tester
     public void Parameterless_WhenSourceHasOnlyOneItem_ShouldBeEmptyAfter()
     {
         //Arrange
-        var source = new List<Dummy> { Fixture.Create<Dummy>() };
+        var source = new List<Garbage> { Dummy.Create<Garbage>() };
 
         //Act
         source.PopLast();
@@ -46,8 +46,8 @@ public class PopLast : Tester
     public void Parameterless_WhenSourceHasOnlyOneItem_ThenReturnRemovedElement()
     {
         //Arrange
-        var item = Fixture.Create<Dummy>();
-        var source = new List<Dummy> { item };
+        var item = Dummy.Create<Garbage>();
+        var source = new List<Garbage> { item };
 
         //Act
         var result = source.PopLast();
@@ -60,7 +60,7 @@ public class PopLast : Tester
     public void Parameterless_WhenSourceHasMultipleItems_LastItemShouldBeRemoved()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().ToList();
+        var source = Dummy.CreateMany<Garbage>().ToList();
         var original = source.ToList();
         var item = source.Last();
 
@@ -75,7 +75,7 @@ public class PopLast : Tester
     public void Parameterless_WhenSourceHasMultipleItems_ThenReturnRemovedElement()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().ToList();
+        var source = Dummy.CreateMany<Garbage>().ToList();
         var item = source.Last();
 
         //Act
@@ -89,10 +89,10 @@ public class PopLast : Tester
     public void Item_WhenSourceIsNull_Throw()
     {
         //Arrange
-        IList<Dummy> source = null!;
+        IList<Garbage> source = null!;
 
         //Act
-        var action = () => source.PopLast((Dummy)null!);
+        var action = () => source.PopLast((Garbage)null!);
 
         //Assert
         action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(source));
@@ -102,8 +102,8 @@ public class PopLast : Tester
     public void Item_WhenSourceContainsOnlyOneItem_ReturnSingleItem()
     {
         //Arrange
-        var item = Fixture.Create<Dummy>();
-        var source = new List<Dummy> { item };
+        var item = Dummy.Create<Garbage>();
+        var source = new List<Garbage> { item };
 
         //Act
         var result = source.PopLast(item);
@@ -116,7 +116,7 @@ public class PopLast : Tester
     public void Item_WhenSourceContainsOnlyOneItem_SourceShouldBeEmpty()
     {
         //Arrange
-        var source = new List<Dummy> { Fixture.Create<Dummy>() };
+        var source = new List<Garbage> { Dummy.Create<Garbage>() };
 
         //Act
         source.PopLast(source.Single());
@@ -129,7 +129,7 @@ public class PopLast : Tester
     public void Item_WhenSourceContainsMutlipleItems_ReturnLastItem()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().ToList();
+        var source = Dummy.CreateMany<Garbage>().ToList();
         var original = source.ToList();
 
         //Act
@@ -143,7 +143,7 @@ public class PopLast : Tester
     public void Item_WhenSourceContainsMultipleItems_RemoveLastItem()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().ToList();
+        var source = Dummy.CreateMany<Garbage>().ToList();
         var original = source.ToList();
 
         //Act
@@ -157,8 +157,8 @@ public class PopLast : Tester
     public void Predicate_WhenSourceIsNull_Throw()
     {
         //Arrange
-        IList<Dummy> source = null!;
-        var predicate = Fixture.Create<Func<Dummy, bool>>();
+        IList<Garbage> source = null!;
+        var predicate = Dummy.Create<Func<Garbage, bool>>();
 
         //Act
         var action = () => source.PopLast(predicate);
@@ -171,8 +171,8 @@ public class PopLast : Tester
     public void Predicate_WhenPredicateIsNull_Throw()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().ToList();
-        Func<Dummy, bool> match = null!;
+        var source = Dummy.CreateMany<Garbage>().ToList();
+        Func<Garbage, bool> match = null!;
 
         //Act
         var action = () => source.PopLast(match);
@@ -185,10 +185,10 @@ public class PopLast : Tester
     public void Predicate_WhenSourceHasItemsButNoneMatchPredicate_Throw()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().ToList();
+        var source = Dummy.CreateMany<Garbage>().ToList();
 
         //Act
-        var action = () => source.PopLast(x => x.Name == Fixture.Create<string>());
+        var action = () => source.PopLast(x => x.Name == Dummy.Create<string>());
 
         //Assert
         action.Should().Throw<ArgumentOutOfRangeException>();
@@ -198,7 +198,7 @@ public class PopLast : Tester
     public void Predicate_WhenSourceContainsItemsAndOnlyOneMatchesPredicate_ReturnItem()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().ToList();
+        var source = Dummy.CreateMany<Garbage>().ToList();
         var item = source.Last();
 
         //Act
@@ -212,7 +212,7 @@ public class PopLast : Tester
     public void Predicate_WhenSourceContainsItemsAndOnlyOneMatchesPredicate_RemoveItem()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().ToList();
+        var source = Dummy.CreateMany<Garbage>().ToList();
         var item = source.Last();
         var original = source.ToList();
 
@@ -227,9 +227,9 @@ public class PopLast : Tester
     public void Predicate_WhenSourceContainsItemsAndMultipleMatchesWithPredicate_ReturnLastItemMatch()
     {
         //Arrange
-        var name = Fixture.Create<string>();
-        var itemsOfInterest = Fixture.Build<Dummy>().With(x => x.Name, name).CreateMany().ToList();
-        var source = Fixture.CreateMany<Dummy>().Concat(itemsOfInterest).Concat(Fixture.CreateMany<Dummy>()).ToList();
+        var name = Dummy.Create<string>();
+        var itemsOfInterest = Dummy.Build<Garbage>().With(x => x.Name, name).CreateMany().ToList();
+        var source = Dummy.CreateMany<Garbage>().Concat(itemsOfInterest).Concat(Dummy.CreateMany<Garbage>()).ToList();
 
         //Act
         var result = source.PopLast(x => x.Name == name);
@@ -242,9 +242,9 @@ public class PopLast : Tester
     public void Predicate_WhenSourceContainsItemsAndMultipleMatchesWithPredicate_RemoveLastItemMatch()
     {
         //Arrange
-        var name = Fixture.Create<string>();
-        var itemsOfInterest = Fixture.Build<Dummy>().With(x => x.Name, name).CreateMany().ToList();
-        var source = Fixture.CreateMany<Dummy>().Concat(itemsOfInterest).Concat(Fixture.CreateMany<Dummy>()).ToList();
+        var name = Dummy.Create<string>();
+        var itemsOfInterest = Dummy.Build<Garbage>().With(x => x.Name, name).CreateMany().ToList();
+        var source = Dummy.CreateMany<Garbage>().Concat(itemsOfInterest).Concat(Dummy.CreateMany<Garbage>()).ToList();
         var original = source.ToList();
 
         //Act

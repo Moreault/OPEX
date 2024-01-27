@@ -1,20 +1,20 @@
 ﻿namespace OPEX.Tests;
 
 [TestClass]
-public sealed class ToShuffledWithArray : ToShuffledTester<Dummy[]>
+public sealed class ToShuffledWithArray : ToShuffledTester<Garbage[]>
 {
 
 
 }
 
 [TestClass]
-public sealed class ToShuffledWithList : ToShuffledTester<List<Dummy>>
+public sealed class ToShuffledWithList : ToShuffledTester<List<Garbage>>
 {
 
 
 }
 
-public abstract class ToShuffledTester<TCollection> : Tester where TCollection : class, IEnumerable<Dummy>
+public abstract class ToShuffledTester<TCollection> : TestBase where TCollection : class, IEnumerable<Garbage>
 {
     [TestMethod]
     public void WhenSourceIsNull_Throw()
@@ -33,7 +33,7 @@ public abstract class ToShuffledTester<TCollection> : Tester where TCollection :
     public void WhenSourceIsEmpty_ReturnEmpty()
     {
         //Arrange
-        var source = new List<Dummy>().To<TCollection, Dummy>();
+        var source = new List<Garbage>().To<TCollection, Garbage>();
 
         //Act
         var result = source.ToShuffled();
@@ -46,7 +46,7 @@ public abstract class ToShuffledTester<TCollection> : Tester where TCollection :
     public void WhenSourceIsNotEmpty_ReturnEquivalentCollectionButInDifferentOrder()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>(10).ToList().To<TCollection, Dummy>();
+        var source = Dummy.CreateMany<Garbage>(10).ToList().To<TCollection, Garbage>();
 
         //Act
         var result = source.ToShuffled();
@@ -60,7 +60,7 @@ public abstract class ToShuffledTester<TCollection> : Tester where TCollection :
     public void WhenSourceIsNotEmpty_SourceOrderShouldNotBeModified()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>(10).ToList().To<TCollection, Dummy>();
+        var source = Dummy.CreateMany<Garbage>(10).ToList().To<TCollection, Garbage>();
         var original = source.ToList();
 
         //Act

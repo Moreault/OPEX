@@ -1,14 +1,14 @@
 ﻿namespace OPEX.Tests;
 
 [TestClass]
-public sealed class SingleOrDefault : Tester
+public sealed class SingleOrDefault : TestBase
 {
     [TestMethod]
     public void Parameterless_WhenSourceIsNull_ThrowArgumentNullException()
     {
         //Arrange
-        IEnumerable<Dummy> source = null!;
-        var customMessage = Fixture.Create<string>();
+        IEnumerable<Garbage> source = null!;
+        var customMessage = Dummy.Create<string>();
 
         //Act
         var action = () => source.SingleOrDefault(customMessage);
@@ -21,8 +21,8 @@ public sealed class SingleOrDefault : Tester
     public void Parameterless_WhenSourceIsEmpty_ReturnNull()
     {
         //Arrange
-        var source = new List<Dummy>();
-        var customMessage = Fixture.Create<string>();
+        var source = new List<Garbage>();
+        var customMessage = Dummy.Create<string>();
 
         //Act
         var result = source.SingleOrDefault(customMessage);
@@ -35,8 +35,8 @@ public sealed class SingleOrDefault : Tester
     public void Parameterless_WhenContainsItems_ThrowWithCustomMessage()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().ToList();
-        var customMessage = Fixture.Create<string>();
+        var source = Dummy.CreateMany<Garbage>().ToList();
+        var customMessage = Dummy.Create<string>();
 
         //Act
         var action = () => source.SingleOrDefault(customMessage);
@@ -49,12 +49,12 @@ public sealed class SingleOrDefault : Tester
     public void Parameterless_WhenThereIsExactlyOneItem_ReturnItem()
     {
         //Arrange
-        var item = Fixture.Create<Dummy>();
-        var source = new List<Dummy>
+        var item = Dummy.Create<Garbage>();
+        var source = new List<Garbage>
         {
             item
         };
-        var customMessage = Fixture.Create<string>();
+        var customMessage = Dummy.Create<string>();
 
         //Act
         var result = source.SingleOrDefault(customMessage);
@@ -67,9 +67,9 @@ public sealed class SingleOrDefault : Tester
     public void Predicate_WhenSourceIsNull_ThrowArgumentNullException()
     {
         //Arrange
-        IEnumerable<Dummy> source = null!;
-        var predicate = Fixture.Create<Func<Dummy, bool>>();
-        var customMessage = Fixture.Create<string>();
+        IEnumerable<Garbage> source = null!;
+        var predicate = Dummy.Create<Func<Garbage, bool>>();
+        var customMessage = Dummy.Create<string>();
 
         //Act
         var action = () => source.SingleOrDefault(predicate, customMessage);
@@ -82,9 +82,9 @@ public sealed class SingleOrDefault : Tester
     public void Predicate_WhenPredicateIsNull_ThrowArgumentNullException()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().ToList();
-        Func<Dummy, bool> predicate = null!;
-        var customMessage = Fixture.Create<string>();
+        var source = Dummy.CreateMany<Garbage>().ToList();
+        Func<Garbage, bool> predicate = null!;
+        var customMessage = Dummy.Create<string>();
 
         //Act
         var action = () => source.SingleOrDefault(predicate, customMessage);
@@ -96,9 +96,9 @@ public sealed class SingleOrDefault : Tester
     [TestMethod] public void Predicate_WhenSourceIsEmpty_ReturnNull()
     {
         //Arrange
-        var source = new List<Dummy>();
-        var predicate = Fixture.Create<Func<Dummy, bool>>();
-        var customMessage = Fixture.Create<string>();
+        var source = new List<Garbage>();
+        var predicate = Dummy.Create<Func<Garbage, bool>>();
+        var customMessage = Dummy.Create<string>();
 
         //Act
         var result = source.SingleOrDefault(predicate, customMessage);
@@ -111,8 +111,8 @@ public sealed class SingleOrDefault : Tester
     public void Predicate_WhenSourceHasNoMatchForPredicate_ReturnNull()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().ToList();
-        var customMessage = Fixture.Create<string>();
+        var source = Dummy.CreateMany<Garbage>().ToList();
+        var customMessage = Dummy.Create<string>();
 
         //Act
         var result = source.SingleOrDefault(x => x.Id < 0, customMessage);
@@ -125,9 +125,9 @@ public sealed class SingleOrDefault : Tester
     public void Predicate_WhenSourceHasOneMatchForPredicate_ReturnMatchingItem()
     {
         //Arrange
-        var item = Fixture.Create<Dummy>();
-        var source = Fixture.CreateMany<Dummy>().Append(item).ToList();
-        var customMessage = Fixture.Create<string>();
+        var item = Dummy.Create<Garbage>();
+        var source = Dummy.CreateMany<Garbage>().Append(item).ToList();
+        var customMessage = Dummy.Create<string>();
 
         //Act
         var result = source.SingleOrDefault(x => x.Id == item.Id, customMessage);
@@ -140,10 +140,10 @@ public sealed class SingleOrDefault : Tester
     public void Predicate_WhenSourceHasMultipleMatchesForPredicate_ThrowWithCustomMessage()
     {
         //Arrange
-        var name = Fixture.Create<string>();
-        var items = Fixture.Build<Dummy>().With(x => x.Name, name).CreateMany().ToList();
-        var source = Fixture.CreateMany<Dummy>().Concat(items).ToList();
-        var customMessage = Fixture.Create<string>();
+        var name = Dummy.Create<string>();
+        var items = Dummy.Build<Garbage>().With(x => x.Name, name).CreateMany().ToList();
+        var source = Dummy.CreateMany<Garbage>().Concat(items).ToList();
+        var customMessage = Dummy.Create<string>();
 
         //Act
         var action = () => source.SingleOrDefault(x => x.Name == name, customMessage);

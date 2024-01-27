@@ -1,20 +1,18 @@
-﻿using ToolBX.Eloquentest.Extensions;
-
-namespace OPEX.Tests;
+﻿namespace OPEX.Tests;
 
 [TestClass]
 public class Swap
 {
     [TestClass]
-    public class WithArray : Tester
+    public class WithArray : TestBase
     {
         [TestMethod]
         public void WhenCollectionIsNull_Throw()
         {
             //Arrange
-            Dummy[] source = null!;
-            var current = Fixture.Create<int>();
-            var destination = Fixture.Create<int>();
+            Garbage[] source = null!;
+            var current = Dummy.Create<int>();
+            var destination = Dummy.Create<int>();
 
             //Act
             var action = () => source.Swap(current, destination);
@@ -27,9 +25,9 @@ public class Swap
         public void WhenCurrentIsNegative_Throw()
         {
             //Arrange
-            var source = Fixture.CreateMany<int>().ToArray();
-            var currentIndex = -Fixture.Create<int>();
-            var destinationIndex = Fixture.CreateBetween(0, source.Length);
+            var source = Dummy.CreateMany<int>().ToArray();
+            var currentIndex = -Dummy.Create<int>();
+            var destinationIndex = Dummy.Number.Between(0, source.Length).Create();
 
             //Act
             var action = () => source.Swap(currentIndex, destinationIndex);
@@ -42,10 +40,10 @@ public class Swap
         public void WhenCurrentIsOutOfBounds_Throw()
         {
             //Arrange
-            var source = Fixture.CreateMany<int>().ToArray();
-            var currentIndex = Fixture.CreateGreaterThan(source.LastIndex());
-            var destinationIndex = Fixture.CreateBetween(0, source.LastIndex());
-                
+            var source = Dummy.CreateMany<int>().ToArray();
+            var currentIndex = Dummy.Number.GreaterThan(source.LastIndex()).Create();
+            var destinationIndex = Dummy.Number.Between(0, source.LastIndex()).Create();
+
             //Act
             var action = () => source.Swap(currentIndex, destinationIndex);
 
@@ -57,9 +55,9 @@ public class Swap
         public void WhenDestinationIsNegative_Throw()
         {
             //Arrange
-            var source = Fixture.CreateMany<int>().ToArray();
-            var currentIndex = Fixture.CreateBetween(0, source.LastIndex());
-            var destinationIndex = -Fixture.Create<int>();
+            var source = Dummy.CreateMany<int>().ToArray();
+            var currentIndex = Dummy.Number.Between(0, source.LastIndex()).Create();
+            var destinationIndex = -Dummy.Create<int>();
 
             //Act
             var action = () => source.Swap(currentIndex, destinationIndex);
@@ -72,9 +70,9 @@ public class Swap
         public void WhenDestinationIsOutOfBounds_Throw()
         {
             //Arrange
-            var source = Fixture.CreateMany<int>().ToArray();
-            var currentIndex = Fixture.CreateBetween(0, source.LastIndex());
-            var destinationIndex = Fixture.CreateGreaterThan(source.LastIndex());
+            var source = Dummy.CreateMany<int>().ToArray();
+            var currentIndex = Dummy.Number.Between(0, source.LastIndex()).Create();
+            var destinationIndex = Dummy.Number.GreaterThan(source.LastIndex()).Create();
 
             //Act
             var action = () => source.Swap(currentIndex, destinationIndex);
@@ -89,10 +87,10 @@ public class Swap
             //Arrange
             var source = new[]
             {
-                Fixture.Build<Dummy>().With(x => x.Name, "First").Create(),
-                Fixture.Build<Dummy>().With(x => x.Name, "Second").Create(),
-                Fixture.Build<Dummy>().With(x => x.Name, "Third").Create(),
-                Fixture.Build<Dummy>().With(x => x.Name, "Fourth").Create(),
+                Dummy.Build<Garbage>().With(x => x.Name, "First").Create(),
+                Dummy.Build<Garbage>().With(x => x.Name, "Second").Create(),
+                Dummy.Build<Garbage>().With(x => x.Name, "Third").Create(),
+                Dummy.Build<Garbage>().With(x => x.Name, "Fourth").Create(),
             };
             var original = source.ToArray();
 
@@ -103,7 +101,7 @@ public class Swap
             source.Swap(current, destination);
 
             //Assert
-            source.Should().ContainInOrder(new List<Dummy>
+            source.Should().ContainInOrder(new List<Garbage>
             {
                 original[0],
                 original[2],
@@ -114,15 +112,15 @@ public class Swap
     }
 
     [TestClass]
-    public class WithList : Tester
+    public class WithList : TestBase
     {
         [TestMethod]
         public void WhenCollectionIsNull_Throw()
         {
             //Arrange
-            List<Dummy> source = null!;
-            var current = Fixture.Create<int>();
-            var destination = Fixture.Create<int>();
+            List<Garbage> source = null!;
+            var current = Dummy.Create<int>();
+            var destination = Dummy.Create<int>();
 
             //Act
             var action = () => source.Swap(current, destination);
@@ -135,9 +133,9 @@ public class Swap
         public void WhenCurrentIsNegative_Throw()
         {
             //Arrange
-            var source = Fixture.CreateMany<int>().ToList();
-            var currentIndex = -Fixture.Create<int>();
-            var destinationIndex = Fixture.CreateBetween(0, source.LastIndex());
+            var source = Dummy.CreateMany<int>().ToList();
+            var currentIndex = -Dummy.Create<int>();
+            var destinationIndex = Dummy.Number.Between(0, source.LastIndex()).Create();
 
             //Act
             var action = () => source.Swap(currentIndex, destinationIndex);
@@ -150,9 +148,9 @@ public class Swap
         public void WhenCurrentIsOutOfBounds_Throw()
         {
             //Arrange
-            var source = Fixture.CreateMany<int>().ToList();
-            var currentIndex = Fixture.CreateGreaterThan(source.LastIndex());
-            var destinationIndex = Fixture.CreateBetween(0, source.LastIndex());
+            var source = Dummy.CreateMany<int>().ToList();
+            var currentIndex = Dummy.Number.GreaterThan(source.LastIndex()).Create();
+            var destinationIndex = Dummy.Number.Between(0, source.LastIndex()).Create();
 
             //Act
             var action = () => source.Swap(currentIndex, destinationIndex);
@@ -165,9 +163,9 @@ public class Swap
         public void WhenDestinationIsNegative_Throw()
         {
             //Arrange
-            var source = Fixture.CreateMany<int>().ToList();
-            var currentIndex = Fixture.CreateBetween(0, source.LastIndex());
-            var destinationIndex = -Fixture.Create<int>();
+            var source = Dummy.CreateMany<int>().ToList();
+            var currentIndex = Dummy.Number.Between(0, source.LastIndex()).Create();
+            var destinationIndex = -Dummy.Create<int>();
 
             //Act
             var action = () => source.Swap(currentIndex, destinationIndex);
@@ -180,9 +178,9 @@ public class Swap
         public void WhenDestinationIsOutOfBounds_Throw()
         {
             //Arrange
-            var source = Fixture.CreateMany<int>().ToList();
-            var currentIndex = Fixture.CreateBetween(0, source.LastIndex());
-            var destinationIndex = Fixture.CreateGreaterThan(source.LastIndex());
+            var source = Dummy.CreateMany<int>().ToList();
+            var currentIndex = Dummy.Number.Between(0, source.LastIndex()).Create();
+            var destinationIndex = Dummy.Number.GreaterThan(source.LastIndex()).Create();
 
             //Act
             var action = () => source.Swap(currentIndex, destinationIndex);
@@ -195,12 +193,12 @@ public class Swap
         public void WhenCurrentAndDestinationAreWithinBounds_SwapTogether()
         {
             //Arrange
-            var source = new List<Dummy>
+            var source = new List<Garbage>
             {
-                Fixture.Build<Dummy>().With(x => x.Name, "First").Create(),
-                Fixture.Build<Dummy>().With(x => x.Name, "Second").Create(),
-                Fixture.Build<Dummy>().With(x => x.Name, "Third").Create(),
-                Fixture.Build<Dummy>().With(x => x.Name, "Fourth").Create(),
+                Dummy.Build<Garbage>().With(x => x.Name, "First").Create(),
+                Dummy.Build<Garbage>().With(x => x.Name, "Second").Create(),
+                Dummy.Build<Garbage>().With(x => x.Name, "Third").Create(),
+                Dummy.Build<Garbage>().With(x => x.Name, "Fourth").Create(),
             };
             var original = source.ToArray();
 
@@ -211,7 +209,7 @@ public class Swap
             source.Swap(current, destination);
 
             //Assert
-            source.Should().ContainInOrder(new List<Dummy>
+            source.Should().ContainInOrder(new List<Garbage>
             {
                 original[0],
                 original[2],
@@ -222,15 +220,15 @@ public class Swap
     }
 
     [TestClass]
-    public class WithWriteOnlyList : Tester
+    public class WithWriteOnlyList : TestBase
     {
         [TestMethod]
         public void WhenCollectionIsNull_Throw()
         {
             //Arrange
-            WriteOnlyList<Dummy> source = null!;
-            var current = Fixture.Create<int>();
-            var destination = Fixture.Create<int>();
+            WriteOnlyList<Garbage> source = null!;
+            var current = Dummy.Create<int>();
+            var destination = Dummy.Create<int>();
 
             //Act
             var action = () => source.Swap(current, destination);
@@ -243,9 +241,9 @@ public class Swap
         public void WhenCurrentIsNegative_Throw()
         {
             //Arrange
-            var source = Fixture.CreateMany<int>().ToWriteOnlyList();
-            var currentIndex = -Fixture.Create<int>();
-            var destinationIndex = Fixture.CreateBetween(0, source.LastIndex());
+            var source = Dummy.CreateMany<int>().ToWriteOnlyList();
+            var currentIndex = -Dummy.Create<int>();
+            var destinationIndex = Dummy.Number.Between(0, source.LastIndex()).Create();
 
             //Act
             var action = () => source.Swap(currentIndex, destinationIndex);
@@ -258,9 +256,9 @@ public class Swap
         public void WhenCurrentIsOutOfBounds_Throw()
         {
             //Arrange
-            var source = Fixture.CreateMany<int>().ToWriteOnlyList();
-            var currentIndex = Fixture.CreateGreaterThan(source.LastIndex());
-            var destinationIndex = Fixture.CreateBetween(0, source.LastIndex());
+            var source = Dummy.CreateMany<int>().ToWriteOnlyList();
+            var currentIndex = Dummy.Number.GreaterThan(source.LastIndex()).Create();
+            var destinationIndex = Dummy.Number.Between(0, source.LastIndex()).Create();
 
             //Act
             var action = () => source.Swap(currentIndex, destinationIndex);
@@ -273,9 +271,9 @@ public class Swap
         public void WhenDestinationIsNegative_Throw()
         {
             //Arrange
-            var source = Fixture.CreateMany<int>().ToWriteOnlyList();
-            var currentIndex = Fixture.CreateBetween(0, source.LastIndex());
-            var destinationIndex = -Fixture.Create<int>();
+            var source = Dummy.CreateMany<int>().ToWriteOnlyList();
+            var currentIndex = Dummy.Number.Between(0, source.LastIndex()).Create();
+            var destinationIndex = -Dummy.Create<int>();
 
             //Act
             var action = () => source.Swap(currentIndex, destinationIndex);
@@ -288,9 +286,9 @@ public class Swap
         public void WhenDestinationIsOutOfBounds_Throw()
         {
             //Arrange
-            var source = Fixture.CreateMany<int>().ToWriteOnlyList();
-            var currentIndex = Fixture.CreateBetween(0, source.LastIndex());
-            var destinationIndex = Fixture.CreateGreaterThan(source.LastIndex());
+            var source = Dummy.CreateMany<int>().ToWriteOnlyList();
+            var currentIndex = Dummy.Number.Between(0, source.LastIndex()).Create();
+            var destinationIndex = Dummy.Number.GreaterThan(source.LastIndex()).Create();
 
             //Act
             var action = () => source.Swap(currentIndex, destinationIndex);
@@ -303,12 +301,12 @@ public class Swap
         public void WhenCurrentAndDestinationAreWithinBounds_SwapTogether()
         {
             //Arrange
-            var source = new WriteOnlyList<Dummy>
+            var source = new WriteOnlyList<Garbage>
             {
-                Fixture.Build<Dummy>().With(x => x.Name, "First").Create(),
-                Fixture.Build<Dummy>().With(x => x.Name, "Second").Create(),
-                Fixture.Build<Dummy>().With(x => x.Name, "Third").Create(),
-                Fixture.Build<Dummy>().With(x => x.Name, "Fourth").Create(),
+                Dummy.Build<Garbage>().With(x => x.Name, "First").Create(),
+                Dummy.Build<Garbage>().With(x => x.Name, "Second").Create(),
+                Dummy.Build<Garbage>().With(x => x.Name, "Third").Create(),
+                Dummy.Build<Garbage>().With(x => x.Name, "Fourth").Create(),
             };
             var original = source.ToArray();
 
@@ -319,7 +317,7 @@ public class Swap
             source.Swap(current, destination);
 
             //Assert
-            source.Should().ContainInOrder(new List<Dummy>
+            source.Should().ContainInOrder(new List<Garbage>
             {
                 original[0],
                 original[2],

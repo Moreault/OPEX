@@ -1,14 +1,14 @@
 ﻿namespace OPEX.Tests;
 
 [TestClass]
-public sealed class TryPopAt : Tester
+public sealed class TryPopAt : TestBase
 {
     [TestMethod]
     public void SingleIndex_WhenSourceIsNull_Throw()
     {
         //Arrange
-        IList<Dummy> source = null!;
-        var index = Fixture.Create<int>();
+        IList<Garbage> source = null!;
+        var index = Dummy.Create<int>();
 
         //Act
         var action = () => source.TryPopAt(index);
@@ -21,49 +21,49 @@ public sealed class TryPopAt : Tester
     public void SingleIndex_WhenSourceIsEmpty_ReturnFailure()
     {
         //Arrange
-        var source = new List<Dummy>();
-        var index = Fixture.Create<int>();
+        var source = new List<Garbage>();
+        var index = Dummy.Create<int>();
 
         //Act
         var result = source.TryPopAt(index);
 
         //Assert
-        result.Should().BeEquivalentTo(Result<Dummy>.Failure());
+        result.Should().BeEquivalentTo(Result<Garbage>.Failure());
     }
 
     [TestMethod]
     public void SingleIndex_WhenSourceIsNotEmptyButIndexIsLowerThanZero_ReturnFailure()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().ToList();
-        var index = -Fixture.Create<int>();
+        var source = Dummy.CreateMany<Garbage>().ToList();
+        var index = -Dummy.Create<int>();
 
         //Act
         var result = source.TryPopAt(index);
 
         //Assert
-        result.Should().BeEquivalentTo(Result<Dummy>.Failure());
+        result.Should().BeEquivalentTo(Result<Garbage>.Failure());
     }
 
     [TestMethod]
     public void SingleIndex_WhenSourceIsNotEmptyButIndexIsBiggerThanLastIndex_ReturnFailure()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().ToList();
+        var source = Dummy.CreateMany<Garbage>().ToList();
         var index = source.LastIndex() + 1;
 
         //Act
         var result = source.TryPopAt(index);
 
         //Assert
-        result.Should().BeEquivalentTo(Result<Dummy>.Failure());
+        result.Should().BeEquivalentTo(Result<Garbage>.Failure());
     }
 
     [TestMethod]
     public void SingleIndex_WhenIsWithinRange_ReturnItem()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().ToList();
+        var source = Dummy.CreateMany<Garbage>().ToList();
         var original = source.ToList();
         var index = source.GetRandomIndex();
 
@@ -71,15 +71,15 @@ public sealed class TryPopAt : Tester
         var result = source.TryPopAt(index);
 
         //Assert
-        result.Should().BeEquivalentTo(Result<Dummy>.Success(original[index]));
+        result.Should().BeEquivalentTo(Result<Garbage>.Success(original[index]));
     }
 
     [TestMethod]
     public void Multiple_WhenSourceIsNull_Throw()
     {
         //Arrange
-        Dummy[] source = null!;
-        var indexes = Fixture.CreateMany<int>().ToList();
+        Garbage[] source = null!;
+        var indexes = Dummy.CreateMany<int>().ToList();
 
         //Act
         var action = () => source.TryPopAt(indexes);
@@ -92,7 +92,7 @@ public sealed class TryPopAt : Tester
     public void Multiple_WhenIndexesIsNull_Throw()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().ToArray();
+        var source = Dummy.CreateMany<Garbage>().ToArray();
 
         //Act
         var action = () => source.TryPopAt(null!);
@@ -105,16 +105,16 @@ public sealed class TryPopAt : Tester
     public void Multiple_WhenIndexIsOutOfRange_ReturnEmpty()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().ToList();
+        var source = Dummy.CreateMany<Garbage>().ToList();
         var indexes = new[] { source.LastIndex() + 1 };
 
         //Act
         var result = source.TryPopAt(indexes);
 
         //Assert
-        result.Should().BeEquivalentTo(new List<Result<Dummy>>
+        result.Should().BeEquivalentTo(new List<Result<Garbage>>
         {
-            Result<Dummy>.Failure()
+            Result<Garbage>.Failure()
         });
     }
 

@@ -1,13 +1,13 @@
 ﻿namespace OPEX.Tests;
 
 [TestClass]
-public class PopFirst : Tester
+public class PopFirst : TestBase
 {
     [TestMethod]
     public void WhenUsingParameterlessWithNullSource_Throw()
     {
         //Arrange
-        IList<Dummy> source = null!;
+        IList<Garbage> source = null!;
 
         //Act
         var action = () => source.PopFirst();
@@ -20,7 +20,7 @@ public class PopFirst : Tester
     public void WhenUsingParameterlessOnEmptyCollection_Throw()
     {
         //Arrange
-        var source = new List<Dummy>();
+        var source = new List<Garbage>();
 
         //Act
         var action = () => source.PopFirst();
@@ -33,7 +33,7 @@ public class PopFirst : Tester
     public void WhenUsingParameterlessOnCollectionWithOneElement_ShouldBeEmptyAfter()
     {
         //Arrange
-        var source = new List<Dummy> { Fixture.Create<Dummy>() };
+        var source = new List<Garbage> { Dummy.Create<Garbage>() };
 
         //Act
         source.PopFirst();
@@ -46,8 +46,8 @@ public class PopFirst : Tester
     public void WhenUsingParameterlessOnCollectionWithOneElement_ThenReturnRemovedElement()
     {
         //Arrange
-        var item = Fixture.Create<Dummy>();
-        var source = new List<Dummy> { item };
+        var item = Dummy.Create<Garbage>();
+        var source = new List<Garbage> { item };
 
         //Act
         var result = source.PopFirst();
@@ -60,7 +60,7 @@ public class PopFirst : Tester
     public void WhenUsingParameterlessOnCollectionWithMultipleElements_ShouldBeRemoved()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().ToList();
+        var source = Dummy.CreateMany<Garbage>().ToList();
         var original = source.ToList();
         var item = source.First();
 
@@ -75,7 +75,7 @@ public class PopFirst : Tester
     public void WhenUsingParameterlessOnCollectionWithMultipleElements_ThenReturnRemovedElement()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().ToList();
+        var source = Dummy.CreateMany<Garbage>().ToList();
         var item = source.First();
 
         //Act
@@ -89,8 +89,8 @@ public class PopFirst : Tester
     public void Item_WhenSourceIsNull_Throw()
     {
         //Arrange
-        IList<Dummy> source = null!;
-        var item = Fixture.Create<Dummy>();
+        IList<Garbage> source = null!;
+        var item = Dummy.Create<Garbage>();
 
         //Act
         var action = () => source.PopFirst(item);
@@ -103,8 +103,8 @@ public class PopFirst : Tester
     public void Item_WhenSourceIsEmpty_Throw()
     {
         //Arrange
-        var source = new List<Dummy>();
-        var item = Fixture.Create<Dummy>();
+        var source = new List<Garbage>();
+        var item = Dummy.Create<Garbage>();
 
         //Act
         var action = () => source.PopFirst(item);
@@ -117,8 +117,8 @@ public class PopFirst : Tester
     public void Item_WhenSourceWithMultipleItemsButDoesNotContainItem_Throw()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().ToList();
-        var item = Fixture.Create<Dummy>();
+        var source = Dummy.CreateMany<Garbage>().ToList();
+        var item = Dummy.Create<Garbage>();
 
         //Act
         var action = () => source.PopFirst(item);
@@ -131,8 +131,8 @@ public class PopFirst : Tester
     public void Item_WhenSourceContainsOneMatchingItem_ReturnThatItem()
     {
         //Arrange
-        var item = Fixture.Create<Dummy>();
-        var source = Fixture.CreateMany<Dummy>().Append(item).ToShuffled().ToList();
+        var item = Dummy.Create<Garbage>();
+        var source = Dummy.CreateMany<Garbage>().Append(item).ToShuffled().ToList();
 
         //Act
         var result = source.PopFirst(item);
@@ -145,8 +145,8 @@ public class PopFirst : Tester
     public void Item_WhenSourceContainsOneMatchingItem_RemoveFromSource()
     {
         //Arrange
-        var item = Fixture.Create<Dummy>();
-        var original = Fixture.CreateMany<Dummy>().ToList();
+        var item = Dummy.Create<Garbage>();
+        var original = Dummy.CreateMany<Garbage>().ToList();
         var source = original.Append(item).ToShuffled().ToList();
 
         //Act
@@ -160,8 +160,8 @@ public class PopFirst : Tester
     public void Item_WhenSourceContainsMultipleMatchingItems_ReturnItem()
     {
         //Arrange
-        var item = Fixture.Create<Dummy>();
-        var source = Fixture.CreateMany<Dummy>().Append(item).Append(item).Append(item).ToShuffled().ToList();
+        var item = Dummy.Create<Garbage>();
+        var source = Dummy.CreateMany<Garbage>().Append(item).Append(item).Append(item).ToShuffled().ToList();
 
         //Act
         var result = source.PopFirst(item);
@@ -174,13 +174,13 @@ public class PopFirst : Tester
     public void Item_WhenSourceContainsMultipleMatchingItems_RemoveOnlyTheFirstOccurence()
     {
         //Arrange
-        var item = Fixture.Create<Dummy>();
-        var source = new List<Dummy>
+        var item = Dummy.Create<Garbage>();
+        var source = new List<Garbage>
         {
-            Fixture.Create<Dummy>(),
+            Dummy.Create<Garbage>(),
             item,
-            Fixture.Create<Dummy>(),
-            Fixture.Create<Dummy>(),
+            Dummy.Create<Garbage>(),
+            Dummy.Create<Garbage>(),
             item,
             item
         };
@@ -190,7 +190,7 @@ public class PopFirst : Tester
         source.PopFirst(item);
 
         //Assert
-        source.Should().BeEquivalentTo(new List<Dummy>
+        source.Should().BeEquivalentTo(new List<Garbage>
         {
             original[0],
             original[2],
@@ -204,8 +204,8 @@ public class PopFirst : Tester
     public void Predicate_WhenSourceIsNull_Throw()
     {
         //Arrange
-        IList<Dummy> source = null!;
-        var predicate = Fixture.Create<Func<Dummy, bool>>();
+        IList<Garbage> source = null!;
+        var predicate = Dummy.Create<Func<Garbage, bool>>();
 
         //Act
         var action = () => source.PopFirst(predicate);
@@ -218,8 +218,8 @@ public class PopFirst : Tester
     public void Predicate_WhenMatchIsNull_Throw()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().ToList();
-        Func<Dummy, bool> match = null!;
+        var source = Dummy.CreateMany<Garbage>().ToList();
+        Func<Garbage, bool> match = null!;
 
         //Act
         var action = () => source.PopFirst(match);
@@ -232,8 +232,8 @@ public class PopFirst : Tester
     public void Predicate_WhenSourceIsEmpty_Throw()
     {
         //Arrange
-        var source = new List<Dummy>();
-        var predicate = Fixture.Create<Func<Dummy, bool>>();
+        var source = new List<Garbage>();
+        var predicate = Dummy.Create<Func<Garbage, bool>>();
 
         //Act
         var action = () => source.PopFirst(predicate);
@@ -246,7 +246,7 @@ public class PopFirst : Tester
     public void Predicate_WhenContainsItemsButNoneThatMatchPredicate_Throw()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().ToList();
+        var source = Dummy.CreateMany<Garbage>().ToList();
 
         //Act
         var action = () => source.PopFirst(x => x.Id < 0);
@@ -259,7 +259,7 @@ public class PopFirst : Tester
     public void Predicate_WhenContainsItemsAndOneMatchesPredicate_ReturnItem()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().ToList();
+        var source = Dummy.CreateMany<Garbage>().ToList();
         var item = source.GetRandom();
 
         //Act
@@ -273,7 +273,7 @@ public class PopFirst : Tester
     public void Predicate_WhenContainsItemsAndOneMatchesPredicate_RemoveItemFromSource()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().ToList();
+        var source = Dummy.CreateMany<Garbage>().ToList();
         var item = source.GetRandom();
         var original = source.ToList();
 
@@ -288,9 +288,9 @@ public class PopFirst : Tester
     public void Predicate_WhenContainsMultipleMatchingItems_ReturnTheFirstOne()
     {
         //Arrange
-        var name = Fixture.Create<string>();
-        var itemsOfInterest = Fixture.Build<Dummy>().With(x => x.Name, name).CreateMany().ToList();
-        var source = Fixture.CreateMany<Dummy>().Concat(itemsOfInterest).ToShuffled().ToList();
+        var name = Dummy.Create<string>();
+        var itemsOfInterest = Dummy.Build<Garbage>().With(x => x.Name, name).CreateMany().ToList();
+        var source = Dummy.CreateMany<Garbage>().Concat(itemsOfInterest).ToShuffled().ToList();
 
         //Act
         var result = source.PopFirst(x => x.Name == name);
@@ -303,9 +303,9 @@ public class PopFirst : Tester
     public void Predicate_WhenContainsMultipleMatchingItems_RemoveItFromSource()
     {
         //Arrange
-        var name = Fixture.Create<string>();
-        var itemsOfInterest = Fixture.Build<Dummy>().With(x => x.Name, name).CreateMany().ToList();
-        var source = Fixture.CreateMany<Dummy>().Concat(itemsOfInterest).ToShuffled().ToList();
+        var name = Dummy.Create<string>();
+        var itemsOfInterest = Dummy.Build<Garbage>().With(x => x.Name, name).CreateMany().ToList();
+        var source = Dummy.CreateMany<Garbage>().Concat(itemsOfInterest).ToShuffled().ToList();
         var original = source.ToList();
 
         //Act

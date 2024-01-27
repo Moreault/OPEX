@@ -4,14 +4,14 @@
 public class RemoveLast
 {
     [TestClass]
-    public class WithArray : Tester
+    public class WithArray : TestBase
     {
         [TestMethod]
         public void WhenUsingItemAndCollectionIsNull_Throw()
         {
             //Arrange
-            Dummy[] source = null!;
-            var item = Fixture.Create<Dummy>();
+            Garbage[] source = null!;
+            var item = Dummy.Create<Garbage>();
 
             //Act
             var action = () => source.RemoveLast(item);
@@ -24,8 +24,8 @@ public class RemoveLast
         public void WhenUsingLambdaAndCollectionIsNull_Throw()
         {
             //Arrange
-            Dummy[] source = null!;
-            var match = Fixture.Create<Func<Dummy, bool>>();
+            Garbage[] source = null!;
+            var match = Dummy.Create<Func<Garbage, bool>>();
 
             //Act
             var action = () => source.RemoveLast(match);
@@ -38,8 +38,8 @@ public class RemoveLast
         public void WhenUsingLambdaAndLambdaIsNull_Throw()
         {
             //Arrange
-            var source = Fixture.Create<Dummy[]>();
-            Func<Dummy, bool> match = null!;
+            var source = Dummy.Create<Garbage[]>();
+            Func<Garbage, bool> match = null!;
 
             //Act
             var action = () => source.RemoveLast(match);
@@ -52,8 +52,8 @@ public class RemoveLast
         public void Always_Throw()
         {
             //Arrange
-            var source = Fixture.Create<Dummy[]>();
-            var match = Fixture.Create<Func<Dummy, bool>>();
+            var source = Dummy.Create<Garbage[]>();
+            var match = Dummy.Create<Func<Garbage, bool>>();
 
             //Act
             var action = () => source.RemoveLast(match);
@@ -66,8 +66,8 @@ public class RemoveLast
         public void WhenUsingItemWithArray_Throw()
         {
             //Arrange
-            var source = Fixture.CreateMany<Dummy>().ToArray();
-            var item = Fixture.Create<Dummy>();
+            var source = Dummy.CreateMany<Garbage>().ToArray();
+            var item = Dummy.Create<Garbage>();
 
             //Act
             var action = () => source.RemoveLast(item);
@@ -78,14 +78,14 @@ public class RemoveLast
     }
 
     [TestClass]
-    public class WithList : Tester
+    public class WithList : TestBase
     {
         [TestMethod]
         public void WhenUsingItemAndCollectionIsNull_Throw()
         {
             //Arrange
-            List<Dummy> source = null!;
-            var item = Fixture.Create<Dummy>();
+            List<Garbage> source = null!;
+            var item = Dummy.Create<Garbage>();
 
             //Act
             var action = () => source.RemoveLast(item);
@@ -98,8 +98,8 @@ public class RemoveLast
         public void WhenUsingLambdaAndCollectionIsNull_Throw()
         {
             //Arrange
-            List<Dummy> source = null!;
-            var match = Fixture.Create<Func<Dummy, bool>>();
+            List<Garbage> source = null!;
+            var match = Dummy.Create<Func<Garbage, bool>>();
 
             //Act
             var action = () => source.RemoveLast(match);
@@ -112,8 +112,8 @@ public class RemoveLast
         public void WhenUsingLambdaAndLambdaIsNull_Throw()
         {
             //Arrange
-            var source = Fixture.Create<List<Dummy>>();
-            Func<Dummy, bool> match = null!;
+            var source = Dummy.Create<List<Garbage>>();
+            Func<Garbage, bool> match = null!;
 
             //Act
             var action = () => source.RemoveLast(match);
@@ -126,8 +126,8 @@ public class RemoveLast
         public void WhenUsingItemAndItemIsNullAndThereIsNoNullInCollection_Throw()
         {
             //Arrange
-            var source = Fixture.Create<List<Dummy>>();
-            Dummy item = null!;
+            var source = Dummy.Create<List<Garbage>>();
+            Garbage item = null!;
 
             //Act
             var action = () => source.RemoveLast(item);
@@ -140,8 +140,8 @@ public class RemoveLast
         public void WhenUsingItemAndItemNotFoundInCollection_Throw()
         {
             //Arrange
-            var source = Fixture.Create<List<Dummy>>();
-            var item = Fixture.Create<Dummy>();
+            var source = Dummy.Create<List<Garbage>>();
+            var item = Dummy.Create<Garbage>();
 
             //Act
             var action = () => source.RemoveLast(item);
@@ -154,10 +154,10 @@ public class RemoveLast
         public void WhenUsingLambdaAndItemNotFoundInCollection_Throw()
         {
             //Arrange
-            var source = Fixture.Create<List<Dummy>>();
+            var source = Dummy.Create<List<Garbage>>();
 
             //Act
-            var action = () => source.RemoveLast(x => x.Name == Fixture.Create<string>());
+            var action = () => source.RemoveLast(x => x.Name == Dummy.Create<string>());
 
             //Assert
             action.Should().Throw<Exception>().WithMessage(Exceptions.PredicateItemCouldNotBeRemoved);
@@ -167,7 +167,7 @@ public class RemoveLast
         public void WhenUsingItemAndThereIsOneOccurenceOfItem_RemoveItem()
         {
             //Arrange
-            var source = Fixture.CreateMany<Dummy>().ToList();
+            var source = Dummy.CreateMany<Garbage>().ToList();
             var original = source.ToList();
             var item = source[1];
 
@@ -175,7 +175,7 @@ public class RemoveLast
             source.RemoveLast(item);
 
             //Assert
-            source.Should().BeEquivalentTo(new List<Dummy>
+            source.Should().BeEquivalentTo(new List<Garbage>
             {
                 original[0], original[2]
             });
@@ -185,7 +185,7 @@ public class RemoveLast
         public void WhenUsingLambdaAndThereIsOneOccurenceOfItem_RemoveItem()
         {
             //Arrange
-            var source = Fixture.CreateMany<Dummy>().ToList();
+            var source = Dummy.CreateMany<Garbage>().ToList();
             var original = source.ToList();
             var item = source[1];
 
@@ -193,7 +193,7 @@ public class RemoveLast
             source.RemoveLast(x => x.Name == item.Name);
 
             //Assert
-            source.Should().BeEquivalentTo(new List<Dummy>
+            source.Should().BeEquivalentTo(new List<Garbage>
             {
                 original[0], original[2]
             });
@@ -203,13 +203,13 @@ public class RemoveLast
         public void WhenUsingItemAndThereAreMultipleOccurencesOfItem_RemoveTheLastOne()
         {
             //Arrange
-            var item = Fixture.Create<Dummy>();
-            var source = new List<Dummy>
+            var item = Dummy.Create<Garbage>();
+            var source = new List<Garbage>
             {
-                Fixture.Create<Dummy>(),
+                Dummy.Create<Garbage>(),
                 item,
                 item,
-                Fixture.Create<Dummy>(),
+                Dummy.Create<Garbage>(),
                 item
             };
             var original = source.ToList();
@@ -218,7 +218,7 @@ public class RemoveLast
             source.RemoveLast(item);
 
             //Assert
-            source.Should().BeEquivalentTo(new List<Dummy>
+            source.Should().BeEquivalentTo(new List<Garbage>
             {
                 original[0],
                 item,
@@ -231,13 +231,13 @@ public class RemoveLast
         public void WhenUsingLambdaAndThereAreMultipleOccurencesOfItem_RemoveTheLastOne()
         {
             //Arrange
-            var item = Fixture.Create<Dummy>();
-            var source = new List<Dummy>
+            var item = Dummy.Create<Garbage>();
+            var source = new List<Garbage>
             {
-                Fixture.Create<Dummy>(),
+                Dummy.Create<Garbage>(),
                 item,
                 item,
-                Fixture.Create<Dummy>(),
+                Dummy.Create<Garbage>(),
                 item
             };
             var original = source.ToList();
@@ -246,7 +246,7 @@ public class RemoveLast
             source.RemoveLast(x => x.Name == item.Name);
 
             //Assert
-            source.Should().BeEquivalentTo(new List<Dummy>
+            source.Should().BeEquivalentTo(new List<Garbage>
             {
                 original[0],
                 item,

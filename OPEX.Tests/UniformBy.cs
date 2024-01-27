@@ -4,14 +4,14 @@
 public class UniformBy
 {
     [TestClass]
-    public class OrDefault : Tester
+    public class OrDefault : TestBase
     {
         [TestMethod]
         public void WhenSourceIsNull_Throw()
         {
             //Arrange
-            IEnumerable<Dummy> source = null!;
-            var selector = Fixture.Create<Func<Dummy, bool>>();
+            IEnumerable<Garbage> source = null!;
+            var selector = Dummy.Create<Func<Garbage, bool>>();
 
             //Act
             var action = () => source.UniformByOrDefault(selector);
@@ -24,8 +24,8 @@ public class UniformBy
         public void WheSelectorIsNull_Throw()
         {
             //Arrange
-            var source = Fixture.CreateMany<Dummy>().ToList();
-            Func<Dummy, bool> selector = null!;
+            var source = Dummy.CreateMany<Garbage>().ToList();
+            Func<Garbage, bool> selector = null!;
 
             //Act
             var action = () => source.UniformByOrDefault(selector);
@@ -38,12 +38,12 @@ public class UniformBy
         public void WhenThereIsMoreThanOneOccurence_Throw()
         {
             //Arrange
-            var id = Fixture.Create<int>();
-            var source = new List<Dummy>
+            var id = Dummy.Create<int>();
+            var source = new List<Garbage>
             {
-                Fixture.Build<Dummy>().With(x => x.Id, id).Create(),
-                Fixture.Create<Dummy>(),
-                Fixture.Build<Dummy>().With(x => x.Id, id).Create(),
+                Dummy.Build<Garbage>().With(x => x.Id, id).Create(),
+                Dummy.Create<Garbage>(),
+                Dummy.Build<Garbage>().With(x => x.Id, id).Create(),
             };
 
             //Act
@@ -59,7 +59,7 @@ public class UniformBy
             //Arrange
 
             //Act
-            var result = new List<Dummy>().UniformByOrDefault(x => x.Id);
+            var result = new List<Garbage>().UniformByOrDefault(x => x.Id);
 
             //Assert
             result.Should().BeNull();
@@ -69,7 +69,7 @@ public class UniformBy
         public void WhenAllItemsHaveTheSameProperty_ReturnUniqueValue()
         {
             //Arrange
-            var values = Fixture.Build<Dummy>().With(x => x.Name, "Roger").CreateMany().ToList();
+            var values = Dummy.Build<Garbage>().With(x => x.Name, "Roger").CreateMany().ToList();
 
             //Act
             var result = values.UniformByOrDefault(x => x.Name);
@@ -80,14 +80,14 @@ public class UniformBy
     }
 
     [TestClass]
-    public class NonDefault : Tester
+    public class NonDefault : TestBase
     {
         [TestMethod]
         public void WhenSourceIsNull_Throw()
         {
             //Arrange
-            IEnumerable<Dummy> source = null!;
-            var selector = Fixture.Create<Func<Dummy, bool>>();
+            IEnumerable<Garbage> source = null!;
+            var selector = Dummy.Create<Func<Garbage, bool>>();
 
             //Act
             var action = () => source.UniformBy(selector);
@@ -100,8 +100,8 @@ public class UniformBy
         public void WheSelectorIsNull_Throw()
         {
             //Arrange
-            var source = Fixture.CreateMany<Dummy>().ToList();
-            Func<Dummy, bool> selector = null!;
+            var source = Dummy.CreateMany<Garbage>().ToList();
+            Func<Garbage, bool> selector = null!;
 
             //Act
             var action = () => source.UniformBy(selector);
@@ -114,12 +114,12 @@ public class UniformBy
         public void WhenThereIsMoreThanOneOccurence_Throw()
         {
             //Arrange
-            var id = Fixture.Create<int>();
-            var source = new List<Dummy>
+            var id = Dummy.Create<int>();
+            var source = new List<Garbage>
             {
-                Fixture.Build<Dummy>().With(x => x.Id, id).Create(),
-                Fixture.Create<Dummy>(),
-                Fixture.Build<Dummy>().With(x => x.Id, id).Create(),
+                Dummy.Build<Garbage>().With(x => x.Id, id).Create(),
+                Dummy.Create<Garbage>(),
+                Dummy.Build<Garbage>().With(x => x.Id, id).Create(),
             };
 
             //Act
@@ -135,7 +135,7 @@ public class UniformBy
             //Arrange
 
             //Act
-            var action = () => new List<Dummy>().UniformBy(x => x.Id);
+            var action = () => new List<Garbage>().UniformBy(x => x.Id);
 
             //Assert
             action.Should().Throw<InvalidOperationException>().WithMessage(Exceptions.CannotUseUniformOnEmptyCollection);
@@ -145,7 +145,7 @@ public class UniformBy
         public void WhenAllItemsHaveTheSameProperty_ReturnUniqueValue()
         {
             //Arrange
-            var values = Fixture.Build<Dummy>().With(x => x.Name, "Roger").CreateMany().ToList();
+            var values = Dummy.Build<Garbage>().With(x => x.Name, "Roger").CreateMany().ToList();
 
             //Act
             var result = values.UniformBy(x => x.Name);

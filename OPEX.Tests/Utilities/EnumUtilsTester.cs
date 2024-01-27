@@ -13,7 +13,7 @@ public class EnumUtilsTester
     }
 
     [TestClass]
-    public class ToList : Tester
+    public class ToList : TestBase
     {
         [TestMethod]
         public void Always_ReturnListWithAllValuesOfTheEnum()

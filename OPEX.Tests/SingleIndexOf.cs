@@ -1,16 +1,16 @@
 ﻿namespace OPEX.Tests;
 
 [TestClass]
-public class SingleIndexOf : Tester
+public class SingleIndexOf : TestBase
 {
     [TestMethod]
     public void Item_WhenSourceIsNull_Throw()
     {
         //Arrange
-        IList<Dummy> source = null!;
+        IList<Garbage> source = null!;
 
         //Act
-        var action = () => source.SingleIndexOf(Fixture.Create<Dummy>());
+        var action = () => source.SingleIndexOf(Dummy.Create<Garbage>());
 
         //Assert
         action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(source));
@@ -20,10 +20,10 @@ public class SingleIndexOf : Tester
     public void Item_WhenSourceIsEmpty_Throw()
     {
         //Arrange
-        var source = new List<Dummy>();
+        var source = new List<Garbage>();
 
         //Act
-        var action = () => source.SingleIndexOf(Fixture.Create<Dummy>());
+        var action = () => source.SingleIndexOf(Dummy.Create<Garbage>());
 
         //Assert
         action.Should().Throw<InvalidOperationException>();
@@ -33,8 +33,8 @@ public class SingleIndexOf : Tester
     public void Item_WhenThereIsNoOccurenceOfItemInSource_Throw()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().ToList();
-        var item = Fixture.Create<Dummy>();
+        var source = Dummy.CreateMany<Garbage>().ToList();
+        var item = Dummy.Create<Garbage>();
 
         //Act
         var action = () => source.SingleIndexOf(item);
@@ -47,8 +47,8 @@ public class SingleIndexOf : Tester
     public void Item_WhenThereIsMoreThanOneOccurenceInSource_Throw()
     {
         //Arrange
-        var item = Fixture.Create<Dummy>();
-        var source = Fixture.CreateMany<Dummy>().Concat(item, item).ToShuffled().ToList();
+        var item = Dummy.Create<Garbage>();
+        var source = Dummy.CreateMany<Garbage>().Concat(item, item).ToShuffled().ToList();
 
         //Act
         var action = () => source.SingleIndexOf(item);
@@ -64,8 +64,8 @@ public class SingleIndexOf : Tester
     public void Item_WhenThereIsExactlyOneOccurenceInSource_ReturnIndex(int index)
     {
         //Arrange
-        var item = Fixture.Create<Dummy>();
-        var source = Fixture.CreateMany<Dummy>(3).ToList();
+        var item = Dummy.Create<Garbage>();
+        var source = Dummy.CreateMany<Garbage>(3).ToList();
         source.Insert(index, item);
 
         //Act
@@ -79,8 +79,8 @@ public class SingleIndexOf : Tester
     public void Predicate_WhenSourceIsNull_Throw()
     {
         //Arrange
-        IEnumerable<Dummy> source = null!;
-        var match = Fixture.Create<Func<Dummy, bool>>();
+        IEnumerable<Garbage> source = null!;
+        var match = Dummy.Create<Func<Garbage, bool>>();
 
         //Act
         var action = () => source.SingleIndexOf(match);
@@ -93,8 +93,8 @@ public class SingleIndexOf : Tester
     public void Predicate_WhenPredicateIsNull_Throw()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().ToList();
-        Func<Dummy, bool> match = null!;
+        var source = Dummy.CreateMany<Garbage>().ToList();
+        Func<Garbage, bool> match = null!;
 
         //Act
         var action = () => source.SingleIndexOf(match);
@@ -107,8 +107,8 @@ public class SingleIndexOf : Tester
     public void Predicate_WhenSourceIsEmpty_Throw()
     {
         //Arrange
-        var source = new List<Dummy>();
-        var match = Fixture.Create<Func<Dummy, bool>>();
+        var source = new List<Garbage>();
+        var match = Dummy.Create<Func<Garbage, bool>>();
 
         //Act
         var action = () => source.SingleIndexOf(match);
@@ -121,10 +121,10 @@ public class SingleIndexOf : Tester
     public void Predicate_WhenNoItemInSourceMatchesPredicate_Throw()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().ToList();
+        var source = Dummy.CreateMany<Garbage>().ToList();
         
         //Act
-        var action = () => source.SingleIndexOf(x => x.Name == Fixture.Create<string>());
+        var action = () => source.SingleIndexOf(x => x.Name == Dummy.Create<string>());
 
         //Assert
         action.Should().Throw<InvalidOperationException>();
@@ -134,7 +134,7 @@ public class SingleIndexOf : Tester
     public void Predicate_WhenMultipleItemInSourceMatchPredicate_Throw()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().ToList();
+        var source = Dummy.CreateMany<Garbage>().ToList();
 
         //Act
         var action = () => source.SingleIndexOf(x => x.Id > 0);
@@ -150,8 +150,8 @@ public class SingleIndexOf : Tester
     public void Predicate_WhenExactlyOneItemInSourceMatchesPredicate_ReturnIndexOfMatchingItem(int index)
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().ToList();
-        var item = Fixture.Create<Dummy>();
+        var source = Dummy.CreateMany<Garbage>().ToList();
+        var item = Dummy.Create<Garbage>();
         source.Insert(index, item);
 
         //Act

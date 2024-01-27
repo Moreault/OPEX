@@ -1,14 +1,14 @@
 ﻿namespace OPEX.Tests;
 
 [TestClass]
-public class SequenceEqualOrNull : Tester
+public class SequenceEqualOrNull : TestBase
 {
     [TestMethod]
     public void WhenBothAreNull_ReturnTrue()
     {
         //Arrange
-        IEnumerable<Dummy> first = null!;
-        IEnumerable<Dummy> second = null!;
+        IEnumerable<Garbage> first = null!;
+        IEnumerable<Garbage> second = null!;
 
         //Act
         var result = first.SequenceEqualOrNull(second);
@@ -21,8 +21,8 @@ public class SequenceEqualOrNull : Tester
     public void WhenFirstIsNullButSecondIsNot_ReturnFalse()
     {
         //Arrange
-        IEnumerable<Dummy> first = null!;
-        var second = Fixture.Create<List<Dummy>>();
+        IEnumerable<Garbage> first = null!;
+        var second = Dummy.Create<List<Garbage>>();
 
         //Act
         var result = first.SequenceEqualOrNull(second);
@@ -35,8 +35,8 @@ public class SequenceEqualOrNull : Tester
     public void WhenFirstIsNotNullButSecondIs_ReturnFalse()
     {
         //Arrange
-        var first = Fixture.Create<List<Dummy>>();
-        IEnumerable<Dummy> second = null!;
+        var first = Dummy.Create<List<Garbage>>();
+        IEnumerable<Garbage> second = null!;
 
         //Act
         var result = first.SequenceEqualOrNull(second);
@@ -49,8 +49,8 @@ public class SequenceEqualOrNull : Tester
     public void WhenBothAreNotNullButAreAlsoNotEqual_ReturnFalse()
     {
         //Arrange
-        var first = Fixture.Create<List<Dummy>>();
-        var second = Fixture.Create<List<Dummy>>();
+        var first = Dummy.Create<List<Garbage>>();
+        var second = Dummy.Create<List<Garbage>>();
 
         //Act
         var result = first.SequenceEqualOrNull(second);
@@ -63,7 +63,7 @@ public class SequenceEqualOrNull : Tester
     public void WhenBothAreNotNullAndContainTheSameElements_ReturnTrue()
     {
         //Arrange
-        var first = Fixture.Create<List<Dummy>>();
+        var first = Dummy.Create<List<Garbage>>();
         var second = first.ToArray();
 
         //Act
@@ -77,7 +77,7 @@ public class SequenceEqualOrNull : Tester
     public void WhenBothAreNotNullAndContainTheSameElementsButNotInSameOrder_ReturnFalse()
     {
         //Arrange
-        var first = Fixture.Create<List<Dummy>>();
+        var first = Dummy.Create<List<Garbage>>();
         var second = first.ToList();
         second.Reverse();
 
