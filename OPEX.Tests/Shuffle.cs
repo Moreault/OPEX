@@ -4,7 +4,7 @@
 public class Shuffle
 {
     [TestClass]
-    public class WithArray : TestBase
+    public class WithArray : Tester
     {
         [TestMethod]
         public void WhenCollectionIsNull_Throw()
@@ -63,7 +63,7 @@ public class Shuffle
     }
 
     [TestClass]
-    public class WithList : TestBase
+    public class WithList : Tester
     {
         [TestMethod]
         public void WhenCollectionIsNull_Throw()

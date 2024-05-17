@@ -1,7 +1,7 @@
 ﻿namespace OPEX.Tests;
 
 [TestClass]
-public class SequenceEqualOrNull : TestBase
+public class SequenceEqualOrNull : Tester
 {
     [TestMethod]
     public void WhenBothAreNull_ReturnTrue()

@@ -4,7 +4,7 @@
 public class TryRemoveLast
 {
     [TestClass]
-    public class WithArray : TestBase
+    public class WithArray : Tester
     {
         [TestMethod]
         public void WhenUsingItemAndCollectionIsNull_Throw()
@@ -64,7 +64,7 @@ public class TryRemoveLast
     }
 
     [TestClass]
-    public class WithList : TestBase
+    public class WithList : Tester
     {
         [TestMethod]
         public void WhenUsingItemAndCollectionIsNull_Throw()

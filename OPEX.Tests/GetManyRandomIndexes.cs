@@ -24,7 +24,7 @@ public sealed class GetManyRandomIndexesWithImmutableListOfDummyTests : GetManyR
 
 }
 
-public abstract class GetManyRandomIndexesTester<TCollection> : TestBase where TCollection : class, IList<Garbage>
+public abstract class GetManyRandomIndexesTester<TCollection> : Tester where TCollection : class, IList<Garbage>
 {
     [TestMethod]
     public void Get_WhenSourceIsNull_Throw()

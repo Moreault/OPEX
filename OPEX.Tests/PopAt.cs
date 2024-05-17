@@ -1,7 +1,7 @@
 ﻿namespace OPEX.Tests;
 
 [TestClass]
-public class PopAt : TestBase
+public class PopAt : Tester
 {
     [TestMethod]
     public void WhenSourceIsNull_Throw()

@@ -112,7 +112,7 @@ public class AddRangeWithArrayOfDummyTests : AddRangeTester<Garbage[], Garbage>
     }
 }
 
-public abstract class AddRangeTester<TCollection, TSource> : TestBase where TCollection : class, IList<TSource>
+public abstract class AddRangeTester<TCollection, TSource> : Tester where TCollection : class, IList<TSource>
 {
     [TestMethod]
     public void WhenUsingParamsAndCollectionIsNull_Throw()

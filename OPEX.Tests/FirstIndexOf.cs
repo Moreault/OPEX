@@ -24,7 +24,7 @@ public sealed class FirstIndexOfWithImmutableListOfDummyTests : FirstIndexOfTest
 
 }
 
-public abstract class FirstIndexOfTester<TCollection> : TestBase where TCollection : class, IList<Garbage>
+public abstract class FirstIndexOfTester<TCollection> : Tester where TCollection : class, IList<Garbage>
 {
     [TestMethod]
     public void WhenUsingItemAndCollectionIsNull_Throw()

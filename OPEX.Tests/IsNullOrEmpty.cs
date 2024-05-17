@@ -4,7 +4,7 @@ namespace OPEX.Tests;
 public class IsNullOrEmpty
 {
     [TestClass]
-    public class WithArray : TestBase
+    public class WithArray : Tester
     {
         [TestMethod]
         public void WhenIsNull_ReturnTrue()
@@ -47,7 +47,7 @@ public class IsNullOrEmpty
     }
 
     [TestClass]
-    public class WithList : TestBase
+    public class WithList : Tester
     {
         [TestMethod]
         public void WhenIsNull_ReturnTrue()
@@ -90,7 +90,7 @@ public class IsNullOrEmpty
     }
 
     [TestClass]
-    public class WithReadOnlyList : TestBase
+    public class WithReadOnlyList : Tester
     {
         [TestMethod]
         public void WhenIsNull_ReturnTrue()
@@ -133,7 +133,7 @@ public class IsNullOrEmpty
     }
 
     [TestClass]
-    public class WithDictionary : TestBase
+    public class WithDictionary : Tester
     {
         [TestMethod]
         public void WhenIsNull_ReturnTrue()

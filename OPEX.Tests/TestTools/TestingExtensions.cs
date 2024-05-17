@@ -14,7 +14,7 @@ public static class TestingExtensions
 }
 
 [TestClass]
-public class TestingExtensionsTest : TestBase
+public class TestingExtensionsTest : Tester
 {
     [TestMethod]
     public void ToList_ReturnList()

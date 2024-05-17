@@ -4,7 +4,7 @@
 public class IsWithinRange
 {
     [TestClass]
-    public class WithArray : TestBase
+    public class WithArray : Tester
     {
         [TestMethod]
         public void WhenSourceIsNull_Throw()
@@ -92,7 +92,7 @@ public class IsWithinRange
     }
 
     [TestClass]
-    public class WithList : TestBase
+    public class WithList : Tester
     {
         [TestMethod]
         public void WhenSourceIsNull_Throw()
@@ -180,7 +180,7 @@ public class IsWithinRange
     }
 
     [TestClass]
-    public class WithReadOnlyList : TestBase
+    public class WithReadOnlyList : Tester
     {
         [TestMethod]
         public void WhenSourceIsNull_Throw()
@@ -268,7 +268,7 @@ public class IsWithinRange
     }
 
     [TestClass]
-    public class WithWriteOnlyList : TestBase
+    public class WithWriteOnlyList : Tester
     {
         [TestMethod]
         public void WhenSourceIsNull_Throw()

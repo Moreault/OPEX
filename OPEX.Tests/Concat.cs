@@ -24,7 +24,7 @@ public class ConcatWithDictionaryOfDummyTests : ConcatTester<Dictionary<int, Gar
 
 }
 
-public abstract class ConcatTester<TCollection, TSource> : TestBase where TCollection : class, IEnumerable<TSource>
+public abstract class ConcatTester<TCollection, TSource> : Tester where TCollection : class, IEnumerable<TSource>
 {
     [TestMethod]
     public void WhenCollectionIsNull_Throw()

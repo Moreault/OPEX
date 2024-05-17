@@ -1,7 +1,7 @@
 ﻿namespace OPEX.Tests;
 
 [TestClass]
-public class UnorderedEqualOrNull : TestBase
+public class UnorderedEqualOrNull : Tester
 {
     [TestMethod]
     public void WhenBothAreNull_ReturnTrue()

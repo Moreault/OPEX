@@ -4,7 +4,7 @@
 public class TryGetFirst
 {
     [TestClass]
-    public class WithoutPredicate : TestBase
+    public class WithoutPredicate : Tester
     {
         [TestMethod]
         public void WhenSourceIsNull_Throw()
@@ -62,7 +62,7 @@ public class TryGetFirst
     }
 
     [TestClass]
-    public class WithPredicate : TestBase
+    public class WithPredicate : Tester
     {
         [TestMethod]
         public void WhenSourceIsNull_Throw()

@@ -4,7 +4,7 @@
 public class LastIndexOf
 {
     [TestClass]
-    public class WithArray : TestBase
+    public class WithArray : Tester
     {
         [TestMethod]
         public void WhenUsingItemAndCollectionIsNull_Throw()
@@ -133,7 +133,7 @@ public class LastIndexOf
     }
 
     [TestClass]
-    public class WithIList : TestBase
+    public class WithIList : Tester
     {
         [TestMethod]
         public void WhenUsingItemAndCollectionIsNull_Throw()
@@ -262,7 +262,7 @@ public class LastIndexOf
     }
 
     [TestClass]
-    public class WithWriteOnlyList : TestBase
+    public class WithWriteOnlyList : Tester
     {
         [TestMethod]
         public void WhenUsingItemAndCollectionIsNull_Throw()
@@ -391,7 +391,7 @@ public class LastIndexOf
     }
 
     [TestClass]
-    public class WithReadOnlyList : TestBase    
+    public class WithReadOnlyList : Tester    
     {
         [TestMethod]
         public void WhenUsingItemAndCollectionIsNull_Throw()

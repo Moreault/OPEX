@@ -4,7 +4,7 @@
 public class UniformBy
 {
     [TestClass]
-    public class OrDefault : TestBase
+    public class OrDefault : Tester
     {
         [TestMethod]
         public void WhenSourceIsNull_Throw()
@@ -80,7 +80,7 @@ public class UniformBy
     }
 
     [TestClass]
-    public class NonDefault : TestBase
+    public class NonDefault : Tester
     {
         [TestMethod]
         public void WhenSourceIsNull_Throw()

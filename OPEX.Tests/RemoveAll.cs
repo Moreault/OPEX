@@ -4,7 +4,7 @@ namespace OPEX.Tests;
 public class RemoveAll
 {
     [TestClass]
-    public class Item : TestBase
+    public class Item : Tester
     {
         [TestMethod]
         public void WhenSourceIsNull_Throw()
@@ -103,7 +103,7 @@ public class RemoveAll
     }
 
     [TestClass]
-    public class Predicate : TestBase
+    public class Predicate : Tester
     {
         [TestMethod]
         public void WhenUsingOnArray_Throw()

@@ -3,7 +3,7 @@
 namespace OPEX.Tests;
 
 [TestClass]
-public class PopAll : TestBase
+public class PopAll : Tester
 {
     [TestMethod]
     public void Parameterless_WhenSourceIsNull_Throw()

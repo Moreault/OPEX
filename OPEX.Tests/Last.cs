@@ -1,7 +1,7 @@
 ﻿namespace OPEX.Tests;
 
 [TestClass]
-public sealed class Last : TestBase
+public sealed class Last : Tester
 {
     [TestMethod]
     public void Parameterless_WhenSourceIsNull_ThrowArgumentNullException()

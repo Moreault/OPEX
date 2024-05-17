@@ -4,7 +4,7 @@
 public class Uniform
 {
     [TestClass]
-    public class Parameterless : TestBase
+    public class Parameterless : Tester
     {
         [TestMethod]
         public void WhenSourceIsNull_Throw()
@@ -66,7 +66,7 @@ public class Uniform
     }
 
     [TestClass]
-    public class ParameterlessOrDefault : TestBase
+    public class ParameterlessOrDefault : Tester
     {
         [TestMethod]
         public void WhenSourceIsNull_Throw()
@@ -128,7 +128,7 @@ public class Uniform
     }
 
     [TestClass]
-    public class Selector : TestBase
+    public class Selector : Tester
     {
         [TestMethod]
         public void WhenSourceIsNull_Throw()
@@ -204,7 +204,7 @@ public class Uniform
     }
 
     [TestClass]
-    public class SelectorOrDefault : TestBase
+    public class SelectorOrDefault : Tester
     {
         [TestMethod]
         public void WhenSourceIsNull_Throw()

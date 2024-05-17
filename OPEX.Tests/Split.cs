@@ -1,7 +1,7 @@
 ﻿namespace OPEX.Tests;
 
 [TestClass]
-public class Split : TestBase
+public class Split : Tester
 {
     [TestMethod]
     public void WhenSourceIsNull_Throw()

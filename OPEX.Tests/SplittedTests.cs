@@ -1,7 +1,7 @@
 ﻿namespace OPEX.Tests;
 
 [TestClass]
-public sealed class SplittedTests : RecordTestBase<Splitted<Garbage>>
+public sealed class SplittedTests : RecordTester<Splitted<Garbage>>
 {
 
 }

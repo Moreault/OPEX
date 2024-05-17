@@ -1,7 +1,7 @@
 ﻿namespace OPEX.Tests;
 
 [TestClass]
-public sealed class PopManyRandoms : TestBase
+public sealed class PopManyRandoms : Tester
 {
     [TestMethod]
     public void WhenSourceIsNull_Throw()

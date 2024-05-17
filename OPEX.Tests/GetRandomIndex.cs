@@ -24,7 +24,7 @@ public sealed class GetRandomIndexWithImmutableListOfDummyTests : GetRandomIndex
 
 }
 
-public abstract class GetRandomIndexTester<TCollection> : TestBase where TCollection : class, IEnumerable<Garbage>
+public abstract class GetRandomIndexTester<TCollection> : Tester where TCollection : class, IEnumerable<Garbage>
 {
     [TestMethod]
     public void WhenSourceIsNull_Throw()

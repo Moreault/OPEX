@@ -1,7 +1,7 @@
 ﻿namespace OPEX.Tests;
 
 [TestClass]
-public sealed class TryPopAt : TestBase
+public sealed class TryPopAt : Tester
 {
     [TestMethod]
     public void SingleIndex_WhenSourceIsNull_Throw()

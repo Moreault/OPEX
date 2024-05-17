@@ -4,7 +4,7 @@
 		<TargetFramework>net8.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-		<Version>2.2.0</Version>
+		<Version>3.0.0-beta1</Version>
 		<RootNamespace>ToolBX.$(AssemblyName)</RootNamespace>
 		<PackageId>ToolBX.$(AssemblyName)</PackageId>
 		<Product>ToolBX.$(AssemblyName)</Product>
@@ -52,7 +52,7 @@
 
 	<ItemGroup>
 	  <PackageReference Include="ToolBX.OutWarden" Version="2.2.0" />
-	  <PackageReference Include="ToolBX.Reflection4Humans.ValueEquality" Version="2.2.0" />
+	  <PackageReference Include="ToolBX.Reflection4Humans.ValueEquality" Version="3.0.0-beta0a" />
 	</ItemGroup>
 
 </Project>

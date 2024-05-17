@@ -24,7 +24,7 @@ public sealed class IndexesOfWithImmutableListOfDummyTests : IndexesOfTester<Imm
 
 }
 
-public abstract class IndexesOfTester<TCollection> : TestBase where TCollection : class, IEnumerable<Garbage>
+public abstract class IndexesOfTester<TCollection> : Tester where TCollection : class, IEnumerable<Garbage>
 {
     [TestMethod]
     public void WhenUsingItemAndCollectionIsNull_Throw()

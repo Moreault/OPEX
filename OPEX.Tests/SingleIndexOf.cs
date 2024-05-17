@@ -1,7 +1,7 @@
 ﻿namespace OPEX.Tests;
 
 [TestClass]
-public class SingleIndexOf : TestBase
+public class SingleIndexOf : Tester
 {
     [TestMethod]
     public void Item_WhenSourceIsNull_Throw()

@@ -1,7 +1,7 @@
 ﻿namespace OPEX.Tests;
 
 [TestClass]
-public sealed class PopSingle : TestBase
+public sealed class PopSingle : Tester
 {
     [TestMethod]
     public void Parameterless_WhenSourceIsNull_Throw()

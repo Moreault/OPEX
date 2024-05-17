@@ -4,7 +4,7 @@
 public class RemoveFirst
 {
     [TestClass]
-    public class Item : TestBase
+    public class Item : Tester
     {
         [TestMethod]
         public void WhenSourceIsNullArray_Throw()
@@ -124,7 +124,7 @@ public class RemoveFirst
     }
 
     [TestClass]
-    public class Predicate : TestBase
+    public class Predicate : Tester
     {
         [TestMethod]
         public void WhenSourceIsNullArray_Throw()
