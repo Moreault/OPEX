@@ -14,6 +14,12 @@ public static partial class CollectionExtensions
         return list.TryGetManyRandomIndexes(count);
     }
 
+    public static IReadOnlyList<int> GetManyRandomIndexes<TSource>(this IEnumerable<TSource> source, int count, Func<TSource, bool> predicate)
+    {
+        if (predicate is null) throw new ArgumentNullException(nameof(predicate));
+        return source.Where(predicate).GetManyRandomIndexes(count);
+    }
+
     /// <summary>
     /// Attempts to return multiple unique indexes from a collection or all indexes if count is greater than collection count.
     /// </summary>
@@ -37,6 +43,12 @@ public static partial class CollectionExtensions
         }
 
         return indexes;
+    }
+
+    public static IReadOnlyList<int> TryGetManyRandomIndexes<TSource>(this IEnumerable<TSource> source, int count, Func<TSource, bool> predicate)
+    {
+        if (predicate is null) throw new ArgumentNullException(nameof(predicate));
+        return source.Where(predicate).TryGetManyRandomIndexes(count);
     }
 
 }

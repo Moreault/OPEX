@@ -21,4 +21,11 @@ public static partial class CollectionExtensions
         }
         return output;
     }
+
+    public static IReadOnlyList<TSource> GetManyRandoms<TSource>(this IEnumerable<TSource> source, int count, Func<TSource, bool> predicate)
+    {
+        if (predicate is null) throw new ArgumentNullException(nameof(predicate));
+        return source.Where(predicate).GetManyRandoms(count);
+    }
+
 }
