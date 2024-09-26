@@ -32,7 +32,6 @@ public static partial class CollectionExtensions
         {
             if (predicate.Invoke(enumerator.Current))
             {
-                //TODO Message
                 if (isFound) return Result<TSource>.Failure();
                 occurence = enumerator.Current;
                 isFound = true;

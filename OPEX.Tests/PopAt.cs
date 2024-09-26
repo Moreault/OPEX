@@ -7,8 +7,8 @@ public class PopAt : Tester
     public void WhenSourceIsNull_Throw()
     {
         //Arrange
-        IList<Dummy> source = null!;
-        var index = Fixture.Create<int>();
+        IList<Garbage> source = null!;
+        var index = Dummy.Create<int>();
 
         //Act
         var action = () => source.PopAt(index);
@@ -21,8 +21,8 @@ public class PopAt : Tester
     public void WhenSourceIsEmpty_Throw()
     {
         //Arrange
-        var source = new List<Dummy>();
-        var index = Fixture.Create<int>();
+        var source = new List<Garbage>();
+        var index = Dummy.Create<int>();
 
         //Act
         var action = () => source.PopAt(index);
@@ -35,8 +35,8 @@ public class PopAt : Tester
     public void WhenSourceIsNotEmptyButIndexIsLowerThanZero_Throw()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().ToList();
-        var index = -Fixture.Create<int>();
+        var source = Dummy.CreateMany<Garbage>().ToList();
+        var index = -Dummy.Create<int>();
 
         //Act
         var action = () => source.PopAt(index);
@@ -49,7 +49,7 @@ public class PopAt : Tester
     public void WhenSourceIsNotEmptyButIndexIsBiggerThanLastIndex_Throw()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().ToList();
+        var source = Dummy.CreateMany<Garbage>().ToList();
         var index = source.LastIndex() + 1;
 
         //Act
@@ -63,7 +63,7 @@ public class PopAt : Tester
     public void WhenSourceIsNotEmptyAndIndexIsWithinRange_ReturnItem()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().ToList();
+        var source = Dummy.CreateMany<Garbage>().ToList();
         var index = source.GetRandomIndex();
         var item = source[index];
 
@@ -78,7 +78,7 @@ public class PopAt : Tester
     public void WhenSourceIsNotEmptyAndIndexIsWithinRange_RemoveItemAtIndex()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().ToList();
+        var source = Dummy.CreateMany<Garbage>().ToList();
         var original = source.ToList();
         var index = source.GetRandomIndex();
         var item = source[index];
@@ -95,8 +95,8 @@ public class PopAt : Tester
     public void MultipleIndexes_WhenSourceIsNull_Throw()
     {
         //Arrange
-        IList<Dummy> source = null!;
-        var indexes = Fixture.CreateMany<int>().ToArray();
+        IList<Garbage> source = null!;
+        var indexes = Dummy.CreateMany<int>().ToArray();
 
         //Act
         var action = () => source.PopAt(indexes);
@@ -109,7 +109,7 @@ public class PopAt : Tester
     public void MultipleIndexes_WhenIndexesNull_Throw()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().ToList();
+        var source = Dummy.CreateMany<Garbage>().ToList();
         int[]? indexes = null;
 
         //Act
@@ -123,8 +123,8 @@ public class PopAt : Tester
     public void MultipleIndexes_WhenSourceIsEmpty_Throw()
     {
         //Arrange
-        var source = new List<Dummy>();
-        var indexes = Fixture.CreateMany<int>().ToArray();
+        var source = new List<Garbage>();
+        var indexes = Dummy.CreateMany<int>().ToArray();
 
         //Act
         var action = () => source.PopAt(indexes);
@@ -137,7 +137,7 @@ public class PopAt : Tester
     public void MultipleIndexes_WhenIndexesAreEmpty_ReturnEmpty()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().ToList();
+        var source = Dummy.CreateMany<Garbage>().ToList();
         var indexes = Array.Empty<int>();
 
         //Act
@@ -152,8 +152,8 @@ public class PopAt : Tester
     public void MultipleIndexes_WhenOneIsOutsideOfRange_Throw()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().ToList();
-        var indexes = Fixture.CreateMany<int>().Append(source.LastIndex() + 1).ToShuffled().ToArray();
+        var source = Dummy.CreateMany<Garbage>().ToList();
+        var indexes = Dummy.CreateMany<int>().Append(source.LastIndex() + 1).ToShuffled().ToArray();
 
         //Act
         var action = () => source.PopAt(indexes);
@@ -166,7 +166,7 @@ public class PopAt : Tester
     public void MultipleIndexes_WhenAllAreWithinRange_ReturnAll()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>(10).ToList();
+        var source = Dummy.CreateMany<Garbage>(10).ToList();
         var original = source.ToList();
         var indexes = source.GetManyRandomIndexes(3).ToArray();
 

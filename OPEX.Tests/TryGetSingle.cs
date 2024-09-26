@@ -10,7 +10,7 @@ public class TryGetSingle
         public void WhenSourceIsNull_Throw()
         {
             //Arrange
-            IEnumerable<Dummy> source = null!;
+            IEnumerable<Garbage> source = null!;
 
             //Act
             var action = () => source.TryGetSingle();
@@ -23,41 +23,41 @@ public class TryGetSingle
         public void WhenSourceIsEmpty_ReturnFailure()
         {
             //Arrange
-            var source = Array.Empty<Dummy>();
+            var source = Array.Empty<Garbage>();
 
             //Act
             var result = source.TryGetSingle();
 
             //Assert
-            result.Should().Be(Result<Dummy>.Failure());
+            result.Should().Be(Result<Garbage>.Failure());
         }
 
         [TestMethod]
         public void WhenSourceContainsExactlyOneItem_ReturnThatItem()
         {
             //Arrange
-            var source = new List<Dummy> { Fixture.Create<Dummy>() };
+            var source = new List<Garbage> { Dummy.Create<Garbage>() };
 
             //Act
             var result = source.TryGetSingle();
 
             //Assert
-            result.Should().BeEquivalentTo(Result<Dummy>.Success(source.Single()));
+            result.Should().BeEquivalentTo(Result<Garbage>.Success(source.Single()));
         }
 
         [TestMethod]
         public void WhenSourceContainsMultipleItems_ReturnFailure()
         {
             //Arrange
-            var source = Fixture.CreateMany<Dummy>().ToList();
-            var first = Fixture.Create<Dummy>();
+            var source = Dummy.CreateMany<Garbage>().ToList();
+            var first = Dummy.Create<Garbage>();
             source.Insert(0, first);
 
             //Act
             var result = source.TryGetSingle();
 
             //Assert
-            result.Should().Be(Result<Dummy>.Failure());
+            result.Should().Be(Result<Garbage>.Failure());
         }
     }
 
@@ -68,7 +68,7 @@ public class TryGetSingle
         public void WhenSourceIsNull_Throw()
         {
             //Arrange
-            IEnumerable<Dummy> source = null!;
+            IEnumerable<Garbage> source = null!;
 
             //Act
             var action = () => source.TryGetSingle(x => x.Name == "Something");
@@ -81,8 +81,8 @@ public class TryGetSingle
         public void WhenPredicateIsNull_Throw()
         {
             //Arrange
-            var source = Fixture.CreateMany<Dummy>().ToArray();
-            Func<Dummy, bool> predicate = null!;
+            var source = Dummy.CreateMany<Garbage>().ToArray();
+            Func<Garbage, bool> predicate = null!;
 
             //Act
             var action = () => source.TryGetSingle(predicate);
@@ -95,55 +95,55 @@ public class TryGetSingle
         public void WhenSourceIsEmpty_ReturnFailure()
         {
             //Arrange
-            var source = Array.Empty<Dummy>();
+            var source = Array.Empty<Garbage>();
 
             //Act
             var result = source.TryGetSingle(x => x.Name == "Something");
 
             //Assert
-            result.Should().Be(Result<Dummy>.Failure());
+            result.Should().Be(Result<Garbage>.Failure());
         }
 
         [TestMethod]
         public void WhenSourceContainsMultipleItemsButNoneCorrespond_ReturnFailure()
         {
             //Arrange
-            var source = Fixture.CreateMany<Dummy>().ToList();
+            var source = Dummy.CreateMany<Garbage>().ToList();
 
             //Act
             var result = source.TryGetSingle(x => x.Name == "Something");
 
             //Assert
-            result.Should().Be(Result<Dummy>.Failure());
+            result.Should().Be(Result<Garbage>.Failure());
         }
 
         [TestMethod]
         public void WhenSourceContainsMultipleItemsButOnlyOneCorresponds_ReturnThatOneItem()
         {
             //Arrange
-            var source = Fixture.CreateMany<Dummy>().ToList();
+            var source = Dummy.CreateMany<Garbage>().ToList();
 
-            var first = Fixture.Build<Dummy>().With(x => x.Name, "Something").Create();
+            var first = Dummy.Build<Garbage>().With(x => x.Name, "Something").Create();
             source.Insert(1, first);
 
             //Act
             var result = source.TryGetSingle(x => x.Name == "Something");
 
             //Assert
-            result.Should().Be(Result<Dummy>.Success(first));
+            result.Should().Be(Result<Garbage>.Success(first));
         }
 
         [TestMethod]
         public void WhenAllItemsCorrespond_ReturnFailure()
         {
             //Arrange
-            var source = Fixture.Build<Dummy>().With(x => x.Name, "Something").CreateMany().ToArray();
+            var source = Dummy.Build<Garbage>().With(x => x.Name, "Something").CreateMany().ToArray();
 
             //Act
             var result = source.TryGetSingle(x => x.Name == "Something");
 
             //Assert
-            result.Should().Be(Result<Dummy>.Failure());
+            result.Should().Be(Result<Garbage>.Failure());
         }
     }
 }

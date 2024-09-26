@@ -1,30 +1,30 @@
 ﻿namespace OPEX.Tests;
 
 [TestClass]
-public sealed class GetManyRandomIndexesWithArrayOfDummyTests : GetManyRandomIndexesTester<Dummy[]>
+public sealed class GetManyRandomIndexesWithArrayOfDummyTests : GetManyRandomIndexesTester<Garbage[]>
 {
 
 }
 
 [TestClass]
-public sealed class GetManyRandomIndexesWithListOfDummyTests : GetManyRandomIndexesTester<List<Dummy>>
+public sealed class GetManyRandomIndexesWithListOfDummyTests : GetManyRandomIndexesTester<List<Garbage>>
 {
 
 }
 
 [TestClass]
-public sealed class GetManyRandomIndexesWithWriteOnlyListOfDummyTests : GetManyRandomIndexesTester<WriteOnlyList<Dummy>>
+public sealed class GetManyRandomIndexesWithWriteOnlyListOfDummyTests : GetManyRandomIndexesTester<WriteOnlyList<Garbage>>
 {
 
 }
 
 [TestClass]
-public sealed class GetManyRandomIndexesWithImmutableListOfDummyTests : GetManyRandomIndexesTester<ImmutableList<Dummy>>
+public sealed class GetManyRandomIndexesWithImmutableListOfDummyTests : GetManyRandomIndexesTester<ImmutableList<Garbage>>
 {
 
 }
 
-public abstract class GetManyRandomIndexesTester<TCollection> : Tester where TCollection : class, IList<Dummy>
+public abstract class GetManyRandomIndexesTester<TCollection> : Tester where TCollection : class, IList<Garbage>
 {
     [TestMethod]
     public void Get_WhenSourceIsNull_Throw()
@@ -33,7 +33,7 @@ public abstract class GetManyRandomIndexesTester<TCollection> : Tester where TCo
         TCollection source = null!;
 
         //Act
-        var action = () => source.GetManyRandomIndexes(Fixture.Create<int>());
+        var action = () => source.GetManyRandomIndexes(Dummy.Create<int>());
 
         //Assert
         action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(source));
@@ -43,8 +43,8 @@ public abstract class GetManyRandomIndexesTester<TCollection> : Tester where TCo
     public void Get_WhenCountIsNegative_Throw()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().To<TCollection, Dummy>();
-        var count = -Fixture.Create<int>();
+        var source = Dummy.CreateMany<Garbage>().To<TCollection, Garbage>();
+        var count = -Dummy.Create<int>();
 
         //Act
         var action = () => source.GetManyRandomIndexes(count);
@@ -57,8 +57,8 @@ public abstract class GetManyRandomIndexesTester<TCollection> : Tester where TCo
     public void Get_WhenCountIsLargerThanCollection_Throw()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().To<TCollection, Dummy>();
-        var count = source.Count + Fixture.Create<int>();
+        var source = Dummy.CreateMany<Garbage>().To<TCollection, Garbage>();
+        var count = source.Count + Dummy.Create<int>();
 
         //Act
         var action = () => source.GetManyRandomIndexes(count);
@@ -71,7 +71,7 @@ public abstract class GetManyRandomIndexesTester<TCollection> : Tester where TCo
     public void Get_WhenCountIsEqualToCollectionSize_ReturnAllIndexes()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().To<TCollection, Dummy>();
+        var source = Dummy.CreateMany<Garbage>().To<TCollection, Garbage>();
         var count = source.Count;
 
         //Act
@@ -90,7 +90,7 @@ public abstract class GetManyRandomIndexesTester<TCollection> : Tester where TCo
     public void Get_WhenCountIsLessThanCollectionSize_ReturnRandomIndexes(int count)
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>(10).To<TCollection, Dummy>();
+        var source = Dummy.CreateMany<Garbage>(10).To<TCollection, Garbage>();
 
         //Act
         var result = source.GetManyRandomIndexes(count);
@@ -108,7 +108,7 @@ public abstract class GetManyRandomIndexesTester<TCollection> : Tester where TCo
         TCollection source = null!;
 
         //Act
-        var action = () => source.TryGetManyRandomIndexes(Fixture.Create<int>());
+        var action = () => source.TryGetManyRandomIndexes(Dummy.Create<int>());
 
         //Assert
         action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(source));
@@ -118,8 +118,8 @@ public abstract class GetManyRandomIndexesTester<TCollection> : Tester where TCo
     public void TryGet_WhenCountIsNegative_ReturnEmpty()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().To<TCollection, Dummy>();
-        var count = -Fixture.Create<int>();
+        var source = Dummy.CreateMany<Garbage>().To<TCollection, Garbage>();
+        var count = -Dummy.Create<int>();
 
         //Act
         var result = source.TryGetManyRandomIndexes(count);
@@ -132,8 +132,8 @@ public abstract class GetManyRandomIndexesTester<TCollection> : Tester where TCo
     public void TryGet_WhenCountIsLargerThanCollection_ReturnAllIndexes()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().To<TCollection, Dummy>();
-        var count = source.Count + Fixture.Create<int>();
+        var source = Dummy.CreateMany<Garbage>().To<TCollection, Garbage>();
+        var count = source.Count + Dummy.Create<int>();
 
         //Act
         var result = source.TryGetManyRandomIndexes(count);
@@ -146,7 +146,7 @@ public abstract class GetManyRandomIndexesTester<TCollection> : Tester where TCo
     public void TryGet_WhenCountIsEqualToCollectionSize_ReturnAllIndexes()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().To<TCollection, Dummy>();
+        var source = Dummy.CreateMany<Garbage>().To<TCollection, Garbage>();
         var count = source.Count;
 
         //Act
@@ -165,7 +165,7 @@ public abstract class GetManyRandomIndexesTester<TCollection> : Tester where TCo
     public void TryGet_WhenCountIsLessThanCollectionSize_ReturnRandomIndexes(int count)
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>(10).To<TCollection, Dummy>();
+        var source = Dummy.CreateMany<Garbage>(10).To<TCollection, Garbage>();
 
         //Act
         var result = source.TryGetManyRandomIndexes(count);

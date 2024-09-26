@@ -2,7 +2,6 @@
 
 public static partial class CollectionExtensions
 {
-    //TODO Do it
     public static TSource? PopLastOrDefault<TSource>(this IList<TSource> source)
     {
         if (source == null) throw new ArgumentNullException(nameof(source));

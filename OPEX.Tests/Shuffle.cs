@@ -10,7 +10,7 @@ public class Shuffle
         public void WhenCollectionIsNull_Throw()
         {
             //Arrange
-            Dummy[] source = null!;
+            Garbage[] source = null!;
 
             //Act
             var action = () => source.Shuffle();
@@ -23,7 +23,7 @@ public class Shuffle
         public void WhenCollectionIsEmpty_DoNothing()
         {
             //Arrange
-            var source = Array.Empty<Dummy>();
+            var source = Array.Empty<Garbage>();
 
             //Act
             source.Shuffle();
@@ -36,7 +36,7 @@ public class Shuffle
         public void WhenCollectionContainsOneItem_DoNothing()
         {
             //Arrange
-            var source = new[] { Fixture.Create<Dummy>() };
+            var source = new[] { Dummy.Create<Garbage>() };
             var original = source.ToList();
 
             //Act
@@ -50,7 +50,7 @@ public class Shuffle
         public void WhenCollectionContainsMultipleItems_ContainTheSameItemsButInDifferentOrder()
         {
             //Arrange
-            var source = Fixture.CreateMany<Dummy>(10).ToArray();
+            var source = Dummy.CreateMany<Garbage>(10).ToArray();
             var original = source.ToList();
 
             //Act
@@ -69,7 +69,7 @@ public class Shuffle
         public void WhenCollectionIsNull_Throw()
         {
             //Arrange
-            List<Dummy> source = null!;
+            List<Garbage> source = null!;
 
             //Act
             var action = () => source.Shuffle();
@@ -82,7 +82,7 @@ public class Shuffle
         public void WhenCollectionIsEmpty_DoNothing()
         {
             //Arrange
-            var source = new List<Dummy>();
+            var source = new List<Garbage>();
 
             //Act
             source.Shuffle();
@@ -95,7 +95,7 @@ public class Shuffle
         public void WhenCollectionContainsOneItem_DoNothing()
         {
             //Arrange
-            var source = new List<Dummy> { Fixture.Create<Dummy>() };
+            var source = new List<Garbage> { Dummy.Create<Garbage>() };
             var original = source.ToList();
 
             //Act
@@ -109,7 +109,7 @@ public class Shuffle
         public void WhenCollectionContainsMultipleItems_ContainTheSameItemsButInDifferentOrder()
         {
             //Arrange
-            var source = Fixture.CreateMany<Dummy>(10).ToList();
+            var source = Dummy.CreateMany<Garbage>(10).ToList();
             var original = source.ToList();
 
             //Act

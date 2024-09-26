@@ -10,8 +10,8 @@ public class TryRemoveFirst
         public void WhenUsingItemAndCollectionIsNull_Throw()
         {
             //Arrange
-            Dummy[] source = null!;
-            var item = Fixture.Create<Dummy>();
+            Garbage[] source = null!;
+            var item = Dummy.Create<Garbage>();
 
             //Act
             var action = () => source.TryRemoveFirst(item);
@@ -24,8 +24,8 @@ public class TryRemoveFirst
         public void WhenUsingLambdaAndCollectionIsNull_Throw()
         {
             //Arrange
-            Dummy[] source = null!;
-            var match = Fixture.Create<Func<Dummy, bool>>();
+            Garbage[] source = null!;
+            var match = Dummy.Create<Func<Garbage, bool>>();
 
             //Act
             var action = () => source.TryRemoveFirst(match);
@@ -38,8 +38,8 @@ public class TryRemoveFirst
         public void WhenUsingLambdaAndLambdaIsNull_Throw()
         {
             //Arrange
-            var source = Fixture.Create<Dummy[]>();
-            Func<Dummy, bool> match = null!;
+            var source = Dummy.Create<Garbage[]>();
+            Func<Garbage, bool> match = null!;
 
             //Act
             var action = () => source.TryRemoveFirst(match);
@@ -52,8 +52,8 @@ public class TryRemoveFirst
         public void Always_Throw()
         {
             //Arrange
-            var source = Fixture.Create<Dummy[]>();
-            var match = Fixture.Create<Func<Dummy, bool>>();
+            var source = Dummy.Create<Garbage[]>();
+            var match = Dummy.Create<Func<Garbage, bool>>();
 
             //Act
             var action = () => source.TryRemoveFirst(match);
@@ -70,8 +70,8 @@ public class TryRemoveFirst
         public void WhenUsingItemAndCollectionIsNull_Throw()
         {
             //Arrange
-            List<Dummy> source = null!;
-            var item = Fixture.Create<Dummy>();
+            List<Garbage> source = null!;
+            var item = Dummy.Create<Garbage>();
 
             //Act
             var action = () => source.TryRemoveFirst(item);
@@ -84,8 +84,8 @@ public class TryRemoveFirst
         public void WhenUsingLambdaAndCollectionIsNull_Throw()
         {
             //Arrange
-            List<Dummy> source = null!;
-            var match = Fixture.Create<Func<Dummy, bool>>();
+            List<Garbage> source = null!;
+            var match = Dummy.Create<Func<Garbage, bool>>();
 
             //Act
             var action = () => source.TryRemoveFirst(match);
@@ -98,8 +98,8 @@ public class TryRemoveFirst
         public void WhenUsingLambdaAndLambdaIsNull_Throw()
         {
             //Arrange
-            var source = Fixture.Create<List<Dummy>>();
-            Func<Dummy, bool> match = null!;
+            var source = Dummy.Create<List<Garbage>>();
+            Func<Garbage, bool> match = null!;
 
             //Act
             var action = () => source.TryRemoveFirst(match);
@@ -112,8 +112,8 @@ public class TryRemoveFirst
         public void WhenUsingItemAndItemIsNullAndThereIsNoNullInCollection_DoNotThrow()
         {
             //Arrange
-            var source = Fixture.Create<List<Dummy>>();
-            Dummy item = null!;
+            var source = Dummy.Create<List<Garbage>>();
+            Garbage item = null!;
 
             //Act
             var action = () => source.TryRemoveFirst(item);
@@ -126,8 +126,8 @@ public class TryRemoveFirst
         public void WhenUsingItemAndItemNotFoundInCollection_Throw()
         {
             //Arrange
-            var source = Fixture.Create<List<Dummy>>();
-            var item = Fixture.Create<Dummy>();
+            var source = Dummy.Create<List<Garbage>>();
+            var item = Dummy.Create<Garbage>();
 
             //Act
             var action = () => source.TryRemoveFirst(item);
@@ -140,10 +140,10 @@ public class TryRemoveFirst
         public void WhenUsingLambdaAndItemNotFoundInCollection_Throw()
         {
             //Arrange
-            var source = Fixture.Create<List<Dummy>>();
+            var source = Dummy.Create<List<Garbage>>();
 
             //Act
-            var action = () => source.TryRemoveFirst(x => x.Name == Fixture.Create<string>());
+            var action = () => source.TryRemoveFirst(x => x.Name == Dummy.Create<string>());
 
             //Assert
             action.Should().NotThrow();
@@ -153,7 +153,7 @@ public class TryRemoveFirst
         public void WhenUsingItemAndThereIsOneOccurenceOfItem_RemoveItem()
         {
             //Arrange
-            var source = Fixture.CreateMany<Dummy>().ToList();
+            var source = Dummy.CreateMany<Garbage>().ToList();
             var original = source.ToList();
             var item = source[1];
 
@@ -161,7 +161,7 @@ public class TryRemoveFirst
             source.TryRemoveFirst(item);
 
             //Assert
-            source.Should().BeEquivalentTo(new List<Dummy>
+            source.Should().BeEquivalentTo(new List<Garbage>
             {
                 original[0], original[2]
             });
@@ -171,7 +171,7 @@ public class TryRemoveFirst
         public void WhenUsingLambdaAndThereIsOneOccurenceOfItem_RemoveItem()
         {
             //Arrange
-            var source = Fixture.CreateMany<Dummy>().ToList();
+            var source = Dummy.CreateMany<Garbage>().ToList();
             var original = source.ToList();
             var item = source[1];
 
@@ -179,7 +179,7 @@ public class TryRemoveFirst
             source.TryRemoveFirst(x => x.Name == item.Name);
 
             //Assert
-            source.Should().BeEquivalentTo(new List<Dummy>
+            source.Should().BeEquivalentTo(new List<Garbage>
             {
                 original[0], original[2]
             });
@@ -189,13 +189,13 @@ public class TryRemoveFirst
         public void WhenUsingItemAndThereAreMultipleOccurencesOfItem_RemoveTheFirstOne()
         {
             //Arrange
-            var item = Fixture.Create<Dummy>();
-            var source = new List<Dummy>
+            var item = Dummy.Create<Garbage>();
+            var source = new List<Garbage>
             {
-                Fixture.Create<Dummy>(),
+                Dummy.Create<Garbage>(),
                 item,
                 item,
-                Fixture.Create<Dummy>(),
+                Dummy.Create<Garbage>(),
                 item
             };
             var original = source.ToList();
@@ -204,7 +204,7 @@ public class TryRemoveFirst
             source.TryRemoveFirst(item);
 
             //Assert
-            source.Should().BeEquivalentTo(new List<Dummy>
+            source.Should().BeEquivalentTo(new List<Garbage>
             {
                 original[0],
                 item,
@@ -217,13 +217,13 @@ public class TryRemoveFirst
         public void WhenUsingLambdaAndThereAreMultipleOccurencesOfItem_RemoveTheFirstOne()
         {
             //Arrange
-            var item = Fixture.Create<Dummy>();
-            var source = new List<Dummy>
+            var item = Dummy.Create<Garbage>();
+            var source = new List<Garbage>
             {
-                Fixture.Create<Dummy>(),
+                Dummy.Create<Garbage>(),
                 item,
                 item,
-                Fixture.Create<Dummy>(),
+                Dummy.Create<Garbage>(),
                 item
             };
             var original = source.ToList();
@@ -232,7 +232,7 @@ public class TryRemoveFirst
             source.TryRemoveFirst(x => x.Name == item.Name);
 
             //Assert
-            source.Should().BeEquivalentTo(new List<Dummy>
+            source.Should().BeEquivalentTo(new List<Garbage>
             {
                 original[0],
                 item,

@@ -36,7 +36,7 @@ public class LastIndex
         public void WhenCollectionContainsOnlyOneItem_ReturnZero()
         {
             //Arrange
-            var source = new[] { Fixture.Create<string>() };
+            var source = new[] { Dummy.Create<string>() };
 
             //Act
             var result = source.LastIndex();
@@ -49,7 +49,7 @@ public class LastIndex
         public void WhenCollectionContainsMultipleItems_ReturnLastIndex()
         {
             //Arrange
-            var source = Fixture.CreateMany<string>().ToArray();
+            var source = Dummy.CreateMany<string>().ToArray();
 
             //Act
             var result = source.LastIndex();
@@ -92,7 +92,7 @@ public class LastIndex
         public void WhenCollectionContainsOnlyOneItem_ReturnZero()
         {
             //Arrange
-            var source = new List<string> { Fixture.Create<string>() };
+            var source = new List<string> { Dummy.Create<string>() };
 
             //Act
             var result = source.LastIndex();
@@ -105,7 +105,7 @@ public class LastIndex
         public void WhenCollectionContainsMultipleItems_ReturnLastIndex()
         {
             //Arrange
-            var source = Fixture.CreateMany<string>().ToList();
+            var source = Dummy.CreateMany<string>().ToList();
 
             //Act
             var result = source.LastIndex();
@@ -148,7 +148,7 @@ public class LastIndex
         public void WhenCollectionContainsOnlyOneItem_ReturnZero()
         {
             //Arrange
-            IReadOnlyList<string> source = new List<string> { Fixture.Create<string>() };
+            IReadOnlyList<string> source = new List<string> { Dummy.Create<string>() };
 
             //Act
             var result = source.LastIndex();
@@ -161,7 +161,7 @@ public class LastIndex
         public void WhenCollectionContainsMultipleItems_ReturnLastIndex()
         {
             //Arrange
-            IReadOnlyList<string> source = Fixture.CreateMany<string>().ToList();
+            IReadOnlyList<string> source = Dummy.CreateMany<string>().ToList();
 
             //Act
             var result = source.LastIndex();
@@ -204,7 +204,7 @@ public class LastIndex
         public void WhenCollectionContainsOnlyOneItem_ReturnZero()
         {
             //Arrange
-            var source = new WriteOnlyList<string> { Fixture.Create<string>() };
+            var source = new WriteOnlyList<string> { Dummy.Create<string>() };
 
             //Act
             var result = source.LastIndex();
@@ -217,7 +217,7 @@ public class LastIndex
         public void WhenCollectionContainsMultipleItems_ReturnLastIndex()
         {
             //Arrange
-            var source = Fixture.CreateMany<string>().ToWriteOnlyList();
+            var source = Dummy.CreateMany<string>().ToWriteOnlyList();
 
             //Act
             var result = source.LastIndex();

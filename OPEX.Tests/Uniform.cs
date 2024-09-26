@@ -23,11 +23,11 @@ public class Uniform
         public void WhenThereIsMoreThanOneOccurence_Throw()
         {
             //Arrange
-            var same = Fixture.Create<string>();
+            var same = Dummy.Create<string>();
             var source = new List<string>
             {
                 same,
-                Fixture.Create<string>(),
+                Dummy.Create<string>(),
                 same,
             };
 
@@ -54,7 +54,7 @@ public class Uniform
         public void WhenAllItemsHaveTheSameProperty_ReturnUniqueValue()
         {
             //Arrange
-            var value = Fixture.Create<string>();
+            var value = Dummy.Create<string>();
             var values = new List<string> { value, value, value };
 
             //Act
@@ -85,11 +85,11 @@ public class Uniform
         public void WhenThereIsMoreThanOneOccurence_Throw()
         {
             //Arrange
-            var same = Fixture.Create<string>();
+            var same = Dummy.Create<string>();
             var source = new List<string>
             {
                 same,
-                Fixture.Create<string>(),
+                Dummy.Create<string>(),
                 same,
             };
 
@@ -116,7 +116,7 @@ public class Uniform
         public void WhenAllItemsHaveTheSameProperty_ReturnUniqueValue()
         {
             //Arrange
-            var value = Fixture.Create<string>();
+            var value = Dummy.Create<string>();
             var values = new List<string> { value, value, value };
 
             //Act
@@ -134,8 +134,8 @@ public class Uniform
         public void WhenSourceIsNull_Throw()
         {
             //Arrange
-            IEnumerable<Dummy> source = null!;
-            var selector = Fixture.Create<Func<Dummy, bool>>();
+            IEnumerable<Garbage> source = null!;
+            var selector = Dummy.Create<Func<Garbage, bool>>();
 
             //Act
             var action = () => source.Uniform(selector);
@@ -148,8 +148,8 @@ public class Uniform
         public void WheSelectorIsNull_Throw()
         {
             //Arrange
-            var source = Fixture.CreateMany<Dummy>().ToList();
-            Func<Dummy, bool> selector = null!;
+            var source = Dummy.CreateMany<Garbage>().ToList();
+            Func<Garbage, bool> selector = null!;
 
             //Act
             var action = () => source.Uniform(selector);
@@ -162,12 +162,12 @@ public class Uniform
         public void WhenThereIsMoreThanOneOccurence_Throw()
         {
             //Arrange
-            var id = Fixture.Create<int>();
-            var source = new List<Dummy>
+            var id = Dummy.Create<int>();
+            var source = new List<Garbage>
             {
-                Fixture.Build<Dummy>().With(x => x.Id, id).Create(),
-                Fixture.Create<Dummy>(),
-                Fixture.Build<Dummy>().With(x => x.Id, id).Create(),
+                Dummy.Build<Garbage>().With(x => x.Id, id).Create(),
+                Dummy.Create<Garbage>(),
+                Dummy.Build<Garbage>().With(x => x.Id, id).Create(),
             };
 
             //Act
@@ -183,7 +183,7 @@ public class Uniform
             //Arrange
 
             //Act
-            var action = () => new List<Dummy>().Uniform(x => x.Id);
+            var action = () => new List<Garbage>().Uniform(x => x.Id);
 
             //Assert
             action.Should().Throw<InvalidOperationException>().WithMessage(Exceptions.CannotUseUniformOnEmptyCollection);
@@ -193,7 +193,7 @@ public class Uniform
         public void WhenAllItemsHaveTheSameProperty_ReturnUniqueValue()
         {
             //Arrange
-            var values = Fixture.Build<Dummy>().With(x => x.Name, "Roger").CreateMany();
+            var values = Dummy.Build<Garbage>().With(x => x.Name, "Roger").CreateMany();
 
             //Act
             var result = values.Uniform(x => x.Name);
@@ -210,8 +210,8 @@ public class Uniform
         public void WhenSourceIsNull_Throw()
         {
             //Arrange
-            IEnumerable<Dummy> source = null!;
-            var selector = Fixture.Create<Func<Dummy, bool>>();
+            IEnumerable<Garbage> source = null!;
+            var selector = Dummy.Create<Func<Garbage, bool>>();
 
             //Act
             var action = () => source.Uniform(selector);
@@ -224,8 +224,8 @@ public class Uniform
         public void WheSelectorIsNull_Throw()
         {
             //Arrange
-            var source = Fixture.CreateMany<Dummy>().ToList();
-            Func<Dummy, bool> selector = null!;
+            var source = Dummy.CreateMany<Garbage>().ToList();
+            Func<Garbage, bool> selector = null!;
 
             //Act
             var action = () => source.Uniform(selector);
@@ -238,12 +238,12 @@ public class Uniform
         public void WhenThereIsMoreThanOneOccurence_Throw()
         {
             //Arrange
-            var id = Fixture.Create<int>();
-            var source = new List<Dummy>
+            var id = Dummy.Create<int>();
+            var source = new List<Garbage>
             {
-                Fixture.Build<Dummy>().With(x => x.Id, id).Create(),
-                Fixture.Create<Dummy>(),
-                Fixture.Build<Dummy>().With(x => x.Id, id).Create(),
+                Dummy.Build<Garbage>().With(x => x.Id, id).Create(),
+                Dummy.Create<Garbage>(),
+                Dummy.Build<Garbage>().With(x => x.Id, id).Create(),
             };
 
             //Act
@@ -259,7 +259,7 @@ public class Uniform
             //Arrange
 
             //Act
-            var result = new List<Dummy>().UniformOrDefault(x => x.Id);
+            var result = new List<Garbage>().UniformOrDefault(x => x.Id);
 
             //Assert
             result.Should().Be(0);
@@ -269,7 +269,7 @@ public class Uniform
         public void WhenAllItemsHaveTheSameProperty_ReturnUniqueValue()
         {
             //Arrange
-            var values = Fixture.Build<Dummy>().With(x => x.Name, "Roger").CreateMany();
+            var values = Dummy.Build<Garbage>().With(x => x.Name, "Roger").CreateMany();
 
             //Act
             var result = values.Uniform(x => x.Name);

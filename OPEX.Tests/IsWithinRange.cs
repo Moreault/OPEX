@@ -1,6 +1,4 @@
-﻿using ToolBX.Eloquentest.Extensions;
-
-namespace OPEX.Tests;
+﻿namespace OPEX.Tests;
 
 [TestClass]
 public class IsWithinRange
@@ -12,8 +10,8 @@ public class IsWithinRange
         public void WhenSourceIsNull_Throw()
         {
             //Arrange
-            Dummy[] source = null!;
-            var index = Fixture.Create<int>();
+            Garbage[] source = null!;
+            var index = Dummy.Create<int>();
 
             //Act
             var action = () => source.IsWithinRange(index);
@@ -26,7 +24,7 @@ public class IsWithinRange
         public void WhenIndexIsZero_ReturnTrue()
         {
             //Arrange
-            var source = Fixture.CreateMany<Dummy>().ToArray();
+            var source = Dummy.CreateMany<Garbage>().ToArray();
             var index = 0;
 
             //Act
@@ -40,7 +38,7 @@ public class IsWithinRange
         public void WhenIndexIsEqualToLastIndex_ReturnTrue()
         {
             //Arrange
-            var source = Fixture.CreateMany<Dummy>().ToArray();
+            var source = Dummy.CreateMany<Garbage>().ToArray();
             var index = source.LastIndex();
 
             //Act
@@ -54,8 +52,8 @@ public class IsWithinRange
         public void WhenIndexIsBetweenZeroAndLastIndex_ReturnTrue()
         {
             //Arrange
-            var source = Fixture.CreateMany<Dummy>().ToArray();
-            var index = Fixture.CreateBetween(0, source.LastIndex());
+            var source = Dummy.CreateMany<Garbage>().ToArray();
+            var index = Dummy.Number.Between(0, source.LastIndex()).Create();
 
             //Act
             var result = source.IsWithinRange(index);
@@ -68,8 +66,8 @@ public class IsWithinRange
         public void WhenIndexIsNegative_ReturnFalse()
         {
             //Arrange
-            var source = Fixture.CreateMany<Dummy>().ToArray();
-            var index = -Fixture.Create<int>();
+            var source = Dummy.CreateMany<Garbage>().ToArray();
+            var index = -Dummy.Create<int>();
 
             //Act
             var result = source.IsWithinRange(index);
@@ -82,7 +80,7 @@ public class IsWithinRange
         public void WhenIndexIsGreaterThanLastIndex_ReturnTrue()
         {
             //Arrange
-            var source = Fixture.CreateMany<Dummy>().ToArray();
+            var source = Dummy.CreateMany<Garbage>().ToArray();
             var index = source.LastIndex() + 1;
 
             //Act
@@ -100,8 +98,8 @@ public class IsWithinRange
         public void WhenSourceIsNull_Throw()
         {
             //Arrange
-            List<Dummy> source = null!;
-            var index = Fixture.Create<int>();
+            List<Garbage> source = null!;
+            var index = Dummy.Create<int>();
 
             //Act
             var action = () => source.IsWithinRange(index);
@@ -114,7 +112,7 @@ public class IsWithinRange
         public void WhenIndexIsZero_ReturnTrue()
         {
             //Arrange
-            var source = Fixture.CreateMany<Dummy>().ToList();
+            var source = Dummy.CreateMany<Garbage>().ToList();
             var index = 0;
 
             //Act
@@ -128,7 +126,7 @@ public class IsWithinRange
         public void WhenIndexIsEqualToLastIndex_ReturnTrue()
         {
             //Arrange
-            var source = Fixture.CreateMany<Dummy>().ToList();
+            var source = Dummy.CreateMany<Garbage>().ToList();
             var index = source.LastIndex();
 
             //Act
@@ -142,8 +140,8 @@ public class IsWithinRange
         public void WhenIndexIsBetweenZeroAndLastIndex_ReturnTrue()
         {
             //Arrange
-            var source = Fixture.CreateMany<Dummy>().ToList();
-            var index = Fixture.CreateBetween(0, source.LastIndex());
+            var source = Dummy.CreateMany<Garbage>().ToList();
+            var index = Dummy.Number.Between(0, source.LastIndex()).Create();
 
             //Act
             var result = source.IsWithinRange(index);
@@ -156,8 +154,8 @@ public class IsWithinRange
         public void WhenIndexIsNegative_ReturnFalse()
         {
             //Arrange
-            var source = Fixture.CreateMany<Dummy>().ToList();
-            var index = -Fixture.Create<int>();
+            var source = Dummy.CreateMany<Garbage>().ToList();
+            var index = -Dummy.Create<int>();
 
             //Act
             var result = source.IsWithinRange(index);
@@ -170,7 +168,7 @@ public class IsWithinRange
         public void WhenIndexIsGreaterThanLastIndex_ReturnFalse()
         {
             //Arrange
-            var source = Fixture.CreateMany<Dummy>().ToList();
+            var source = Dummy.CreateMany<Garbage>().ToList();
             var index = source.LastIndex() + 1;
 
             //Act
@@ -188,8 +186,8 @@ public class IsWithinRange
         public void WhenSourceIsNull_Throw()
         {
             //Arrange
-            IReadOnlyList<Dummy> source = null!;
-            var index = Fixture.Create<int>();
+            IReadOnlyList<Garbage> source = null!;
+            var index = Dummy.Create<int>();
 
             //Act
             var action = () => source.IsWithinRange(index);
@@ -202,7 +200,7 @@ public class IsWithinRange
         public void WhenIndexIsZero_ReturnTrue()
         {
             //Arrange
-            IReadOnlyList<Dummy> source = Fixture.CreateMany<Dummy>().ToList();
+            IReadOnlyList<Garbage> source = Dummy.CreateMany<Garbage>().ToList();
             var index = 0;
 
             //Act
@@ -216,7 +214,7 @@ public class IsWithinRange
         public void WhenIndexIsEqualToLastIndex_ReturnTrue()
         {
             //Arrange
-            IReadOnlyList<Dummy> source = Fixture.CreateMany<Dummy>().ToList();
+            IReadOnlyList<Garbage> source = Dummy.CreateMany<Garbage>().ToList();
             var index = source.LastIndex();
 
             //Act
@@ -230,8 +228,8 @@ public class IsWithinRange
         public void WhenIndexIsBetweenZeroAndLastIndex_ReturnTrue()
         {
             //Arrange
-            IReadOnlyList<Dummy> source = Fixture.CreateMany<Dummy>().ToList();
-            var index = Fixture.CreateBetween(0, source.LastIndex());
+            IReadOnlyList<Garbage> source = Dummy.CreateMany<Garbage>().ToList();
+            var index = Dummy.Number.Between(0, source.LastIndex()).Create();
 
             //Act
             var result = source.IsWithinRange(index);
@@ -244,8 +242,8 @@ public class IsWithinRange
         public void WhenIndexIsNegative_ReturnFalse()
         {
             //Arrange
-            IReadOnlyList<Dummy> source = Fixture.CreateMany<Dummy>().ToList();
-            var index = -Fixture.Create<int>();
+            IReadOnlyList<Garbage> source = Dummy.CreateMany<Garbage>().ToList();
+            var index = -Dummy.Create<int>();
 
             //Act
             var result = source.IsWithinRange(index);
@@ -258,7 +256,7 @@ public class IsWithinRange
         public void WhenIndexIsGreaterThanLastIndex_ReturnFalse()
         {
             //Arrange
-            IReadOnlyList<Dummy> source = Fixture.CreateMany<Dummy>().ToList();
+            IReadOnlyList<Garbage> source = Dummy.CreateMany<Garbage>().ToList();
             var index = source.LastIndex() + 1;
 
             //Act
@@ -276,8 +274,8 @@ public class IsWithinRange
         public void WhenSourceIsNull_Throw()
         {
             //Arrange
-            WriteOnlyList<Dummy> source = null!;
-            var index = Fixture.Create<int>();
+            WriteOnlyList<Garbage> source = null!;
+            var index = Dummy.Create<int>();
 
             //Act
             var action = () => source.IsWithinRange(index);
@@ -290,7 +288,7 @@ public class IsWithinRange
         public void WhenIndexIsZero_ReturnTrue()
         {
             //Arrange
-            var source = Fixture.CreateMany<Dummy>().ToWriteOnlyList();
+            var source = Dummy.CreateMany<Garbage>().ToWriteOnlyList();
             var index = 0;
 
             //Act
@@ -304,7 +302,7 @@ public class IsWithinRange
         public void WhenIndexIsEqualToLastIndex_ReturnTrue()
         {
             //Arrange
-            var source = Fixture.CreateMany<Dummy>().ToWriteOnlyList();
+            var source = Dummy.CreateMany<Garbage>().ToWriteOnlyList();
             var index = source.LastIndex();
 
             //Act
@@ -318,8 +316,8 @@ public class IsWithinRange
         public void WhenIndexIsBetweenZeroAndLastIndex_ReturnTrue()
         {
             //Arrange
-            var source = Fixture.CreateMany<Dummy>().ToWriteOnlyList();
-            var index = Fixture.CreateBetween(0, source.LastIndex());
+            var source = Dummy.CreateMany<Garbage>().ToWriteOnlyList();
+            var index = Dummy.Number.Between(0, source.LastIndex()).Create();
 
             //Act
             var result = source.IsWithinRange(index);
@@ -332,8 +330,8 @@ public class IsWithinRange
         public void WhenIndexIsNegative_ReturnFalse()
         {
             //Arrange
-            var source = Fixture.CreateMany<Dummy>().ToWriteOnlyList();
-            var index = -Fixture.Create<int>();
+            var source = Dummy.CreateMany<Garbage>().ToWriteOnlyList();
+            var index = -Dummy.Create<int>();
 
             //Act
             var result = source.IsWithinRange(index);
@@ -346,7 +344,7 @@ public class IsWithinRange
         public void WhenIndexIsGreaterThanLastIndex_ReturnFalse()
         {
             //Arrange
-            var source = Fixture.CreateMany<Dummy>().ToWriteOnlyList();
+            var source = Dummy.CreateMany<Garbage>().ToWriteOnlyList();
             var index = source.LastIndex() + 1;
 
             //Act

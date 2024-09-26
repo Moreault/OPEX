@@ -7,8 +7,8 @@ public sealed class PopManyRandoms : Tester
     public void WhenSourceIsNull_Throw()
     {
         //Arrange
-        IList<Dummy> source = null!;
-        var count = Fixture.Create<int>();
+        IList<Garbage> source = null!;
+        var count = Dummy.Create<int>();
 
         //Act
         var action = () => source.PopManyRandoms(count);
@@ -21,8 +21,8 @@ public sealed class PopManyRandoms : Tester
     public void WhenCountIsNegative_Throw()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().ToList();
-        var count = -Fixture.Create<int>();
+        var source = Dummy.CreateMany<Garbage>().ToList();
+        var count = -Dummy.Create<int>();
 
         //Act
         var action = () => source.PopManyRandoms(count);
@@ -35,8 +35,8 @@ public sealed class PopManyRandoms : Tester
     public void WhenCountIsLargerThanSource_Throw()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().ToList();
-        var count = source.Count + Fixture.Create<int>();
+        var source = Dummy.CreateMany<Garbage>().ToList();
+        var count = source.Count + Dummy.Create<int>();
 
         //Act
         var action = () => source.PopManyRandoms(count);
@@ -49,7 +49,7 @@ public sealed class PopManyRandoms : Tester
     public void WhenCountIsEqualToSource_ReturnAllSourceItems()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().ToList();
+        var source = Dummy.CreateMany<Garbage>().ToList();
         var count = source.Count;
         var original = source.ToList();
 
@@ -64,7 +64,7 @@ public sealed class PopManyRandoms : Tester
     public void WhenCountIsEqualToSource_RemoveAllItemsFromSource()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().ToList();
+        var source = Dummy.CreateMany<Garbage>().ToList();
         var count = source.Count;
 
         //Act
@@ -78,7 +78,7 @@ public sealed class PopManyRandoms : Tester
     public void WhenCountIsLessThanSource_ReturnMultipleRandomItemsFromSource()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>(10).ToList();
+        var source = Dummy.CreateMany<Garbage>(10).ToList();
         var count = 5;
         var original = source.ToList();
 
@@ -94,7 +94,7 @@ public sealed class PopManyRandoms : Tester
     public void WhenCountIsLessThanSource_RemoveThoseItemsFromSource()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>(10).ToList();
+        var source = Dummy.CreateMany<Garbage>(10).ToList();
         var count = 5;
         var original = source.ToList();
 

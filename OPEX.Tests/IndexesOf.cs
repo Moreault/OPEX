@@ -1,30 +1,30 @@
 ﻿namespace OPEX.Tests;
 
 [TestClass]
-public sealed class IndexesOfWithArrayOfDummyTests : IndexesOfTester<Dummy[]>
+public sealed class IndexesOfWithArrayOfDummyTests : IndexesOfTester<Garbage[]>
 {
 
 }
 
 [TestClass]
-public sealed class IndexesOfWithListOfDummyTests : IndexesOfTester<List<Dummy>>
+public sealed class IndexesOfWithListOfDummyTests : IndexesOfTester<List<Garbage>>
 {
 
 }
 
 [TestClass]
-public sealed class IndexesOfWithWriteOnlyListOfDummyTests : IndexesOfTester<WriteOnlyList<Dummy>>
+public sealed class IndexesOfWithWriteOnlyListOfDummyTests : IndexesOfTester<WriteOnlyList<Garbage>>
 {
 
 }
 
 [TestClass]
-public sealed class IndexesOfWithImmutableListOfDummyTests : IndexesOfTester<ImmutableList<Dummy>>
+public sealed class IndexesOfWithImmutableListOfDummyTests : IndexesOfTester<ImmutableList<Garbage>>
 {
 
 }
 
-public abstract class IndexesOfTester<TCollection> : Tester where TCollection : class, IEnumerable<Dummy>
+public abstract class IndexesOfTester<TCollection> : Tester where TCollection : class, IEnumerable<Garbage>
 {
     [TestMethod]
     public void WhenUsingItemAndCollectionIsNull_Throw()
@@ -33,7 +33,7 @@ public abstract class IndexesOfTester<TCollection> : Tester where TCollection : 
         TCollection source = null!;
 
         //Act
-        var action = () => source.IndexesOf(Fixture.Create<Dummy>());
+        var action = () => source.IndexesOf(Dummy.Create<Garbage>());
 
         //Assert
         action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(source));
@@ -46,7 +46,7 @@ public abstract class IndexesOfTester<TCollection> : Tester where TCollection : 
         TCollection source = null!;
 
         //Act
-        var action = () => source.IndexesOf(Fixture.Create<Func<Dummy, bool>>());
+        var action = () => source.IndexesOf(Dummy.Create<Func<Garbage, bool>>());
 
         //Assert
         action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(source));
@@ -56,8 +56,8 @@ public abstract class IndexesOfTester<TCollection> : Tester where TCollection : 
     public void WhenUsingLambdaAndLambdaIsNull_Throw()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().To<TCollection, Dummy>();
-        Func<Dummy, bool> match = null!;
+        var source = Dummy.CreateMany<Garbage>().To<TCollection, Garbage>();
+        Func<Garbage, bool> match = null!;
 
         //Act
         var action = () => source.IndexesOf(match);
@@ -70,8 +70,8 @@ public abstract class IndexesOfTester<TCollection> : Tester where TCollection : 
     public void WhenUsingItemAndCollectionIsEmpty_ReturnEmpty()
     {
         //Arrange
-        var source = new List<Dummy>().To<TCollection, Dummy>();
-        var item = Fixture.Create<Dummy>();
+        var source = new List<Garbage>().To<TCollection, Garbage>();
+        var item = Dummy.Create<Garbage>();
 
         //Act
         var result = source.IndexesOf(item);
@@ -84,8 +84,8 @@ public abstract class IndexesOfTester<TCollection> : Tester where TCollection : 
     public void WhenUsingLambdaAndCollectionIsEmpty_ReturnEmpty()
     {
         //Arrange
-        var source = new List<Dummy>().To<TCollection, Dummy>();
-        var item = Fixture.Create<Dummy>();
+        var source = new List<Garbage>().To<TCollection, Garbage>();
+        var item = Dummy.Create<Garbage>();
 
         //Act
         var result = source.IndexesOf(x => x.Name == item.Name);
@@ -98,8 +98,8 @@ public abstract class IndexesOfTester<TCollection> : Tester where TCollection : 
     public void WhenUsingItemAndItemIsNotInCollection_ReturnEmpty()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().To<TCollection, Dummy>();
-        var item = Fixture.Create<Dummy>();
+        var source = Dummy.CreateMany<Garbage>().To<TCollection, Garbage>();
+        var item = Dummy.Create<Garbage>();
 
         //Act
         var result = source.IndexesOf(item);
@@ -112,8 +112,8 @@ public abstract class IndexesOfTester<TCollection> : Tester where TCollection : 
     public void WhenUsingLambdaAndItemIsNotInCollection_ReturnEmpty()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().To<TCollection, Dummy>();
-        var item = Fixture.Create<Dummy>();
+        var source = Dummy.CreateMany<Garbage>().To<TCollection, Garbage>();
+        var item = Dummy.Create<Garbage>();
 
         //Act
         var result = source.IndexesOf(x => x.Name == item.Name);
@@ -126,8 +126,8 @@ public abstract class IndexesOfTester<TCollection> : Tester where TCollection : 
     public void WhenUsingItemAndThereIsOneCorrespondingItem_ReturnSingleItem()
     {
         //Arrange
-        var originalSource = Fixture.CreateMany<Dummy>().ToList();
-        var source = originalSource.To<TCollection, Dummy>();
+        var originalSource = Dummy.CreateMany<Garbage>().ToList();
+        var source = originalSource.To<TCollection, Garbage>();
         var itemIndex = source.GetRandomIndex();
         var item = originalSource[itemIndex];
 
@@ -142,8 +142,8 @@ public abstract class IndexesOfTester<TCollection> : Tester where TCollection : 
     public void WhenUsingLambdaAndThereIsOneCorrespondingItem_ReturnSingleItem()
     {
         //Arrange
-        var originalSource = Fixture.CreateMany<Dummy>().ToList();
-        var source = originalSource.To<TCollection, Dummy>();
+        var originalSource = Dummy.CreateMany<Garbage>().ToList();
+        var source = originalSource.To<TCollection, Garbage>();
         var itemIndex = source.GetRandomIndex();
         var item = originalSource[itemIndex];
 
@@ -158,8 +158,8 @@ public abstract class IndexesOfTester<TCollection> : Tester where TCollection : 
     public void WhenUsingItemAndThereAreMultipleOccurences_ReturnAllOccurences()
     {
         //Arrange
-        var item = Fixture.Create<Dummy>();
-        var source = Fixture.CreateMany<Dummy>().Concat(item, Fixture.Create<Dummy>(), item, item, Fixture.Create<Dummy>(), Fixture.Create<Dummy>()).To<TCollection, Dummy>();
+        var item = Dummy.Create<Garbage>();
+        var source = Dummy.CreateMany<Garbage>().Concat(item, Dummy.Create<Garbage>(), item, item, Dummy.Create<Garbage>(), Dummy.Create<Garbage>()).To<TCollection, Garbage>();
 
         //Act
         var result = source.IndexesOf(item);
@@ -172,8 +172,8 @@ public abstract class IndexesOfTester<TCollection> : Tester where TCollection : 
     public void WhenUsingLambdaAndThereAreMultipleOccurences_ReturnAllOccurences()
     {
         //Arrange
-        var item = Fixture.Create<Dummy>();
-        var source = Fixture.CreateMany<Dummy>().Concat(item, Fixture.Create<Dummy>(), item, item, Fixture.Create<Dummy>(), Fixture.Create<Dummy>()).To<TCollection, Dummy>();
+        var item = Dummy.Create<Garbage>();
+        var source = Dummy.CreateMany<Garbage>().Concat(item, Dummy.Create<Garbage>(), item, item, Dummy.Create<Garbage>(), Dummy.Create<Garbage>()).To<TCollection, Garbage>();
 
         //Act
         var result = source.IndexesOf(x => x.Name == item.Name);

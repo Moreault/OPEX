@@ -20,13 +20,13 @@ public class TestingExtensionsTest : Tester
     public void ToList_ReturnList()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>();
+        var source = Dummy.CreateMany<Garbage>();
 
         //Act
-        var result = source.To<List<Dummy>, Dummy>();
+        var result = source.To<List<Garbage>, Garbage>();
 
         //Assert
-        result.Should().BeOfType<List<Dummy>>();
+        result.Should().BeOfType<List<Garbage>>();
         result.Should().BeEquivalentTo(source);
     }
 
@@ -34,13 +34,13 @@ public class TestingExtensionsTest : Tester
     public void ToArray_ReturnArray()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>();
+        var source = Dummy.CreateMany<Garbage>();
 
         //Act
-        var result = source.To<Dummy[], Dummy>();
+        var result = source.To<Garbage[], Garbage>();
 
         //Assert
-        result.Should().BeOfType<Dummy[]>();
+        result.Should().BeOfType<Garbage[]>();
         result.Should().BeEquivalentTo(source);
     }
 
@@ -48,13 +48,13 @@ public class TestingExtensionsTest : Tester
     public void ToWriteOnlyList_ReturnWriteOnlyList()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>();
+        var source = Dummy.CreateMany<Garbage>();
 
         //Act
-        var result = source.To<WriteOnlyList<Dummy>, Dummy>();
+        var result = source.To<WriteOnlyList<Garbage>, Garbage>();
 
         //Assert
-        result.Should().BeOfType<WriteOnlyList<Dummy>>();
+        result.Should().BeOfType<WriteOnlyList<Garbage>>();
         result.Should().BeEquivalentTo(source);
     }
 
@@ -62,13 +62,13 @@ public class TestingExtensionsTest : Tester
     public void ToImmutableList_ReturnImmutableList()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>();
+        var source = Dummy.CreateMany<Garbage>();
 
         //Act
-        var result = source.To<ImmutableList<Dummy>, Dummy>();
+        var result = source.To<ImmutableList<Garbage>, Garbage>();
 
         //Assert
-        result.Should().BeOfType<ImmutableList<Dummy>>();
+        result.Should().BeOfType<ImmutableList<Garbage>>();
         result.Should().BeEquivalentTo(source);
     }
 }

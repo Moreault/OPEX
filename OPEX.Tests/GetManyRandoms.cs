@@ -1,37 +1,37 @@
 ﻿namespace OPEX.Tests;
 
 [TestClass]
-public sealed class GetManyRandomsithArrayOfDummyTests : GetManyRandomsTester<Dummy[]>
+public sealed class GetManyRandomsithArrayOfDummyTests : GetManyRandomsTester<Garbage[]>
 {
 
 }
 
 [TestClass]
-public sealed class GetManyRandomsWithListOfDummyTests : GetManyRandomsTester<List<Dummy>>
+public sealed class GetManyRandomsWithListOfDummyTests : GetManyRandomsTester<List<Garbage>>
 {
 
 }
 
 [TestClass]
-public sealed class GetManyRandomsWithWriteOnlyListOfDummyTests : GetManyRandomsTester<WriteOnlyList<Dummy>>
+public sealed class GetManyRandomsWithWriteOnlyListOfDummyTests : GetManyRandomsTester<WriteOnlyList<Garbage>>
 {
 
 }
 
 [TestClass]
-public sealed class GetManyRandomsWithImmutableListOfDummyTests : GetManyRandomsTester<ImmutableList<Dummy>>
+public sealed class GetManyRandomsWithImmutableListOfDummyTests : GetManyRandomsTester<ImmutableList<Garbage>>
 {
 
 }
 
-public abstract class GetManyRandomsTester<TCollection> : Tester where TCollection : class, IEnumerable<Dummy>
+public abstract class GetManyRandomsTester<TCollection> : Tester where TCollection : class, IEnumerable<Garbage>
 {
     [TestMethod]
     public void WhenCollectionIsNull_Throw()
     {
         //Arrange
         TCollection source = null!;
-        var numberOfElements = Fixture.Create<int>();
+        var numberOfElements = Dummy.Create<int>();
 
         //Act
         var action = () => source.GetManyRandoms(numberOfElements);
@@ -44,8 +44,8 @@ public abstract class GetManyRandomsTester<TCollection> : Tester where TCollecti
     public void WhenNumberOfElementsIsNegative_Throw()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().To<TCollection, Dummy>();
-        var numberOfElements = -Fixture.Create<int>();
+        var source = Dummy.CreateMany<Garbage>().To<TCollection, Garbage>();
+        var numberOfElements = -Dummy.Create<int>();
 
         //Act
         var action = () => source.GetManyRandoms(numberOfElements);
@@ -58,7 +58,7 @@ public abstract class GetManyRandomsTester<TCollection> : Tester where TCollecti
     public void WhenNumberOfElementsIsZero_ReturnEmpty()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().To<TCollection, Dummy>();
+        var source = Dummy.CreateMany<Garbage>().To<TCollection, Garbage>();
         var numberOfElements = 0;
 
         //Act
@@ -72,8 +72,8 @@ public abstract class GetManyRandomsTester<TCollection> : Tester where TCollecti
     public void WhenCollectionIsEmpty_ReturnEmpty()
     {
         //Arrange
-        var source = new List<Dummy>().To<TCollection, Dummy>();
-        var numberOfElements = Fixture.Create<int>();
+        var source = new List<Garbage>().To<TCollection, Garbage>();
+        var numberOfElements = Dummy.Create<int>();
 
         //Act
         var result = source.GetManyRandoms(numberOfElements);
@@ -86,7 +86,7 @@ public abstract class GetManyRandomsTester<TCollection> : Tester where TCollecti
     public void WhenNumberOfElementsIsOne_ReturnSingleItemFromCollection()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().To<TCollection, Dummy>();
+        var source = Dummy.CreateMany<Garbage>().To<TCollection, Garbage>();
         var numberOfElements = 1;
 
         //Act
@@ -101,7 +101,7 @@ public abstract class GetManyRandomsTester<TCollection> : Tester where TCollecti
     public void WhenNumberOfElementsIsTheSameAsSizeOfCollection_ReturnEntireCollection()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().To<TCollection, Dummy>();
+        var source = Dummy.CreateMany<Garbage>().To<TCollection, Garbage>();
         var numberOfElements = source.Count();
 
         //Act
@@ -115,8 +115,8 @@ public abstract class GetManyRandomsTester<TCollection> : Tester where TCollecti
     public void WhenNumberOfElementsIsGreaterThanSizeOfCollection_ReturnEntireCollection()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().To<TCollection, Dummy>();
-        var numberOfElements = source.Count() + Fixture.Create<int>();
+        var source = Dummy.CreateMany<Garbage>().To<TCollection, Garbage>();
+        var numberOfElements = source.Count() + Dummy.Create<int>();
 
         //Act
         var result = source.GetManyRandoms(numberOfElements);
@@ -129,7 +129,7 @@ public abstract class GetManyRandomsTester<TCollection> : Tester where TCollecti
     public void WhenNumberOfElementsIsSmallerThanSizeOfCollection_ReturnRandomElementsFromCollection()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>(15).To<TCollection, Dummy>();
+        var source = Dummy.CreateMany<Garbage>(15).To<TCollection, Garbage>();
         var numberOfElements = 5;
 
         //Act

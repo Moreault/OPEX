@@ -7,7 +7,7 @@ public sealed class PopSingle : Tester
     public void Parameterless_WhenSourceIsNull_Throw()
     {
         //Arrange
-        IList<Dummy> source = null!;
+        IList<Garbage> source = null!;
 
         //Act
         var action = () => source.PopSingle();
@@ -20,7 +20,7 @@ public sealed class PopSingle : Tester
     public void Parameterless_WhenSourceIsEmpty_Throw()
     {
         //Arrange
-        var source = new List<Dummy>();
+        var source = new List<Garbage>();
 
         //Act
         var action = () => source.PopSingle();
@@ -36,7 +36,7 @@ public sealed class PopSingle : Tester
     public void ParameterlessWhenThereAreTwoOrMoreElementsInSource_Throw(int count)
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>(count).ToList();
+        var source = Dummy.CreateMany<Garbage>(count).ToList();
 
         //Act
         var action = () => source.PopSingle();
@@ -49,8 +49,8 @@ public sealed class PopSingle : Tester
     public void Parameterless_WhenThereIsExactlyOneElementInSource_ReturnElement()
     {
         //Arrange
-        var item = Fixture.Create<Dummy>();
-        var source = new List<Dummy>
+        var item = Dummy.Create<Garbage>();
+        var source = new List<Garbage>
         {
             item
         };
@@ -66,8 +66,8 @@ public sealed class PopSingle : Tester
     public void Parameterless_WhenThereIsExactlyOneElementInSource_SourceShouldBeEmpty()
     {
         //Arrange
-        var item = Fixture.Create<Dummy>();
-        var source = new List<Dummy>
+        var item = Dummy.Create<Garbage>();
+        var source = new List<Garbage>
         {
             item
         };
@@ -83,8 +83,8 @@ public sealed class PopSingle : Tester
     public void Item_WhenSourceIsNull_Throw()
     {
         //Arrange
-        IList<Dummy> source = null!;
-        var item = Fixture.Create<Dummy>();
+        IList<Garbage> source = null!;
+        var item = Dummy.Create<Garbage>();
 
         //Act
         var action = () => source.PopSingle(item);
@@ -97,8 +97,8 @@ public sealed class PopSingle : Tester
     public void Item_WhenSourceIsEmpty_Throw()
     {
         //Arrange
-        var source = new List<Dummy>();
-        var item = Fixture.Create<Dummy>();
+        var source = new List<Garbage>();
+        var item = Dummy.Create<Garbage>();
 
         //Act
         var action = () => source.PopSingle(item);
@@ -111,8 +111,8 @@ public sealed class PopSingle : Tester
     public void Item_WhenItemIsNotInSource_Throw()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().ToList();
-        var item = Fixture.Create<Dummy>();
+        var source = Dummy.CreateMany<Garbage>().ToList();
+        var item = Dummy.Create<Garbage>();
 
         //Act
         var action = () => source.PopSingle(item);
@@ -125,8 +125,8 @@ public sealed class PopSingle : Tester
     public void Item_WhenThereAreMultipleOccurencesOfItemInSource_Throw()
     {
         //Arrange
-        var item = Fixture.Create<Dummy>();
-        var source = Fixture.CreateMany<Dummy>().Append(item).Append(item).ToShuffled().ToList();
+        var item = Dummy.Create<Garbage>();
+        var source = Dummy.CreateMany<Garbage>().Append(item).Append(item).ToShuffled().ToList();
 
         //Act
         var action = () => source.PopSingle(item);
@@ -139,8 +139,8 @@ public sealed class PopSingle : Tester
     public void Item_WhenThereIsExactlyOneOccurenceOfItemInSource_ReturnItem()
     {
         //Arrange
-        var item = Fixture.Create<Dummy>();
-        var source = Fixture.CreateMany<Dummy>().Append(item).ToShuffled().ToList();
+        var item = Dummy.Create<Garbage>();
+        var source = Dummy.CreateMany<Garbage>().Append(item).ToShuffled().ToList();
 
         //Act
         var result = source.PopSingle(item);
@@ -153,8 +153,8 @@ public sealed class PopSingle : Tester
     public void Item_WhenThereIsExactlyOneOccurenceOfItemInSource_RemoveItem()
     {
         //Arrange
-        var item = Fixture.Create<Dummy>();
-        var source = Fixture.CreateMany<Dummy>().Append(item).ToShuffled().ToList();
+        var item = Dummy.Create<Garbage>();
+        var source = Dummy.CreateMany<Garbage>().Append(item).ToShuffled().ToList();
         var original = source.ToList();
 
         //Act
@@ -168,8 +168,8 @@ public sealed class PopSingle : Tester
     public void Predicate_WhenSourceIsNull_Throw()
     {
         //Arrange
-        IList<Dummy> source = null!;
-        var match = Fixture.Create<Func<Dummy, bool>>();
+        IList<Garbage> source = null!;
+        var match = Dummy.Create<Func<Garbage, bool>>();
 
         //Act
         var action = () => source.PopSingle(match);
@@ -182,8 +182,8 @@ public sealed class PopSingle : Tester
     public void Predicate_WhenPredicateIsNull_Throw()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().ToList();
-        Func<Dummy, bool> match = null!;
+        var source = Dummy.CreateMany<Garbage>().ToList();
+        Func<Garbage, bool> match = null!;
 
         //Act
         var action = () => source.PopSingle(match);
@@ -196,7 +196,7 @@ public sealed class PopSingle : Tester
     public void Predicate_WhenThereIsNoMatchInSource_Throw()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>().ToList();
+        var source = Dummy.CreateMany<Garbage>().ToList();
 
         //Act
         var action = () => source.PopSingle(x => x.Id < 0);
@@ -209,9 +209,9 @@ public sealed class PopSingle : Tester
     public void Predicate_WhenThereIsMoreThanOneMatchInSource_Throw()
     {
         //Arrange
-        var name = Fixture.Create<string>();
-        var item = Fixture.Build<Dummy>().With(x => x.Name, name).CreateMany();
-        var source = Fixture.CreateMany<Dummy>().Concat(item).ToShuffled().ToList();
+        var name = Dummy.Create<string>();
+        var item = Dummy.Build<Garbage>().With(x => x.Name, name).CreateMany();
+        var source = Dummy.CreateMany<Garbage>().Concat(item).ToShuffled().ToList();
 
         //Act
         var action = () => source.PopSingle(x => x.Name == name);
@@ -224,8 +224,8 @@ public sealed class PopSingle : Tester
     public void Predicate_WhenThereIsExactlyOneMatchInSource_ReturnMatch()
     {
         //Arrange
-        var item = Fixture.Create<Dummy>();
-        var source = Fixture.CreateMany<Dummy>().Append(item).ToShuffled().ToList();
+        var item = Dummy.Create<Garbage>();
+        var source = Dummy.CreateMany<Garbage>().Append(item).ToShuffled().ToList();
 
         //Act
         var result = source.PopSingle(x => x.Name == item.Name);
@@ -238,8 +238,8 @@ public sealed class PopSingle : Tester
     public void Predicate_WhenThereIsExactlyOneMatchInSource_RemoveMatchFromSource()
     {
         //Arrange
-        var item = Fixture.Create<Dummy>();
-        var source = Fixture.CreateMany<Dummy>().Append(item).ToShuffled().ToList();
+        var item = Dummy.Create<Garbage>();
+        var source = Dummy.CreateMany<Garbage>().Append(item).ToShuffled().ToList();
         var original = source.ToList();
 
         //Act

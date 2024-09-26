@@ -1,30 +1,30 @@
 ﻿namespace OPEX.Tests;
 
 [TestClass]
-public sealed class GetRandomWithArrayOfDummyTests : GetRandomTester<Dummy[]>
+public sealed class GetRandomWithArrayOfDummyTests : GetRandomTester<Garbage[]>
 {
 
 }
 
 [TestClass]
-public sealed class GetRandomWithListOfDummyTests : GetRandomTester<List<Dummy>>
+public sealed class GetRandomWithListOfDummyTests : GetRandomTester<List<Garbage>>
 {
 
 }
 
 [TestClass]
-public sealed class GetRandomWithWriteOnlyListOfDummyTests : GetRandomTester<WriteOnlyList<Dummy>>
+public sealed class GetRandomWithWriteOnlyListOfDummyTests : GetRandomTester<WriteOnlyList<Garbage>>
 {
 
 }
 
 [TestClass]
-public sealed class GetRandomWithImmutableListOfDummyTests : GetRandomTester<ImmutableList<Dummy>>
+public sealed class GetRandomWithImmutableListOfDummyTests : GetRandomTester<ImmutableList<Garbage>>
 {
 
 }
 
-public abstract class GetRandomTester<TCollection> : Tester where TCollection : class, IEnumerable<Dummy>
+public abstract class GetRandomTester<TCollection> : Tester where TCollection : class, IEnumerable<Garbage>
 {
     [TestMethod]
     public void WhenSourceIsNull_Throw()
@@ -43,7 +43,7 @@ public abstract class GetRandomTester<TCollection> : Tester where TCollection : 
     public void WhenSourceIsEmpty_ReturnNull()
     {
         //Arrange
-        var source = new List<Dummy>().To<TCollection, Dummy>();
+        var source = new List<Garbage>().To<TCollection, Garbage>();
 
         //Act
         var result = source.GetRandom();
@@ -57,7 +57,7 @@ public abstract class GetRandomTester<TCollection> : Tester where TCollection : 
     public void WhenSourceContainsOnlyOneItem_ReturnSingleItem()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>(1).To<TCollection, Dummy>();
+        var source = Dummy.CreateMany<Garbage>(1).To<TCollection, Garbage>();
 
         //Act
         var result = source.GetRandom();
@@ -70,7 +70,7 @@ public abstract class GetRandomTester<TCollection> : Tester where TCollection : 
     public void WhenSourceContainsMultipleItems_ReturnAnyOfThem()
     {
         //Arrange
-        var source = Fixture.CreateMany<Dummy>(10).To<TCollection, Dummy>();
+        var source = Dummy.CreateMany<Garbage>(10).To<TCollection, Garbage>();
 
         //Act
         var result = source.GetRandom()!;

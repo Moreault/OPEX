@@ -10,8 +10,8 @@ public class RemoveAll
         public void WhenSourceIsNull_Throw()
         {
             //Arrange
-            ICollection<Dummy> source = null!;
-            var item = Fixture.Create<Dummy>();
+            ICollection<Garbage> source = null!;
+            var item = Dummy.Create<Garbage>();
 
             //Act
             var action = () => source.RemoveAll(item);
@@ -24,7 +24,7 @@ public class RemoveAll
         public void WhenUsingOnArray_Throw()
         {
             //Arrange
-            var source = Fixture.CreateMany<Dummy>().ToArray();
+            var source = Dummy.CreateMany<Garbage>().ToArray();
 
             var item = source.GetRandom();
 
@@ -39,7 +39,7 @@ public class RemoveAll
         public void WhenUsingOnList_RemoveItem()
         {
             //Arrange
-            var source = Fixture.CreateMany<Dummy>().ToList();
+            var source = Dummy.CreateMany<Garbage>().ToList();
             var originalCount = source.Count;
 
             var item = source.GetRandom();
@@ -56,10 +56,10 @@ public class RemoveAll
         public void WhenUsingOnListThatDoesNotContainItem_DoNothing()
         {
             //Arrange
-            var source = Fixture.CreateMany<Dummy>().ToList();
+            var source = Dummy.CreateMany<Garbage>().ToList();
             var original = source.ToList();
 
-            var item = Fixture.Create<Dummy>();
+            var item = Dummy.Create<Garbage>();
 
             //Act
             source.RemoveAll(item);
@@ -72,7 +72,7 @@ public class RemoveAll
         public void WhenUsingOnDictionary_RemoveItem()
         {
             //Arrange
-            var source = Fixture.Create<Dictionary<int, Dummy>>();
+            var source = Dummy.Create<Dictionary<int, Garbage>>();
             var originalCount = source.Count;
 
             var item = source.GetRandom();
@@ -89,10 +89,10 @@ public class RemoveAll
         public void WhenUsingOnDictionaryThatDoesNotContainItem_DoNothing()
         {
             //Arrange
-            var source = Fixture.Create<Dictionary<int, Dummy>>();
+            var source = Dummy.Create<Dictionary<int, Garbage>>();
             var original = source.ToList();
 
-            var item = Fixture.Create<KeyValuePair<int, Dummy>>();
+            var item = Dummy.Create<KeyValuePair<int, Garbage>>();
 
             //Act
             source.RemoveAll(item);
@@ -109,7 +109,7 @@ public class RemoveAll
         public void WhenUsingOnArray_Throw()
         {
             //Arrange
-            var source = Fixture.CreateMany<Dummy>().ToArray();
+            var source = Dummy.CreateMany<Garbage>().ToArray();
 
             var nameToRemove = source.GetRandom()!.Name;
 
@@ -124,10 +124,10 @@ public class RemoveAll
         public void WhenCollectionIsNullList_Throw()
         {
             //Arrange
-            IList<Dummy> source = null!;
+            IList<Garbage> source = null!;
 
             //Act
-            var action = () => source.RemoveAll(x => x.Name == Fixture.Create<string>());
+            var action = () => source.RemoveAll(x => x.Name == Dummy.Create<string>());
 
             //Assert
             action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(source));
@@ -137,10 +137,10 @@ public class RemoveAll
         public void WhenCollectionIsEmptyList_DoNothing()
         {
             //Arrange
-            IList<Dummy> source = new List<Dummy>();
+            IList<Garbage> source = new List<Garbage>();
 
             //Act
-            source.RemoveAll(x => x.Name == Fixture.Create<string>());
+            source.RemoveAll(x => x.Name == Dummy.Create<string>());
 
             //Assert
             source.Should().BeEmpty();
@@ -150,7 +150,7 @@ public class RemoveAll
         public void WhenUsingLambdaOverloadWithSingleCorrespondingObjectOnList_RemoveThatSingleOccurence()
         {
             //Arrange
-            IList<Dummy> source = Fixture.CreateMany<Dummy>().ToList();
+            IList<Garbage> source = Dummy.CreateMany<Garbage>().ToList();
             var originalCount = source.Count;
 
             var itemToRemove = source.GetRandom()!;
@@ -167,9 +167,9 @@ public class RemoveAll
         public void WhenUsingLambdaOverloadWithMultipleCorrespondingObjectsOnList_RemoveAllOccurences()
         {
             //Arrange
-            var source = Fixture.CreateMany<Dummy>()
-                .Concat(Fixture.Build<Dummy>().With(x => x.Level, -Fixture.Create<short>()).CreateMany())
-                .Concat(Fixture.CreateMany<Dummy>()).ToList();
+            var source = Dummy.CreateMany<Garbage>()
+                .Concat(Dummy.Build<Garbage>().With(x => x.Level, -Dummy.Create<short>()).CreateMany())
+                .Concat(Dummy.CreateMany<Garbage>()).ToList();
 
             //Act
             source.RemoveAll(x => x.Level < 0);
@@ -183,12 +183,12 @@ public class RemoveAll
         public void WhenUsingLambdaOverloadWithNoOccurenceOnList_DoNotModifyCollection()
         {
             //Arrange
-            IList<Dummy> source = Fixture.CreateMany<Dummy>().ToList();
+            IList<Garbage> source = Dummy.CreateMany<Garbage>().ToList();
 
             var original = source.ToList();
 
             //Act
-            source.RemoveAll(x => x.Name == Fixture.Create<string>());
+            source.RemoveAll(x => x.Name == Dummy.Create<string>());
 
             //Assert
             source.Should().BeEquivalentTo(original);
@@ -198,10 +198,10 @@ public class RemoveAll
         public void WhenCollectionIsNullDictionary_Throw()
         {
             //Arrange
-            Dictionary<string, Dummy> source = null!;
+            Dictionary<string, Garbage> source = null!;
 
             //Act
-            var action = () => source.RemoveAll(x => x.Value.Name == Fixture.Create<string>());
+            var action = () => source.RemoveAll(x => x.Value.Name == Dummy.Create<string>());
 
             //Assert
             action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(source));
@@ -211,10 +211,10 @@ public class RemoveAll
         public void WhenCollectionIsEmptyDictionary_DoNothing()
         {
             //Arrange
-            var source = new Dictionary<string, Dummy>();
+            var source = new Dictionary<string, Garbage>();
 
             //Act
-            source.RemoveAll(x => x.Value.Name == Fixture.Create<string>());
+            source.RemoveAll(x => x.Value.Name == Dummy.Create<string>());
 
             //Assert
             source.Should().BeEmpty();
@@ -224,7 +224,7 @@ public class RemoveAll
         public void WhenUsingLambdaOverloadWithSingleCorrespondingObjectOnDictionary_RemoveThatSingleOccurence()
         {
             //Arrange
-            var source = Fixture.CreateMany<KeyValuePair<string, Dummy>>().ToDictionary(x => x.Key, x => x.Value);
+            var source = Dummy.CreateMany<KeyValuePair<string, Garbage>>().ToDictionary(x => x.Key, x => x.Value);
             var originalCount = source.Count;
 
             var itemToRemove = source.GetRandom()!;
@@ -241,17 +241,17 @@ public class RemoveAll
         public void WhenUsingLambdaOnKeyOverloadWithMultipleCorrespondingObjectsOnDictionary_RemoveAllOccurences()
         {
             //Arrange
-            var source = new Dictionary<int, Dummy>
+            var source = new Dictionary<int, Garbage>
             {
-                [1] = Fixture.Create<Dummy>(),
-                [2] = Fixture.Create<Dummy>(),
-                [3] = Fixture.Create<Dummy>(),
-                [-1] = Fixture.Create<Dummy>(),
-                [-2] = Fixture.Create<Dummy>(),
-                [-3] = Fixture.Create<Dummy>(),
-                [7] = Fixture.Create<Dummy>(),
-                [8] = Fixture.Create<Dummy>(),
-                [9] = Fixture.Create<Dummy>()
+                [1] = Dummy.Create<Garbage>(),
+                [2] = Dummy.Create<Garbage>(),
+                [3] = Dummy.Create<Garbage>(),
+                [-1] = Dummy.Create<Garbage>(),
+                [-2] = Dummy.Create<Garbage>(),
+                [-3] = Dummy.Create<Garbage>(),
+                [7] = Dummy.Create<Garbage>(),
+                [8] = Dummy.Create<Garbage>(),
+                [9] = Dummy.Create<Garbage>()
             };
 
             var original = source.ToDictionary(x => x.Key, x => x.Value);
@@ -260,7 +260,7 @@ public class RemoveAll
             source.RemoveAll(x => x.Key < 0);
 
             //Assert
-            source.Should().BeEquivalentTo(new Dictionary<int, Dummy>
+            source.Should().BeEquivalentTo(new Dictionary<int, Garbage>
             {
                 [1] = original[1],
                 [2] = original[2],
@@ -275,17 +275,17 @@ public class RemoveAll
         public void WhenUsingLambdaOnValueOverloadWithMultipleCorrespondingObjectsOnDictionary_RemoveAllOccurences()
         {
             //Arrange
-            var source = new Dictionary<int, Dummy>
+            var source = new Dictionary<int, Garbage>
             {
-                [1] = Fixture.Create<Dummy>(),
-                [2] = Fixture.Create<Dummy>(),
-                [3] = Fixture.Create<Dummy>(),
-                [-1] = Fixture.Build<Dummy>().With(x => x.Level, -Fixture.Create<short>()).Create(),
-                [-2] = Fixture.Build<Dummy>().With(x => x.Level, -Fixture.Create<short>()).Create(),
-                [-3] = Fixture.Build<Dummy>().With(x => x.Level, -Fixture.Create<short>()).Create(),
-                [7] = Fixture.Create<Dummy>(),
-                [8] = Fixture.Create<Dummy>(),
-                [9] = Fixture.Create<Dummy>()
+                [1] = Dummy.Create<Garbage>(),
+                [2] = Dummy.Create<Garbage>(),
+                [3] = Dummy.Create<Garbage>(),
+                [-1] = Dummy.Build<Garbage>().With(x => x.Level, -Dummy.Create<short>()).Create(),
+                [-2] = Dummy.Build<Garbage>().With(x => x.Level, -Dummy.Create<short>()).Create(),
+                [-3] = Dummy.Build<Garbage>().With(x => x.Level, -Dummy.Create<short>()).Create(),
+                [7] = Dummy.Create<Garbage>(),
+                [8] = Dummy.Create<Garbage>(),
+                [9] = Dummy.Create<Garbage>()
             };
 
             var original = source.ToDictionary(x => x.Key, x => x.Value);
@@ -294,7 +294,7 @@ public class RemoveAll
             source.RemoveAll(x => x.Value.Level < 0);
 
             //Assert
-            source.Should().BeEquivalentTo(new Dictionary<int, Dummy>
+            source.Should().BeEquivalentTo(new Dictionary<int, Garbage>
             {
                 [1] = original[1],
                 [2] = original[2],
@@ -309,12 +309,12 @@ public class RemoveAll
         public void WhenUsingLambdaOverloadWithNoOccurenceOnDictionary_DoNotModifyCollection()
         {
             //Arrange
-            var source = Fixture.CreateMany<KeyValuePair<string, Dummy>>().ToDictionary(x => x.Key, x => x.Value);
+            var source = Dummy.CreateMany<KeyValuePair<string, Garbage>>().ToDictionary(x => x.Key, x => x.Value);
 
             var original = source.ToList();
 
             //Act
-            source.RemoveAll(x => x.Value.Name == Fixture.Create<string>());
+            source.RemoveAll(x => x.Value.Name == Dummy.Create<string>());
 
             //Assert
             source.Should().BeEquivalentTo(original);
