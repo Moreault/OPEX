@@ -164,7 +164,7 @@ public class RemoveAll
         }
 
         [TestMethod]
-        public void WhenUsingLambdaOverloadWithMultipleCorrespondingObjectsOnList_RemoveAllOccurences()
+        public void WhenUsingLambdaOverloadWithMultipleCorrespondingObjectsOnList_RemoveAllOccurrences()
         {
             //Arrange
             var source = Dummy.CreateMany<Garbage>()
@@ -238,7 +238,7 @@ public class RemoveAll
         }
 
         [TestMethod]
-        public void WhenUsingLambdaOnKeyOverloadWithMultipleCorrespondingObjectsOnDictionary_RemoveAllOccurences()
+        public void WhenUsingLambdaOnKeyOverloadWithMultipleCorrespondingObjectsOnDictionary_RemoveAllOccurrences()
         {
             //Arrange
             var source = new Dictionary<int, Garbage>
