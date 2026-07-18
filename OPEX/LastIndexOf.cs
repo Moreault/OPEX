@@ -2,6 +2,8 @@
 
 public static partial class CollectionExtensions
 {
+    public static int LastIndexOf<TSource>(this TSource[] source, TSource? item) => ((IEnumerable<TSource>)source!).LastIndexOf(item);
+
     public static int LastIndexOf<TSource>(this IEnumerable<TSource> source, TSource? item) => source.LastIndexOf(x => Equals(x, item));
 
     public static int LastIndexOf<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> match)
